@@ -1,0 +1,5 @@
+*.swp
+.git
+certs
+.env
+node_modules

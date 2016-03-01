@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions
+             targetNamespace="eurocontrol/cfmu/b2b/FlowServices"
+             name="FlowServices"
+             xmlns:flow="eurocontrol/cfmu/b2b/FlowServices"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+    <types>
+        <xs:schema>
+            <xs:import namespace="eurocontrol/cfmu/b2b/FlowServices" schemaLocation="FlowServices_19.0.0.xsd"/>
+        </xs:schema>
+    </types>
+
+    <message name="TrafficCountsByAircraftOperatorRequest">
+        <part name="parameters" element="flow:TrafficCountsByAircraftOperatorRequest"/>
+    </message>
+    <message name="TrafficCountsByAircraftOperatorReply">
+        <part name="parameters" element="flow:TrafficCountsByAircraftOperatorReply"/>
+    </message>
+    <message name="TrafficCountsByAerodromeRequest">
+        <part name="parameters" element="flow:TrafficCountsByAerodromeRequest"/>
+    </message>
+    <message name="TrafficCountsByAerodromeReply">
+        <part name="parameters" element="flow:TrafficCountsByAerodromeReply"/>
+    </message>
+    <message name="TrafficCountsByAerodromeSetRequest">
+        <part name="parameters" element="flow:TrafficCountsByAerodromeSetRequest"/>
+    </message>
+    <message name="TrafficCountsByAerodromeSetReply">
+        <part name="parameters" element="flow:TrafficCountsByAerodromeSetReply"/>
+    </message>
+    <message name="TrafficCountsByAirspaceRequest">
+        <part name="parameters" element="flow:TrafficCountsByAirspaceRequest"/>
+    </message>
+    <message name="TrafficCountsByAirspaceReply">
+        <part name="parameters" element="flow:TrafficCountsByAirspaceReply"/>
+    </message>
+    <message name="TrafficCountsByPointRequest">
+        <part name="parameters" element="flow:TrafficCountsByPointRequest"/>
+    </message>
+    <message name="TrafficCountsByPointReply">
+        <part name="parameters" element="flow:TrafficCountsByPointReply"/>
+    </message>
+    <message name="TrafficCountsByTrafficVolumeRequest">
+        <part name="parameters" element="flow:TrafficCountsByTrafficVolumeRequest"/>
+    </message>
+    <message name="TrafficCountsByTrafficVolumeReply">
+        <part name="parameters" element="flow:TrafficCountsByTrafficVolumeReply"/>
+    </message>
+
+    <portType name="TrafficCountsService">
+        <operation name="queryTrafficCountsByAircraftOperator">
+            <input message="flow:TrafficCountsByAircraftOperatorRequest"/>
+            <output message="flow:TrafficCountsByAircraftOperatorReply"/>
+        </operation>
+        <operation name="queryTrafficCountsByAerodrome">
+            <input message="flow:TrafficCountsByAerodromeRequest"/>
+            <output message="flow:TrafficCountsByAerodromeReply"/>
+        </operation>
+        <operation name="queryTrafficCountsByAerodromeSet">
+            <input message="flow:TrafficCountsByAerodromeSetRequest"/>
+            <output message="flow:TrafficCountsByAerodromeSetReply"/>
+        </operation>
+        <operation name="queryTrafficCountsByAirspace">
+            <input message="flow:TrafficCountsByAirspaceRequest"/>
+            <output message="flow:TrafficCountsByAirspaceReply"/>
+        </operation>
+        <operation name="queryTrafficCountsByPoint">
+            <input message="flow:TrafficCountsByPointRequest"/>
+            <output message="flow:TrafficCountsByPointReply"/>
+        </operation>
+        <operation name="queryTrafficCountsByTrafficVolume">
+            <input message="flow:TrafficCountsByTrafficVolumeRequest"/>
+            <output message="flow:TrafficCountsByTrafficVolumeReply"/>
+        </operation>
+    </portType>
+
+    <binding name="TrafficCountsPortBinding" type="flow:TrafficCountsService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="queryTrafficCountsByAircraftOperator">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="queryTrafficCountsByAerodrome">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="queryTrafficCountsByAerodromeSet">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="queryTrafficCountsByAirspace">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="queryTrafficCountsByPoint">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="queryTrafficCountsByTrafficVolume">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="TrafficCountsService">
+        <port name="TrafficCountsPort" binding="flow:TrafficCountsPortBinding">
+            <soap:address location="https://www.nm.eurocontrol.int:16443/B2B_OPS/gateway/spec/19.0.0"/>
+            <!--soap:address location="http://dhdv101:27030/CORE/spec"/-->
+        </port>
+    </service>
+    <message name="RegulationListRequest">
+        <part name="parameters" element="flow:RegulationListRequest"/>
+    </message>
+    <message name="RegulationListReply">
+        <part name="parameters" element="flow:RegulationListReply"/>
+    </message>
+    <message name="RegulationCreationRequest">
+        <part name="parameters" element="flow:RegulationCreationRequest"/>
+    </message>
+    <message name="RegulationCreationReply">
+        <part name="parameters" element="flow:RegulationCreationReply"/>
+    </message>
+    <message name="RegulationUpdateRequest">
+        <part name="parameters" element="flow:RegulationUpdateRequest"/>
+    </message>
+    <message name="RegulationUpdateReply">
+        <part name="parameters" element="flow:RegulationUpdateReply"/>
+    </message>
+    <message name="RegulationCancelRequest">
+        <part name="parameters" element="flow:RegulationCancelRequest"/>
+    </message>
+    <message name="RegulationCancelReply">
+        <part name="parameters" element="flow:RegulationCancelReply"/>
+    </message>
+    <message name="RegulationProposalListRequest">
+        <part name="parameters" element="flow:RegulationProposalListRequest"/>
+    </message>
+    <message name="RegulationProposalListReply">
+        <part name="parameters" element="flow:RegulationProposalListReply"/>
+    </message>
+    <message name="RegulationProposalFilingRequest">
+        <part name="parameters" element="flow:RegulationProposalFilingRequest"/>
+    </message>
+    <message name="RegulationProposalFilingReply">
+        <part name="parameters" element="flow:RegulationProposalFilingReply"/>
+    </message>
+    <message name="RegulationProposalUpdateRequest">
+        <part name="parameters" element="flow:RegulationProposalUpdateRequest"/>
+    </message>
+    <message name="RegulationProposalUpdateReply">
+        <part name="parameters" element="flow:RegulationProposalUpdateReply"/>
+    </message>
+    <message name="RegulationProposalRevocationRequest">
+        <part name="parameters" element="flow:RegulationProposalRevocationRequest"/>
+    </message>
+    <message name="RegulationProposalRevocationReply">
+        <part name="parameters" element="flow:RegulationProposalRevocationReply"/>
+    </message>
+    <message name="MeasureOpLogRetrievalRequest">
+        <part name="parameters" element="flow:MeasureOpLogRetrievalRequest"/>
+    </message>
+    <message name="MeasureOpLogRetrievalReply">
+        <part name="parameters" element="flow:MeasureOpLogRetrievalReply"/>
+    </message>
+    <message name="RegulationForceDelayRequest">
+        <part name="parameters" element="flow:RegulationForceDelayRequest"/>
+    </message>
+    <message name="RegulationForceDelayReply">
+        <part name="parameters" element="flow:RegulationForceDelayReply"/>
+    </message>
+    <message name="AddFlightsToMeasureRequest">
+        <part name="parameters" element="flow:AddFlightsToMeasureRequest"/>
+    </message>
+    <message name="AddFlightsToMeasureReply">
+        <part name="parameters" element="flow:AddFlightsToMeasureReply"/>
+    </message>
+    <message name="RemoveFlightsFromMeasureRequest">
+        <part name="parameters" element="flow:RemoveFlightsFromMeasureRequest"/>
+    </message>
+    <message name="RemoveFlightsFromMeasureReply">
+        <part name="parameters" element="flow:RemoveFlightsFromMeasureReply"/>
+    </message>
+    <message name="HotspotListRequest">
+        <part name="parameters" element="flow:HotspotListRequest"/>
+    </message>
+    <message name="HotspotListReply">
+        <part name="parameters" element="flow:HotspotListReply"/>
+    </message>
+    <message name="HotspotPlanUpdateRequest">
+        <part name="parameters" element="flow:HotspotPlanUpdateRequest"/>
+    </message>
+    <message name="HotspotPlanUpdateReply">
+        <part name="parameters" element="flow:HotspotPlanUpdateReply"/>
+    </message>
+
+    <portType name="MeasuresService">
+        <operation name="queryRegulations">
+            <input message="flow:RegulationListRequest"/>
+            <output message="flow:RegulationListReply"/>
+        </operation>
+        <operation name="createRegulation">
+            <input message="flow:RegulationCreationRequest"/>
+            <output message="flow:RegulationCreationReply"/>
+        </operation>
+        <operation name="updateRegulation">
+            <input message="flow:RegulationUpdateRequest"/>
+            <output message="flow:RegulationUpdateReply"/>
+        </operation>
+        <operation name="cancelRegulation">
+            <input message="flow:RegulationCancelRequest"/>
+            <output message="flow:RegulationCancelReply"/>
+        </operation>
+        <operation name="queryRegulationProposals">
+            <input message="flow:RegulationProposalListRequest"/>
+            <output message="flow:RegulationProposalListReply"/>
+        </operation>
+        <operation name="fileRegulationProposal">
+            <input message="flow:RegulationProposalFilingRequest"/>
+            <output message="flow:RegulationProposalFilingReply"/>
+        </operation>
+        <operation name="updateRegulationProposal">
+            <input message="flow:RegulationProposalUpdateRequest"/>
+            <output message="flow:RegulationProposalUpdateReply"/>
+        </operation>
+        <operation name="revokeRegulationProposal">
+            <input message="flow:RegulationProposalRevocationRequest"/>
+            <output message="flow:RegulationProposalRevocationReply"/>
+        </operation>
+        <operation name="retrieveMeasureOpLog">
+            <input message="flow:MeasureOpLogRetrievalRequest"/>
+            <output message="flow:MeasureOpLogRetrievalReply"/>
+        </operation>
+        <operation name="regulationForceDelay">
+            <input message="flow:RegulationForceDelayRequest"/>
+            <output message="flow:RegulationForceDelayReply"/>
+        </operation>
+        <operation name="addFlightsToMeasure">
+            <input message="flow:AddFlightsToMeasureRequest"/>
+            <output message="flow:AddFlightsToMeasureReply"/>
+        </operation>
+        <operation name="removeFlightsFromMeasure">
+            <input message="flow:RemoveFlightsFromMeasureRequest"/>
+            <output message="flow:RemoveFlightsFromMeasureReply"/>
+        </operation>
+        <operation name="queryHotspots">
+            <input message="flow:HotspotListRequest"/>
+            <output message="flow:HotspotListReply"/>
+        </operation>
+        <operation name="updateHotspot">
+            <input message="flow:HotspotPlanUpdateRequest"/>
+            <output message="flow:HotspotPlanUpdateReply"/>
+        </operation>
+    </portType>
+
+    <binding name="MeasuresPortBinding" type="flow:MeasuresService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="queryRegulations">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="createRegulation">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="updateRegulation">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="cancelRegulation">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="queryRegulationProposals">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="fileRegulationProposal">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="updateRegulationProposal">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="revokeRegulationProposal">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="retrieveMeasureOpLog">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="regulationForceDelay">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="addFlightsToMeasure">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="removeFlightsFromMeasure">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="queryHotspots">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="updateHotspot">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="MeasuresService">
+        <port name="MeasuresPort" binding="flow:MeasuresPortBinding">
+            <soap:address location="https://www.nm.eurocontrol.int:16443/B2B_OPS/gateway/spec/19.0.0"/>
+            <!--soap:address location="http://dhdv101:27030/CORE/spec"/-->
+        </port>
+    </service>
+    <message name="MCDMTopicListRequest">
+        <part name="parameters" element="flow:MCDMTopicListRequest"/>
+    </message>
+    <message name="MCDMTopicListReply">
+        <part name="parameters" element="flow:MCDMTopicListReply"/>
+    </message>
+    <message name="MCDMTopicUpdateRequest">
+        <part name="parameters" element="flow:MCDMTopicUpdateRequest"/>
+    </message>
+    <message name="MCDMTopicUpdateReply">
+        <part name="parameters" element="flow:MCDMTopicUpdateReply"/>
+    </message>
+    <message name="MCDMTopicMessageRetrievalRequest">
+        <part name="parameters" element="flow:MCDMTopicMessageRetrievalRequest"/>
+    </message>
+    <message name="MCDMTopicMessageRetrievalReply">
+        <part name="parameters" element="flow:MCDMTopicMessageRetrievalReply"/>
+    </message>
+
+    <portType name="McdmService">
+        <operation name="queryMCDM">
+            <input message="flow:MCDMTopicListRequest"/>
+            <output message="flow:MCDMTopicListReply"/>
+        </operation>
+        <operation name="updateMCDM">
+            <input message="flow:MCDMTopicUpdateRequest"/>
+            <output message="flow:MCDMTopicUpdateReply"/>
+        </operation>
+        <operation name="retrieveMCDMMessages">
+            <input message="flow:MCDMTopicMessageRetrievalRequest"/>
+            <output message="flow:MCDMTopicMessageRetrievalReply"/>
+        </operation>
+    </portType>
+
+    <binding name="McdmPortBinding" type="flow:McdmService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="queryMCDM">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="updateMCDM">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="retrieveMCDMMessages">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="McdmService">
+        <port name="McdmPort" binding="flow:McdmPortBinding">
+            <soap:address location="https://www.nm.eurocontrol.int:16443/B2B_OPS/gateway/spec/19.0.0"/>
+            <!--soap:address location="http://dhdv101:27030/CORE/spec"/-->
+        </port>
+    </service>
+
+</definitions>

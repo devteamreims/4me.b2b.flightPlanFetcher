@@ -1,0 +1,45 @@
+{
+  "name": "4me.b2b.flightPlanFetcher",
+  "version": "0.0.1",
+  "description": "4ME NM B2B Flight plan fetcher",
+  "main": "index.js",
+  "scripts": {
+    "babel-node": "babel-node server.js",
+    "start": "nodemon --exec npm run babel-node",
+    "dev": "DEBUG=4me.* npm run start",
+    "test": "NODE_ENV=test mocha --compilers js:babel-register --recursive"
+  },
+  "author": "Benjamin Beret <benjamin.beret@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "babel": "^6.3.26",
+    "babel-cli": "^6.4.5",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-es2015-node5": "^1.1.2",
+    "body-parser": "^1.14.2",
+    "cors": "^2.7.1",
+    "debug": "^2.2.0",
+    "dotenv": "^2.0.0",
+    "express": "^4.13.4",
+    "lodash": "^4.5.1",
+    "moment": "^2.11.2",
+    "morgan": "^1.6.1",
+    "nodemon": "^1.8.1",
+    "redux": "^3.3.1",
+    "redux-freeze": "^0.1.2",
+    "redux-logger": "^2.5.2",
+    "redux-thunk": "^1.0.3",
+    "soap-as-promised": "^1.6.0",
+    "socket.io": "^1.4.4"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.2.0",
+    "chai-things": "^0.2.0",
+    "mocha": "^2.3.4",
+    "proxyquire": "^1.7.3",
+    "sinon": "^1.17.2",
+    "sinon-as-promised": "^4.0.0",
+    "sinon-chai": "^2.8.0"
+  }
+}

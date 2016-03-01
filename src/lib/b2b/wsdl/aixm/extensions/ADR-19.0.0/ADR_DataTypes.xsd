@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!--====================================================================-->
+<!--AIXM 5.1 - ADR EXtension Schema for NM Version 19.0.0-->
+<!--Released:  January 2014-->
+<!--====================================================================-->
+<!--
+		Copyright (c) 2014, EUROCONTROL
+		==============================
+		All rights reserved.
+		Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+			* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+			* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+			* Neither the names of EUROCONTROL or FAA nor the names of their contributors may be used to endorse or promote products derived from this specification without specific prior written permission.
+
+		THIS SPECIFICATION IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+		==========================================
+		Editorial note: this license is an instance of the BSD license template as
+		provided by the Open Source Initiative:
+		http://www.opensource.org/licenses/bsd-license.php
+-->
+<xsd:schema  
+		targetNamespace="http://www.aixm.aero/schema/5.1/extensions/EUR/ADR"
+		xmlns:adr="http://www.aixm.aero/schema/5.1/extensions/EUR/ADR"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		xmlns:gml="http://www.opengis.net/gml/3.2"
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		elementFormDefault="qualified"
+		attributeFormDefault="unqualified"
+		>
+		<import namespace="http://www.aixm.aero/schema/5.1" schemaLocation="../../AIXM_DataTypes.xsd"/>
+		<import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../ISO_19136_Schemas/gml.xsd"/>
+
+  <xsd:annotation>
+    <xsd:appinfo>
+      <gml:gmlProfileSchema>http://www.aixm.aero/schema/5.1/profile/gml4aixm.xsd</gml:gmlProfileSchema>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <xsd:annotation>
+    <xsd:appinfo source="www.aixm.aero/schema/5.1">AIXM_DataTypes.xsd</xsd:appinfo>
+  </xsd:annotation>
+  <xsd:simpleType name="CodeProcessingIndicatorBaseType">
+    <xsd:annotation>
+      <appinfo>
+        <gml:description>Two types that should disappear in the future:
+OTHER:__ADR__AD_FLIGHT_RULE
+OTHER:__ADR__FLIGHT_PROPERTY_ON_TP</gml:description>
+      </appinfo>
+    </xsd:annotation>
+    <xsd:union>
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="AD_CP">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>This is Aerodrome DCT or Aerodrome Connecting Points. 
+It corresponds to the FlightRestrictions in RAD Appendix 5.
+</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="FRA_DCT">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>FRA DCT restrictions. Airspace or Airspace Border.</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="FPR">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>Flight Profile Restriction. 
+Restrictions which reflect known agreements between ATCs to transfer flights between them (often formulated into "letters of agreement" (LOAs). They are used by NM to calculate a more reliable vertical flight profile, but not in flight plan validation</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="RAD_DCT">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>Restrictions used to define direct flight limitations traversing or crossing the border of an Airspace.
+</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="TFR">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>This is the normal RAD restriction.</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType>
+        <xsd:restriction base="string">
+          <xsd:pattern value="OTHER(:(\w|_){1,58})?">
+							</xsd:pattern>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:union>
+  </xsd:simpleType>
+  <xsd:complexType name="CodeProcessingIndicatorType">
+    <xsd:simpleContent>
+      <xsd:extension base="adr:CodeProcessingIndicatorBaseType">
+        <xsd:attribute name="nilReason" type="gml:NilReasonEnumeration"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CodeConditionalRouteBaseType">
+    <xsd:annotation>
+      <appinfo>
+        <gml:description>The type of conditional route, according to the Flexible use of Airspace rules.</gml:description>
+      </appinfo>
+    </xsd:annotation>
+    <xsd:union>
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="CDR_1">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>Conditional Route Type 1 (normally available for flight planning).</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="CDR_2">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>Conditional Route Type 2 (normally not available for flight planning).</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="CDR_3">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>Conditional Route Type 3 (available as ATC re-routing only).</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType>
+        <xsd:restriction base="string">
+          <xsd:pattern value="OTHER(:(\w|_){1,58})?">
+							</xsd:pattern>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:union>
+  </xsd:simpleType>
+  <xsd:complexType name="CodeConditionalRouteType">
+    <xsd:simpleContent>
+      <xsd:extension base="adr:CodeConditionalRouteBaseType">
+        <xsd:attribute name="nilReason" type="gml:NilReasonEnumeration"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CodeAirspaceReservationImpactBaseType">
+    <xsd:annotation>
+      <appinfo>
+        <gml:description>A list of coded values indicating the operational impact of the Airspace over the route segment.</gml:description>
+      </appinfo>
+    </xsd:annotation>
+    <xsd:union>
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="WITHIN">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>The route segment is located within the Airspace and it is available only when the AIrspace is not reserved.</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="NEARBY">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>The route segment is located in the vicinity of the Airspace and it is available only when the Airspace is not active (because of upstream/downstream segments that are located within the airspace).</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="OFFLOAD">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>The route segment recuperates the traffic affected by the activation of the airspace.</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="NOT_AFFECTED">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>Even if geographically located within the horizontal border of the Airspace, the route segment is not affected by the reservation of the Airspace.</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType>
+        <xsd:restriction base="string">
+          <xsd:pattern value="OTHER(:(\w|_){1,58})?">
+							</xsd:pattern>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:union>
+  </xsd:simpleType>
+  <xsd:complexType name="CodeAirspaceReservationImpactType">
+    <xsd:simpleContent>
+      <xsd:extension base="adr:CodeAirspaceReservationImpactBaseType">
+        <xsd:attribute name="nilReason" type="gml:NilReasonEnumeration"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CodeFeatureUsageBaseType">
+    <xsd:union>
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="OPERATIONAL">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>The attributes of the TimeSlice are exposed.</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="WITHHELD">
+            <xsd:annotation>
+              <appinfo>
+                <gml:description>The attributes of the TimeSlice are not visible, they are 'withheld'.</gml:description>
+              </appinfo>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType>
+        <xsd:restriction base="string">
+          <xsd:pattern value="OTHER(:(\w|_){1,58})?">
+							</xsd:pattern>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:union>
+  </xsd:simpleType>
+  <xsd:complexType name="CodeFeatureUsageType">
+    <xsd:simpleContent>
+      <xsd:extension base="adr:CodeFeatureUsageBaseType">
+        <xsd:attribute name="nilReason" type="gml:NilReasonEnumeration"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+<!-- 
+	New in 19.0.0:
+-->
+    <simpleType name="CodeFlowCombinationRoleBaseType">
+        <union>
+            <simpleType>
+                <restriction base="xsd:string">
+                    <enumeration value="INCLUDED"/>
+                    <enumeration value="EXCLUDED"/>
+                    <enumeration value="EXEMPTED"/>
+                    <enumeration value="INCLUDED_EXEMPTED"/>
+                </restriction>
+            </simpleType>
+            <simpleType>
+                <restriction base="xsd:string">
+                    <pattern value="OTHER(:(\w|_){1,58})?"/>
+                </restriction>
+            </simpleType>
+        </union>
+    </simpleType>
+    <complexType name="CodeFlowCombinationRoleType">
+        <simpleContent>
+            <extension base="adr:CodeFlowCombinationRoleBaseType">
+                <attribute name="nilReason" type="gml:NilReasonEnumeration"/>
+            </extension>
+        </simpleContent>
+    </complexType>
+
+</xsd:schema>

@@ -1,0 +1,1529 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0"
+           targetNamespace="eurocontrol/cfmu/b2b/FlowServices"
+           xmlns:flow="eurocontrol/cfmu/b2b/FlowServices"
+           xmlns:common="eurocontrol/cfmu/b2b/CommonServices"
+           xmlns:airspace="eurocontrol/cfmu/b2b/AirspaceServices"
+           xmlns:flight="eurocontrol/cfmu/b2b/FlightServices"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="eurocontrol/cfmu/b2b/CommonServices" schemaLocation="structural_CommonServices_19.0.0.xsd"/>
+  <xs:import namespace="eurocontrol/cfmu/b2b/AirspaceServices" schemaLocation="structural_AirspaceServices_19.0.0.xsd"/>
+  <xs:import namespace="eurocontrol/cfmu/b2b/FlightServices" schemaLocation="structural_FlightServices_19.0.0.xsd"/>
+  <xs:element name="AddFlightsToMeasureRequest" type="flow:AddFlightsToMeasureRequest"/>
+  <xs:element name="HotspotListRequest" type="flow:HotspotListRequest"/>
+  <xs:element name="HotspotPlanUpdateRequest" type="flow:HotspotPlanUpdateRequest"/>
+  <xs:element name="MCDMTopicListRequest" type="flow:MCDMTopicListRequest"/>
+  <xs:element name="MCDMTopicMessageRetrievalRequest" type="flow:MCDMTopicMessageRetrievalRequest"/>
+  <xs:element name="MCDMTopicUpdateRequest" type="flow:MCDMTopicUpdateRequest"/>
+  <xs:element name="MeasureOpLogRetrievalRequest" type="flow:MeasureOpLogRetrievalRequest"/>
+  <xs:element name="RegulationCancelRequest" type="flow:RegulationCancelRequest"/>
+  <xs:element name="RegulationCreationRequest" type="flow:RegulationCreationRequest"/>
+  <xs:element name="RegulationForceDelayRequest" type="flow:RegulationForceDelayRequest"/>
+  <xs:element name="RegulationListRequest" type="flow:RegulationListRequest"/>
+  <xs:element name="RegulationProposalFilingRequest" type="flow:RegulationProposalFilingRequest"/>
+  <xs:element name="RegulationProposalListRequest" type="flow:RegulationProposalListRequest"/>
+  <xs:element name="RegulationProposalRevocationRequest" type="flow:RegulationProposalRevocationRequest"/>
+  <xs:element name="RegulationProposalUpdateRequest" type="flow:RegulationProposalUpdateRequest"/>
+  <xs:element name="RegulationUpdateRequest" type="flow:RegulationUpdateRequest"/>
+  <xs:element name="RemoveFlightsFromMeasureRequest" type="flow:RemoveFlightsFromMeasureRequest"/>
+  <xs:element name="TrafficCountsByAerodromeRequest" type="flow:TrafficCountsByAerodromeRequest"/>
+  <xs:element name="TrafficCountsByAerodromeSetRequest" type="flow:TrafficCountsByAerodromeSetRequest"/>
+  <xs:element name="TrafficCountsByAircraftOperatorRequest" type="flow:TrafficCountsByAircraftOperatorRequest"/>
+  <xs:element name="TrafficCountsByAirspaceRequest" type="flow:TrafficCountsByAirspaceRequest"/>
+  <xs:element name="TrafficCountsByPointRequest" type="flow:TrafficCountsByPointRequest"/>
+  <xs:element name="TrafficCountsByTrafficVolumeRequest" type="flow:TrafficCountsByTrafficVolumeRequest"/>
+  <xs:element name="AddFlightsToMeasureReply" type="flow:AddFlightsToMeasureReply"/>
+  <xs:element name="HotspotListReply" type="flow:HotspotListReply"/>
+  <xs:element name="HotspotPlanUpdateReply" type="flow:HotspotPlanUpdateReply"/>
+  <xs:element name="MCDMTopicListReply" type="flow:MCDMTopicListReply"/>
+  <xs:element name="MCDMTopicMessageRetrievalReply" type="flow:MCDMTopicMessageRetrievalReply"/>
+  <xs:element name="MCDMTopicUpdateReply" type="flow:MCDMTopicUpdateReply"/>
+  <xs:element name="MeasureOpLogRetrievalReply" type="flow:MeasureOpLogRetrievalReply"/>
+  <xs:element name="RegulationCancelReply" type="flow:RegulationCancelReply"/>
+  <xs:element name="RegulationCreationReply" type="flow:RegulationCreationReply"/>
+  <xs:element name="RegulationForceDelayReply" type="flow:RegulationForceDelayReply"/>
+  <xs:element name="RegulationListReply" type="flow:RegulationListReply"/>
+  <xs:element name="RegulationProposalFilingReply" type="flow:RegulationProposalFilingReply"/>
+  <xs:element name="RegulationProposalListReply" type="flow:RegulationProposalListReply"/>
+  <xs:element name="RegulationProposalRevocationReply" type="flow:RegulationProposalRevocationReply"/>
+  <xs:element name="RegulationProposalUpdateReply" type="flow:RegulationProposalUpdateReply"/>
+  <xs:element name="RegulationUpdateReply" type="flow:RegulationUpdateReply"/>
+  <xs:element name="RemoveFlightsFromMeasureReply" type="flow:RemoveFlightsFromMeasureReply"/>
+  <xs:element name="TrafficCountsByAerodromeReply" type="flow:TrafficCountsByAerodromeReply"/>
+  <xs:element name="TrafficCountsByAerodromeSetReply" type="flow:TrafficCountsByAerodromeSetReply"/>
+  <xs:element name="TrafficCountsByAircraftOperatorReply" type="flow:TrafficCountsByAircraftOperatorReply"/>
+  <xs:element name="TrafficCountsByAirspaceReply" type="flow:TrafficCountsByAirspaceReply"/>
+  <xs:element name="TrafficCountsByPointReply" type="flow:TrafficCountsByPointReply"/>
+  <xs:element name="TrafficCountsByTrafficVolumeReply" type="flow:TrafficCountsByTrafficVolumeReply"/>
+  <xs:simpleType name="CountsValue">
+    <xs:restriction base="xs:int">
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FlowId">
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MCDMTopicId">
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RegulationId">
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RegulationIdWildcard">
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ReroutingId">
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CountsCalculationType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ENTRY"/>
+          <xs:enumeration value="OCCUPANCY"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="FlowRoleSelection">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="INCLUDED"/>
+          <xs:enumeration value="EXCLUDED"/>
+          <xs:enumeration value="EXEMPTED"/>
+          <xs:enumeration value="INCLUDED_AND_EXEMPTED"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="FlowType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="LINKED"/>
+          <xs:enumeration value="ASSOCIATED"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="GroupReroutingIndicator">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NO_REROUTING"/>
+          <xs:enumeration value="UNINTERESTING"/>
+          <xs:enumeration value="INTERESTING"/>
+          <xs:enumeration value="OPPORTUNITY"/>
+          <xs:enumeration value="EXECUTED"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="HotspotSeverity">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="HIGH"/>
+          <xs:enumeration value="MEDIUM"/>
+          <xs:enumeration value="LOW"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="HotspotStatus">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="DRAFT"/>
+          <xs:enumeration value="ACTIVE"/>
+          <xs:enumeration value="SOLVED"/>
+          <xs:enumeration value="ACCEPTABLE"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="LifeCycleEventType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CREATION"/>
+          <xs:enumeration value="UPDATE"/>
+          <xs:enumeration value="DELETION"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="MCDMApprovalState">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="UNKNOWN"/>
+          <xs:enumeration value="STANDBY"/>
+          <xs:enumeration value="APPROVED"/>
+          <xs:enumeration value="REJECTED"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="MCDMCoordinationLevel">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="FLIGHT"/>
+          <xs:enumeration value="MEASURE"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="MCDMMessageType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="SYSTEM"/>
+          <xs:enumeration value="INCOMING"/>
+          <xs:enumeration value="OUTGOING"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="MCDMRole">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="INFO"/>
+          <xs:enumeration value="ROLE_INFO"/>
+          <xs:enumeration value="APPROVAL"/>
+          <xs:enumeration value="IMPLEMENTER"/>
+          <xs:enumeration value="INITIATOR"/>
+          <xs:enumeration value="NOT_INVOLVED"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="MCDMState">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="DRAFT"/>
+          <xs:enumeration value="PROPOSED"/>
+          <xs:enumeration value="COORDINATED"/>
+          <xs:enumeration value="IMPLEMENTING"/>
+          <xs:enumeration value="IMPLEMENTED"/>
+          <xs:enumeration value="ABANDONED"/>
+          <xs:enumeration value="INTERRUPTED"/>
+          <xs:enumeration value="FINISHED"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="MCDMTopicField">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="initiator"/>
+          <xs:enumeration value="userRolesAndApprovalStates"/>
+          <xs:enumeration value="userCategories"/>
+          <xs:enumeration value="deadlines"/>
+          <xs:enumeration value="messages"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="MCDMUserCategory">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ADJACENT_FMP"/>
+          <xs:enumeration value="ALL_FMP"/>
+          <xs:enumeration value="TOWER"/>
+          <xs:enumeration value="AIRCRAFT_OPERATOR"/>
+          <xs:enumeration value="NMOC"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="MeasureSubType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="GROUND_DELAY"/>
+          <xs:enumeration value="TAKE_OFF_NOT_BEFORE"/>
+          <xs:enumeration value="TAKE_OFF_NOT_AFTER"/>
+          <xs:enumeration value="MINIMUM_DEPARTURE_INTERVAL"/>
+          <xs:enumeration value="MILES_MINUTES_IN_TRAIL"/>
+          <xs:enumeration value="GROUND_LEVEL_CAP"/>
+          <xs:enumeration value="AIRBORNE_LEVEL_CAP"/>
+          <xs:enumeration value="GROUND_HORIZONTAL_REROUTING"/>
+          <xs:enumeration value="AIRBORNE_HORIZONTAL_REROUTING"/>
+          <xs:enumeration value="TERMINAL_PROCEDURE_CHANGE"/>
+          <xs:enumeration value="OTHER_KIND_OF_STAM_MEASURE"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="OtmvStatus">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="PEAK"/>
+          <xs:enumeration value="SUSTAINED"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="RegulationField">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="applicability"/>
+          <xs:enumeration value="autolink"/>
+          <xs:enumeration value="measureCherryPicked"/>
+          <xs:enumeration value="initialConstraints"/>
+          <xs:enumeration value="linkedRegulations"/>
+          <xs:enumeration value="location"/>
+          <xs:enumeration value="protectedLocation"/>
+          <xs:enumeration value="reason"/>
+          <xs:enumeration value="remark"/>
+          <xs:enumeration value="regulationState"/>
+          <xs:enumeration value="supplementaryConstraints"/>
+          <xs:enumeration value="lastUpdate"/>
+          <xs:enumeration value="noDelayWindow"/>
+          <xs:enumeration value="updateCapacityRequired"/>
+          <xs:enumeration value="updateTVActivationRequired"/>
+          <xs:enumeration value="externallyEditable"/>
+          <xs:enumeration value="subType"/>
+          <xs:enumeration value="delayTVSet"/>
+          <xs:enumeration value="createdByFMP"/>
+          <xs:enumeration value="sourceHotspot"/>
+          <xs:enumeration value="mcdmRequired"/>
+          <xs:enumeration value="dataId"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="RegulationLocationCategory">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ARRIVAL"/>
+          <xs:enumeration value="DEPARTURE"/>
+          <xs:enumeration value="ENROUTE"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="RegulationProposalAction">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CREATION"/>
+          <xs:enumeration value="UPDATE"/>
+          <xs:enumeration value="CANCELLATION"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="RegulationProposalState">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="WAITING"/>
+          <xs:enumeration value="REJECTED"/>
+          <xs:enumeration value="ACCEPTED"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="RegulationReason">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ACCIDENT_INCIDENT"/>
+          <xs:enumeration value="ATC_CAPACITY"/>
+          <xs:enumeration value="DEICING"/>
+          <xs:enumeration value="EQUIPMENT_NON_ATC"/>
+          <xs:enumeration value="AERODROME_CAPACITY"/>
+          <xs:enumeration value="ATC_INDUSTRIAL_ACTION"/>
+          <xs:enumeration value="NON_ATC_INDUSTRIAL_ACTION"/>
+          <xs:enumeration value="WEATHER"/>
+          <xs:enumeration value="AIRSPACE_MANAGEMENT"/>
+          <xs:enumeration value="SPECIAL_EVENT"/>
+          <xs:enumeration value="ATC_ROUTINGS"/>
+          <xs:enumeration value="ATC_STAFFING"/>
+          <xs:enumeration value="ATC_EQUIPMENT"/>
+          <xs:enumeration value="ENVIRONMENTAL_ISSUES"/>
+          <xs:enumeration value="OTHERS"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="RegulationState">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="APPLYING"/>
+          <xs:enumeration value="APPLIED"/>
+          <xs:enumeration value="CANCELLING"/>
+          <xs:enumeration value="CANCELLED"/>
+          <xs:enumeration value="TERMINATED"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="ReroutingApplyKind">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="EXECUTE"/>
+          <xs:enumeration value="FOR_INDICATION_WITHOUT_AUTOMATIC_PROPOSAL_FLIGHT"/>
+          <xs:enumeration value="FOR_INDICATION_WITH_AUTOMATIC_RRP"/>
+          <xs:enumeration value="FOR_INDICATION_WITH_AUTOMATIC_RRN"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="SubTotalsTrafficCountsType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="PFD"/>
+          <xs:enumeration value="RPL"/>
+          <xs:enumeration value="IFPL"/>
+          <xs:enumeration value="SUSPENDED"/>
+          <xs:enumeration value="ATC_ACTIVATED"/>
+          <xs:enumeration value="TACT_ACTIVATED_WITH_FSA"/>
+          <xs:enumeration value="TACT_ACTIVATED_WITHOUT_FSA"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="OTHER:[a-zA-Z_][a-zA-Z0-9_]*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:complexType name="AbstractRegulation" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="flow:Measure">
+    <xs:sequence>
+      <xs:element name="regulationId" type="flow:RegulationId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="reason" type="flow:RegulationReason" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="location" type="flow:TrafficVolumeLocation" minOccurs="0" maxOccurs="1"/>
+      <xs:choice minOccurs="0" maxOccurs="1"><xs:element name="protectedLocation-ReferenceLocationDBEPoint" type="airspace:ReferenceLocationDBEPoint"/><xs:element name="protectedLocation-ReferenceLocationAerodrome" type="airspace:ReferenceLocationAerodrome"/><xs:element name="protectedLocation-ReferenceLocationPublishedPoint" type="airspace:ReferenceLocationPublishedPoint"/><xs:element name="protectedLocation-ReferenceLocationAerodromeSet" type="airspace:ReferenceLocationAerodromeSet"/><xs:element name="protectedLocation-ReferenceLocationAirspace" type="airspace:ReferenceLocationAirspace"/></xs:choice>
+      <xs:element name="initialConstraints" type="flow:RegulationInitialConstraint" minOccurs="0" maxOccurs="24"/>
+      <xs:element name="supplementaryConstraints" type="flow:RegulationSupplementaryConstraint" minOccurs="0" maxOccurs="24"/>
+      <xs:element name="remark" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:string"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="autolink" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="linkedRegulations" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:RegulationId" minOccurs="0" maxOccurs="10"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="noDelayWindow" type="common:DurationHourMinute" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="updateCapacityRequired" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="updateTVActivationRequired" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="delayTVSet" type="airspace:TrafficVolumeSetId" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AbstractRegulationListReplyData" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:MeasureListReplyData">
+    <xs:sequence>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AbstractRegulationListRequest" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="flow:MeasureListRequest">
+    <xs:sequence>
+      <xs:element name="regulations" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:RegulationIdWildcard" minOccurs="0" maxOccurs="100"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="reasons" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:RegulationReason" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="requestedRegulationFields" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:RegulationField" minOccurs="1" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AddFlightsToMeasureReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:AddFlightsToMeasureReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AddFlightsToMeasureReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="addedFlights" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" minOccurs="0" maxOccurs="100"><xs:complexType><xs:choice minOccurs="1" maxOccurs="1"><xs:element name="FlightInRegulation" type="flow:FlightInRegulation"/><xs:element name="FlightInMcdmOnly" type="flow:FlightInMcdmOnly"/><xs:element name="FlightInRerouting" type="flow:FlightInRerouting"/></xs:choice></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="unsuccessfullyAddedFlights" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" minOccurs="1" maxOccurs="100"><xs:complexType><xs:sequence><xs:element name="key" type="flight:FlightKeys" minOccurs="0" maxOccurs="1"/><xs:element name="value" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:string"></xs:restriction></xs:simpleType></xs:element></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddFlightsToMeasureRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="dayOfOperation" type="common:DateYearMonthDay" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="flights" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" minOccurs="0" maxOccurs="100"><xs:complexType><xs:choice minOccurs="1" maxOccurs="1"><xs:element name="FlightInRegulation" type="flow:FlightInRegulation"/><xs:element name="FlightInMcdmOnly" type="flow:FlightInMcdmOnly"/><xs:element name="FlightInRerouting" type="flow:FlightInRerouting"/></xs:choice></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Counts" abstract="false">
+    <xs:sequence>
+      <xs:element name="totalCounts" type="flow:CountsValue" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="flowCounts" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" minOccurs="0" maxOccurs="unbounded"><xs:complexType><xs:sequence><xs:element name="key" type="flow:FlowId" minOccurs="0" maxOccurs="1"/><xs:element name="value" type="flow:CountsValue" minOccurs="0" maxOccurs="1"/></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="subTotalsCounts" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" minOccurs="7" maxOccurs="7"><xs:complexType><xs:sequence><xs:element name="key" type="flow:SubTotalsTrafficCountsType" minOccurs="0" maxOccurs="1"/><xs:element name="value" type="flow:CountsValue" minOccurs="0" maxOccurs="1"/></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CountsInterval" abstract="false">
+    <xs:sequence>
+      <xs:element name="duration" type="common:DurationHourMinute" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="step" type="common:DurationHourMinute" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FlightAtfcmMcdmOnlyLocation" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:FlightAtfcmMeasureLocation">
+    <xs:sequence>
+      <xs:element name="mcdmOnlyMeasureId" type="flow:RegulationId" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FlightAtfcmMeasureLocation" abstract="true">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="1"><xs:element name="referenceLocation-ReferenceLocationDBEPoint" type="airspace:ReferenceLocationDBEPoint"/><xs:element name="referenceLocation-ReferenceLocationAerodrome" type="airspace:ReferenceLocationAerodrome"/><xs:element name="referenceLocation-ReferenceLocationPublishedPoint" type="airspace:ReferenceLocationPublishedPoint"/><xs:element name="referenceLocation-ReferenceLocationAerodromeSet" type="airspace:ReferenceLocationAerodromeSet"/><xs:element name="referenceLocation-ReferenceLocationAirspace" type="airspace:ReferenceLocationAirspace"/></xs:choice>
+      <xs:element name="measureSubType" type="flow:MeasureSubType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="hotspotId" type="flow:HotspotId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="mcdmState" type="flow:MCDMState" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FlightAtfcmRegulationLocation" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:FlightAtfcmMeasureLocation">
+    <xs:sequence>
+      <xs:element name="regulationId" type="flow:RegulationId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="toConfirm" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FlightAtfcmReroutingLocation" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:FlightAtfcmMeasureLocation">
+    <xs:sequence>
+      <xs:element name="reroutingId" type="flow:ReroutingId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="reroutingApplyKind" type="flow:ReroutingApplyKind" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="groupReroutingIndicator" type="flow:GroupReroutingIndicator" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FlightHotspotLocation" abstract="false">
+    <xs:sequence>
+      <xs:element name="hotspot" type="flow:Hotspot" minOccurs="0" maxOccurs="1"/>
+      <xs:choice minOccurs="0" maxOccurs="1"><xs:element name="referenceLocation-ReferenceLocationDBEPoint" type="airspace:ReferenceLocationDBEPoint"/><xs:element name="referenceLocation-ReferenceLocationAerodrome" type="airspace:ReferenceLocationAerodrome"/><xs:element name="referenceLocation-ReferenceLocationPublishedPoint" type="airspace:ReferenceLocationPublishedPoint"/><xs:element name="referenceLocation-ReferenceLocationAerodromeSet" type="airspace:ReferenceLocationAerodromeSet"/><xs:element name="referenceLocation-ReferenceLocationAirspace" type="airspace:ReferenceLocationAirspace"/></xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FlightInMcdmOnly" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:FlightInMeasure">
+    <xs:sequence>
+      <xs:element name="mcdmOnlyMeasureId" type="flow:RegulationId" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FlightInMeasure" abstract="true">
+    <xs:sequence>
+      <xs:element name="flightKeys" type="flight:FlightKeys" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FlightInRegulation" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:FlightInMeasure">
+    <xs:sequence>
+      <xs:element name="regulationId" type="flow:RegulationId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="newCto" type="common:DateTimeMinute" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="newCtot" type="common:DateTimeMinute" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="flightProposal" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FlightInRerouting" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:FlightInMeasure">
+    <xs:sequence>
+      <xs:element name="reroutingId" type="flow:ReroutingId" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FlightMCDMInfo" abstract="false">
+    <xs:sequence>
+      <xs:element name="firstAssociatedMCDMMeasure" type="flow:MeasureId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="nrAssociatedMCDMRegulations" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:int"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="nrAssociatedMCDMOnlyMeasures" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:int"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="worstMCDMState" type="flow:MCDMState" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FlightRegulationLocation" abstract="false">
+    <xs:sequence>
+      <xs:element name="regulationId" type="flow:RegulationId" minOccurs="0" maxOccurs="1"/>
+      <xs:choice minOccurs="0" maxOccurs="1"><xs:element name="referenceLocation-ReferenceLocationDBEPoint" type="airspace:ReferenceLocationDBEPoint"/><xs:element name="referenceLocation-ReferenceLocationAerodrome" type="airspace:ReferenceLocationAerodrome"/><xs:element name="referenceLocation-ReferenceLocationPublishedPoint" type="airspace:ReferenceLocationPublishedPoint"/><xs:element name="referenceLocation-ReferenceLocationAerodromeSet" type="airspace:ReferenceLocationAerodromeSet"/><xs:element name="referenceLocation-ReferenceLocationAirspace" type="airspace:ReferenceLocationAirspace"/></xs:choice>
+      <xs:element name="toConfirm" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Flow" abstract="false">
+    <xs:sequence>
+      <xs:element name="id" type="flow:FlowId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="type" type="flow:FlowType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="role" type="flow:FlowRoleSelection" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Hotspot" abstract="false">
+    <xs:sequence>
+      <xs:element name="hotspotId" type="flow:HotspotId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="severity" type="flow:HotspotSeverity" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="status" type="flow:HotspotStatus" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="remark" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:string"></xs:restriction></xs:simpleType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HotspotId" abstract="false">
+    <xs:sequence>
+      <xs:element name="applicabilityPeriod" type="common:DateTimeMinutePeriod" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="trafficVolume" type="airspace:TrafficVolumeId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="duration" type="common:DurationHourMinute" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HotspotListReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:HotspotListReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="HotspotListReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="plan" type="flow:HotspotPlan" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HotspotListRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="day" type="common:DateYearMonthDay" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="trafficVolume" type="airspace:TrafficVolumeId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="duration" type="common:DurationHourMinute" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="HotspotPlan" abstract="false">
+    <xs:sequence>
+      <xs:element name="dataId" type="common:PlanDataId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="day" type="common:DateYearMonthDay" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="planTransferred" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="planCutOffReached" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="trafficVolume" type="airspace:TrafficVolumeId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="schedule" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" minOccurs="0" maxOccurs="1000"><xs:complexType><xs:sequence><xs:element name="key" type="common:DurationHourMinute" minOccurs="0" maxOccurs="1"/><xs:element name="value" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:Hotspot" minOccurs="0" maxOccurs="1000"/></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HotspotPlanUpdateReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:HotspotPlanUpdateReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="HotspotPlanUpdateReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="plan" type="flow:HotspotPlan" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HotspotPlanUpdateRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="plan" type="flow:HotspotPlan" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LifeCycleEvent" abstract="false">
+    <xs:sequence>
+      <xs:element name="eventTime" type="common:DateTimeSecond" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="userUpdateEventTime" type="common:DateTimeSecond" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="userUpdateType" type="flow:LifeCycleEventType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="userId" type="common:UserId" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Location" abstract="true">
+    <xs:sequence>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MCDMDeadlines" abstract="false">
+    <xs:sequence>
+      <xs:element name="timeToCoordinate" type="common:DateTimeMinute" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="timeToStartImplement" type="common:DateTimeMinute" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="timeToImplement" type="common:DateTimeMinute" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MCDMFlightTopic" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:MCDMStatefulTopic">
+    <xs:sequence>
+      <xs:element name="flightKeys" type="flight:FlightKeys" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MCDMHotspotTopic" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:MCDMTopic">
+    <xs:sequence>
+      <xs:element name="hotspotId" type="flow:HotspotId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="measureTopics" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:MCDMMeasureTopic" minOccurs="1" maxOccurs="10000"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MCDMMeasureTopic" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:MCDMStatefulTopic">
+    <xs:sequence>
+      <xs:element name="userCategories" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:MCDMRoleUserCategory" minOccurs="0" maxOccurs="1000"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="deadlines" type="flow:MCDMDeadlines" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="flightTopics" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:MCDMFlightTopic" minOccurs="0" maxOccurs="1000"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MCDMMessage" abstract="false">
+    <xs:sequence>
+      <xs:element name="time" type="common:DateTimeSecond" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="user" type="common:AirNavigationUnitId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="message" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:string"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="type" type="flow:MCDMMessageType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MCDMRoleUserCategory" abstract="false">
+    <xs:sequence>
+      <xs:element name="category" type="flow:MCDMUserCategory" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="coordinationLevel" type="flow:MCDMCoordinationLevel" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="role" type="flow:MCDMRole" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MCDMStatefulTopic" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="flow:MCDMTopic">
+    <xs:sequence>
+      <xs:element name="measureId" type="flow:MeasureId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="hotspotId" type="flow:HotspotId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="state" type="flow:MCDMState" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="initiator" type="common:AirNavigationUnitId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="initiatorIsImplementer" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="userRolesAndApprovalStates" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:MCDMUserRoleAndApprovalState" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MCDMTopic" abstract="true">
+    <xs:sequence>
+      <xs:element name="topicId" type="flow:MCDMTopicId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="dataId" type="common:PlanDataId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="messages" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:MCDMMessage" minOccurs="0" maxOccurs="10000"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MCDMTopicListReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:MCDMTopicListReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MCDMTopicListReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="hotspotTrees" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:MCDMHotspotTopic" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="measureWithoutHotspotTrees" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:MCDMMeasureTopic" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MCDMTopicListRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="date" type="common:DateYearMonthDay" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="selector" type="flow:MCDMTopicListRequestSelector" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="activeOnly" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="messagesSince" type="common:DateTimeSecond" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="requestedMCDMTopicFields" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:MCDMTopicField" minOccurs="1" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MCDMTopicMessageRetrievalReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:MCDMTopicMessageRetrievalReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MCDMTopicMessageRetrievalReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="messages" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:MCDMMessage" minOccurs="0" maxOccurs="10000"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MCDMTopicMessageRetrievalRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="topicId" type="flow:MCDMTopicId" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MCDMTopicUpdateReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:MCDMTopicUpdateReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MCDMTopicUpdateReplyData" abstract="false">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="1"><xs:element name="topic-MCDMFlightTopic" type="flow:MCDMFlightTopic"/><xs:element name="topic-MCDMMeasureTopic" type="flow:MCDMMeasureTopic"/><xs:element name="topic-MCDMHotspotTopic" type="flow:MCDMHotspotTopic"/></xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MCDMTopicUpdateRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="date" type="common:DateYearMonthDay" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="impersonatedUser" type="common:AirNavigationUnitId" minOccurs="0" maxOccurs="1"/>
+      <xs:choice minOccurs="0" maxOccurs="1"><xs:element name="topic-MCDMFlightTopic" type="flow:MCDMFlightTopic"/><xs:element name="topic-MCDMMeasureTopic" type="flow:MCDMMeasureTopic"/><xs:element name="topic-MCDMHotspotTopic" type="flow:MCDMHotspotTopic"/></xs:choice>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MCDMUserRoleAndApprovalState" abstract="false">
+    <xs:sequence>
+      <xs:element name="user" type="common:AirNavigationUnitId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="role" type="flow:MCDMRole" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="approvalState" type="flow:MCDMApprovalState" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Measure" abstract="true">
+    <xs:sequence>
+      <xs:element name="dataId" type="common:PlanDataId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="applicability" type="common:DateTimeMinutePeriod" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="measureCherryPicked" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="lastUpdate" type="flow:LifeCycleEvent" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="externallyEditable" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="subType" type="flow:MeasureSubType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="createdByFMP" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="mcdmRequired" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="sourceHotspot" type="flow:HotspotId" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeasureListReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="planTransferred" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="planCutOffReached" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeasureListRequest" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="queryPeriod" type="common:DateTimeMinutePeriod" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="tvs" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="airspace:TrafficVolumeIdWildcard" minOccurs="0" maxOccurs="100"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="tvSets" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="airspace:TrafficVolumeSetIdWildcard" minOccurs="0" maxOccurs="100"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MeasureOpLogRetrievalReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:MeasureOpLogRetrievalReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MeasureOpLogRetrievalReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="opLogs" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flight:FlightOperationalLogEntry" minOccurs="0" maxOccurs="10000"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeasureOpLogRetrievalRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="measureId" type="flow:MeasureId" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OtmvAlert" abstract="false">
+    <xs:sequence>
+      <xs:element name="period" type="common:DateTimeMinutePeriod" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="status" type="flow:OtmvStatus" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Regulation" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:AbstractRegulation">
+    <xs:sequence>
+      <xs:element name="regulationState" type="flow:RegulationState" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationCancelReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:RegulationCancelReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationCancelReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="regulation" type="flow:Regulation" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegulationCancelRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="regulationId" type="flow:RegulationId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="dayOfOperation" type="common:DateYearMonthDay" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="dataId" type="common:PlanDataId" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationCause" abstract="false">
+    <xs:sequence>
+      <xs:element name="reason" type="flow:RegulationReason" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="locationCategory" type="flow:RegulationLocationCategory" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="iataDelayCode" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:int"></xs:restriction></xs:simpleType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegulationCreationReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:RegulationCreationReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationCreationReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="regulation" type="flow:Regulation" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegulationCreationRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="regulation" type="flow:Regulation" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationExceptionalConstraint" abstract="false">
+    <xs:sequence>
+      <xs:element name="runwayVisualRange" type="common:DistanceM" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="fcmMandatory" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="shift" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegulationForceDelayReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:RegulationForceDelayReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationForceDelayReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="forcedFlights" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:FlightInRegulation" minOccurs="0" maxOccurs="100"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="unsuccessfullyForcedFlights" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" minOccurs="1" maxOccurs="100"><xs:complexType><xs:sequence><xs:element name="key" type="flight:FlightKeys" minOccurs="0" maxOccurs="1"/><xs:element name="value" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:string"></xs:restriction></xs:simpleType></xs:element></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegulationForceDelayRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="flights" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:FlightInRegulation" minOccurs="1" maxOccurs="100"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationInitialConstraint" abstract="false">
+    <xs:sequence>
+      <xs:element name="constraintPeriod" type="common:DateTimeMinutePeriod" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="normalRate" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:int"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="pendingRate" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:int"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="equipmentRate" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:int"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="exceptionalConstraint" type="flow:RegulationExceptionalConstraint" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegulationListReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:RegulationListReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationListReplyData" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:AbstractRegulationListReplyData">
+    <xs:sequence>
+      <xs:element name="regulations" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:Regulation" minOccurs="0" maxOccurs="10000"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationListRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:AbstractRegulationListRequest">
+    <xs:sequence>
+      <xs:element name="regulationStates" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:RegulationState" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposal" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:AbstractRegulation">
+    <xs:sequence>
+      <xs:element name="action" type="flow:RegulationProposalAction" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="proposalState" type="flow:RegulationProposalState" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalFilingReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:RegulationProposalFilingReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalFilingReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="proposal" type="flow:RegulationProposal" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalFilingRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="proposal" type="flow:RegulationProposal" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="normalRegulationDataId" type="common:PlanDataId" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalListReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:RegulationProposalListReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalListReplyData" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:AbstractRegulationListReplyData">
+    <xs:sequence>
+      <xs:element name="proposals" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:RegulationProposal" minOccurs="0" maxOccurs="10000"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalListRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:AbstractRegulationListRequest">
+    <xs:sequence>
+      <xs:element name="proposalStates" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:RegulationProposalState" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalRevocationReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:RegulationProposalRevocationReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalRevocationReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="proposal" type="flow:RegulationProposal" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalRevocationRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="regulationId" type="flow:RegulationId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="dayOfOperation" type="common:DateYearMonthDay" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="dataId" type="common:PlanDataId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="remark" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:string"></xs:restriction></xs:simpleType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalUpdateReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:RegulationProposalUpdateReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalUpdateReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="proposal" type="flow:RegulationProposal" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegulationProposalUpdateRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="proposal" type="flow:RegulationProposal" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationSupplementaryConstraint" abstract="false">
+    <xs:sequence>
+      <xs:element name="constraintPeriod" type="common:DateTimeMinutePeriod" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="supplementaryRate" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:int"></xs:restriction></xs:simpleType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegulationUpdateReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:RegulationUpdateReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegulationUpdateReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="regulation" type="flow:Regulation" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegulationUpdateRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="regulation" type="flow:Regulation" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RemoveFlightsFromMeasureReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:RemoveFlightsFromMeasureReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RemoveFlightsFromMeasureReplyData" abstract="false">
+    <xs:sequence>
+      <xs:element name="removedFlights" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flight:FlightKeys" minOccurs="0" maxOccurs="100"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="unsuccessfullyRemovedFlights" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" minOccurs="1" maxOccurs="100"><xs:complexType><xs:sequence><xs:element name="key" type="flight:FlightKeys" minOccurs="0" maxOccurs="1"/><xs:element name="value" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:string"></xs:restriction></xs:simpleType></xs:element></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RemoveFlightsFromMeasureRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="measure" type="flow:MeasureId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="flights" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flight:FlightKeys" minOccurs="1" maxOccurs="100"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAerodromeReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:TrafficCountsByAerodromeReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAerodromeReplyData" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsReplyData">
+    <xs:sequence>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAerodromeRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsRequest">
+    <xs:sequence>
+      <xs:element name="aerodrome" type="airspace:AerodromeICAOId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="aerodromeRole" type="flight:AerodromeRole" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAerodromeSetReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:TrafficCountsByAerodromeSetReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAerodromeSetReplyData" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsReplyData">
+    <xs:sequence>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAerodromeSetRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsRequest">
+    <xs:sequence>
+      <xs:element name="aerodromeSet" type="airspace:AerodromeSetId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="aerodromeRole" type="flight:AerodromeRole" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAircraftOperatorReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:TrafficCountsByAircraftOperatorReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAircraftOperatorReplyData" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsReplyData">
+    <xs:sequence>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAircraftOperatorRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsRequest">
+    <xs:sequence>
+      <xs:element name="aircraftOperator" type="flight:AircraftOperatorICAOId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="calculationType" type="flow:CountsCalculationType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAirspaceReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:TrafficCountsByAirspaceReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAirspaceReplyData" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsReplyData">
+    <xs:sequence>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByAirspaceRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsRequest">
+    <xs:sequence>
+      <xs:element name="airspace" type="airspace:AirspaceId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="calculationType" type="flow:CountsCalculationType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByPointReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:TrafficCountsByPointReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByPointReplyData" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsReplyData">
+    <xs:sequence>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByPointRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsRequest">
+    <xs:sequence>
+      <xs:element name="point" type="airspace:PublishedPointId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="flightLevelRange" type="airspace:FlightLevelRange" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByTrafficVolumeReply" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="common:Reply">
+    <xs:sequence>
+      <xs:element name="data" type="flow:TrafficCountsByTrafficVolumeReplyData" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByTrafficVolumeReplyData" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsReplyData">
+    <xs:sequence>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsByTrafficVolumeRequest" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:TrafficCountsRequest">
+    <xs:sequence>
+      <xs:element name="trafficVolume" type="airspace:TrafficVolumeId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="calculationType" type="flow:CountsCalculationType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="computeOtmvAlerts" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="computeFlowCounts" type="flow:FlowType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsReplyData" abstract="true">
+    <xs:sequence>
+      <xs:element name="effectiveTrafficWindow" type="common:DateTimeMinutePeriod" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="flows" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:Flow" minOccurs="0" maxOccurs="100"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="counts" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" minOccurs="0" maxOccurs="1440"><xs:complexType><xs:sequence><xs:element name="key" type="common:DateTimeMinutePeriod" minOccurs="0" maxOccurs="1"/><xs:element name="value" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" minOccurs="1" maxOccurs="3"><xs:complexType><xs:sequence><xs:element name="key" type="flight:TrafficType" minOccurs="0" maxOccurs="1"/><xs:element name="value" type="flow:Counts" minOccurs="0" maxOccurs="1"/></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="otmvAlerts" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" minOccurs="0" maxOccurs="3"><xs:complexType><xs:sequence><xs:element name="key" type="flight:TrafficType" minOccurs="0" maxOccurs="1"/><xs:element name="value" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:OtmvAlert" minOccurs="1" maxOccurs="1440"/></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TrafficCountsRequest" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="common:Request">
+    <xs:sequence>
+      <xs:element name="dataset" type="common:Dataset" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="trafficWindow" type="common:DateTimeMinutePeriod" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="includeProposalFlights" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="trafficTypes" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flight:TrafficType" minOccurs="1" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="computeSubTotals" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:boolean"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="countsInterval" type="flow:CountsInterval" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficVolumeLocation" abstract="false">
+    <xs:complexContent>
+      <xs:extension base="flow:Location">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="1"><xs:element name="referenceLocation-ReferenceLocationDBEPoint" type="airspace:ReferenceLocationDBEPoint"/><xs:element name="referenceLocation-ReferenceLocationAerodrome" type="airspace:ReferenceLocationAerodrome"/><xs:element name="referenceLocation-ReferenceLocationPublishedPoint" type="airspace:ReferenceLocationPublishedPoint"/><xs:element name="referenceLocation-ReferenceLocationAerodromeSet" type="airspace:ReferenceLocationAerodromeSet"/><xs:element name="referenceLocation-ReferenceLocationAirspace" type="airspace:ReferenceLocationAirspace"/></xs:choice>
+      <xs:element name="id" type="airspace:TrafficVolumeId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="flightLevels" type="airspace:FlightLevelRange" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="description" minOccurs="0" maxOccurs="1"><xs:simpleType><xs:restriction base="xs:string"></xs:restriction></xs:simpleType></xs:element>
+      <xs:element name="setIds" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="airspace:TrafficVolumeSetId" minOccurs="0" maxOccurs="200"/></xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MCDMTopicListRequestSelector">
+    <xs:choice>
+      <xs:element name="topics" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:MCDMTopicId" minOccurs="1" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="measures" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:MeasureId" minOccurs="1" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="hotspots" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="flow:HotspotId" minOccurs="1" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="actors" minOccurs="0" maxOccurs="1"><xs:complexType><xs:sequence><xs:element name="item" type="common:AirNavigationUnitId" minOccurs="1" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="MeasureId">
+    <xs:choice>
+      <xs:element name="REGULATION" type="flow:RegulationId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="REROUTING" type="flow:ReroutingId" minOccurs="0" maxOccurs="1"/>
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions
+             targetNamespace="eurocontrol/cfmu/b2b/GeneralinformationServices"
+             name="GeneralinformationServices"
+             xmlns:generalinformation="eurocontrol/cfmu/b2b/GeneralinformationServices"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+    <types>
+        <xs:schema>
+            <xs:import namespace="eurocontrol/cfmu/b2b/GeneralinformationServices" schemaLocation="GeneralinformationServices_19.0.0.xsd"/>
+        </xs:schema>
+    </types>
+
+    <message name="AIMListRequest">
+        <part name="parameters" element="generalinformation:AIMListRequest"/>
+    </message>
+    <message name="AIMListReply">
+        <part name="parameters" element="generalinformation:AIMListReply"/>
+    </message>
+    <message name="AIMRetrievalRequest">
+        <part name="parameters" element="generalinformation:AIMRetrievalRequest"/>
+    </message>
+    <message name="AIMRetrievalReply">
+        <part name="parameters" element="generalinformation:AIMRetrievalReply"/>
+    </message>
+
+    <portType name="AIMsService">
+        <operation name="queryAIMs">
+            <input message="generalinformation:AIMListRequest"/>
+            <output message="generalinformation:AIMListReply"/>
+        </operation>
+        <operation name="retrieveAIMs">
+            <input message="generalinformation:AIMRetrievalRequest"/>
+            <output message="generalinformation:AIMRetrievalReply"/>
+        </operation>
+    </portType>
+
+    <binding name="AIMsPortBinding" type="generalinformation:AIMsService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="queryAIMs">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="retrieveAIMs">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="AIMsService">
+        <port name="AIMsPort" binding="generalinformation:AIMsPortBinding">
+            <soap:address location="https://www.nm.eurocontrol.int:16443/B2B_OPS/gateway/spec/19.0.0"/>
+            <!--soap:address location="http://dhdv101:27030/CORE/spec"/-->
+        </port>
+    </service>
+
+</definitions>

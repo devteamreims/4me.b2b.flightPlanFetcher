@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions
+             targetNamespace="eurocontrol/cfmu/b2b/CommonServices"
+             name="CommonServices"
+             xmlns:common="eurocontrol/cfmu/b2b/CommonServices"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+    <types>
+        <xs:schema>
+            <xs:import namespace="eurocontrol/cfmu/b2b/CommonServices" schemaLocation="CommonServices_19.0.0.xsd"/>
+        </xs:schema>
+    </types>
+
+    <message name="FileListRequest">
+        <part name="parameters" element="common:FileListRequest"/>
+    </message>
+    <message name="FileListReply">
+        <part name="parameters" element="common:FileListReply"/>
+    </message>
+
+    <portType name="FilesService">
+        <operation name="queryFiles">
+            <input message="common:FileListRequest"/>
+            <output message="common:FileListReply"/>
+        </operation>
+    </portType>
+
+    <binding name="FilesPortBinding" type="common:FilesService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="queryFiles">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="FilesService">
+        <port name="FilesPort" binding="common:FilesPortBinding">
+            <soap:address location="https://www.nm.eurocontrol.int:16443/B2B_PREOPS/gateway/spec/19.0.0"/>
+            <!--soap:address location="http://dhdv101:27030/CORE/spec"/-->
+        </port>
+    </service>
+
+</definitions>
