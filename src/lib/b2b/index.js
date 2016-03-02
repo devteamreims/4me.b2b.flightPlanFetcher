@@ -30,19 +30,21 @@ function initClient(wsdl = __dirname + '/wsdl/FlightServices_PREOPS_19.0.0.wsdl'
   const certFile = process.env.B2B_CERT;
   const certKey = process.env.B2B_KEY;
 
+  const useProxy = !!process.env.B2B_USE_PROXY;
+
+  let myRequest = request;
+
+  if(useProxy) {
+    const proxyUrl = process.env.https_proxy;
+    myRequest = request.defaults({'proxy': proxyUrl});
+    myRequest.debug = true;
+  }
+
   const sslSecurity = new ClientSSLSecurityPFX(certFile, certKey);
 
-  const myHttpClient = {
-    request: function() {
-      console.log('Called !!!');
-      console.log(arguments);
-      return request(...arguments);
-    }
-  };
-
-  return createClient(wsdl
-    //,{httpClient: myHttpClient}
-  ).then(client => {
+  return createClient(wsdl, {
+    request: myRequest
+  }).then(client => {
     client.setSecurity(sslSecurity)
     return client;
   });
@@ -71,7 +73,7 @@ export function requestByCallsign(callsign, options = {}) {
 
   return getClient()
     .then((client) => {
-      
+
       console.log(client
         .describe()
         .FlightManagementService
