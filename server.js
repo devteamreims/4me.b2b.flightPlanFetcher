@@ -1,6 +1,6 @@
 import app from './index';
 import http from 'http';
-import {default as d} from 'debug';
+import d from 'debug';
 
 import dotenv from 'dotenv';
 
