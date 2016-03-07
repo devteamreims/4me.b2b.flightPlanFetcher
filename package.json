@@ -29,8 +29,10 @@
     "redux-freeze": "^0.1.2",
     "redux-logger": "^2.5.2",
     "redux-thunk": "^1.0.3",
-    "soap-as-promised": "^1.6.0",
-    "socket.io": "^1.4.4"
+    "request-promise": "^2.0.1",
+    "soap": "^0.13.0",
+    "socket.io": "^1.4.4",
+    "xml2js": "^0.4.16"
   },
   "devDependencies": {
     "chai": "^3.4.1",
