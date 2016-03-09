@@ -80,7 +80,7 @@ export function requestByCallsign(callsign, options = {}) {
     .then(parseFlightPlanListReply);
 }
 
-export function fetchProfile(callsign, dep, dest, eobt, options = {}) {
+export function requestProfile(callsign, dep, dest, eobt, options = {}) {
 
   const sendTime = moment.utc().format(timeFormatWithSeconds);
 

@@ -34,16 +34,9 @@ export function queryFlightPlans(callsign, options = {}) {
 }
 
 export function retrieveFlight(callsign, dep, dest, eobt, options = {}) {
-
-  let formattedEobt = moment(new Date(eobt)).format(b2bTimeFormat);
-
+  
   const sendTime = moment.utc().format(b2bTimeFormatWithSeconds);
-
-  callsign = 'KLM713';
-  dep = 'EHAM';
-  dest = 'SMJP';
-
-  formattedEobt = '2016-03-07 10:30';
+  const formattedEobt = moment.utc(eobt).format(b2bTimeFormat);
 /*
          <sendTime>2013-03-01 16:46:00</sendTime>
          <dataset>
@@ -88,8 +81,9 @@ export function retrieveFlight(callsign, dep, dest, eobt, options = {}) {
       </keys>
     </flightId>
     <requestedFlightDatasets>flight</requestedFlightDatasets>
-    <requestedFlightFields>ctfmPointProfile</requestedFlightFields>
     <requestedFlightFields>ftfmPointProfile</requestedFlightFields>
+    <requestedFlightFields>rtfmPointProfile</requestedFlightFields>
+    <requestedFlightFields>delay</requestedFlightFields>
   `);
 
   return soapEnvelope(`

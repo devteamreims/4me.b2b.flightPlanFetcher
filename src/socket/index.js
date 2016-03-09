@@ -36,6 +36,6 @@ export function attachHandlerToSocket(dispatch, socket) {
   socket.on('disconnect', () => dispatch(clientDisconnected(socket.id)));
 }
 
-export function broadcastUpdateHistory(mainSocket) {
-  mainSocket.emit('update_history');
+export function broadcastUpdateHistory(socket) {
+  socket.emit('update_history');
 }

@@ -3,8 +3,7 @@ import express from 'express';
 import {
   getHistoryRoute,
   getSearchFlightsRoute,
-  getSearchProfilesRoute,
-  getSoapRoute
+  getSearchProfilesRoute
 } from './controller';
 
 const routes = function(store) {
@@ -15,8 +14,6 @@ const routes = function(store) {
 
   router.get('/searchFlights', getSearchFlightsRoute(store));
   router.get('/searchProfiles', getSearchProfilesRoute(store));
-
-  router.get('/soap', getSoapRoute(store));
 
   router.get('/getState', getStateController(store));
 

@@ -1,8 +1,14 @@
+import {
+  fetchFlight
+} from './actions/flight-plans';
 
 import {
-  requestByCallsign,
   fetchProfile
-} from './lib/b2b';
+} from './actions/history';
+
+import {
+  parsePoint
+} from './lib/b2b/response-parser';
 
 import d from 'debug';
 const debug = d('4me.controller');
@@ -19,61 +25,24 @@ export function getSearchFlightsRoute(store) {
       throw new Error('Callsign parameter must exist');
     }
 
-    requestByCallsign(callsign)
+    store.dispatch(fetchFlight(callsign))
       .then(resp => res.send(resp))
-      .catch(function (err) {
-        debug('POUET');
-        debug(arguments);
-        next(err);
-      });
+      .catch(err => next(err));
   }
 }
 
 export function getSearchProfilesRoute(store) {
   return (req, res, next) => {
-    fetchProfile()
-      .then(resp => {
-        const originalFtfm = resp.body.flight.ftfmPointProfile;
-        const originalCtfm = resp.body.flight.ctfmPointProfile;
 
-        const filterPoint = (p) => p.point !== undefined && p.point.pointId !== undefined;
+    const { ifplId, forceRefresh } = req.query;
 
-        const ftfm = _(originalFtfm)
-          .filter(filterPoint)
-          .map(p => p.point.pointId)
-          .value();
+    if(!ifplId) {
+      throw new Error('ifplId must be set');
+    }
 
-        const ctfm = _(originalCtfm)
-          .filter(filterPoint)
-          .map(p => p.point.pointId)
-          .value();
-
-        return Object.assign({}, resp, {
-          ftfmCount: ftfm.length,
-          ctfmCount: ctfm.length,
-          ftfm,
-          ctfm
-        });
-      })
-      .then(resp => res.send(resp))
-      .catch(function (err) {
-        debug('POUET');
-        debug(arguments);
-        next(err);
-      });
-  }
-}
-
-export function getSoapRoute(store) {
-  return (req, res, next) => {
-    getClient()
-    .then((client) => {
-      res.send(client
-        .describe()
-        .FlightManagementService
-        .FlightManagementPort
-        .queryFlightPlans);
-    });
+    store.dispatch(fetchProfile(ifplId, forceRefresh !== undefined))
+      .then(resp => res.send(Object.assign({}, resp, {ifplId})))
+      .catch(err => next(err));
   }
 }
 
