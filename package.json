@@ -1,6 +1,6 @@
 {
   "name": "4me.b2b.flightPlanFetcher",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "4ME NM B2B Flight plan fetcher",
   "main": "index.js",
   "scripts": {
