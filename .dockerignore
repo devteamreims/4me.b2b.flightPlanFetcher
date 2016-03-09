@@ -1,5 +1,5 @@
 *.swp
 .git
-certs
+certs/*
 .env
 node_modules
