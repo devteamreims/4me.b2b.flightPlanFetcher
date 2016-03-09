@@ -1,6 +1,9 @@
 import _ from 'lodash';
 import moment from 'moment';
 
+import d from 'debug';
+const debug = d('4me.lib.b2b.response-parser');
+
 export function parseFlightPlanListReply(input) {
 
   const reply = _.get(input, 'flight:FlightPlanListReply', {});
@@ -58,4 +61,19 @@ export function parseFlightRetrievalReply(input) {
     body
   };
 
+}
+
+export function flightPlanToKeys(flightPlan) {
+  debug(flightPlan);
+  const departure = _.get(flightPlan, 'aerodromeOfDeparture.icaoId');
+  const destination = _.get(flightPlan, 'aerodromesOfDestination.aerodromeOfDestination.icaoId');
+  const callsign = _.get(flightPlan, 'aircraftId.aircraftId');
+  const eobt = _.get(flightPlan, 'estimatedOffBlockTime');
+
+  return {
+    callsign,
+    departure,
+    destination,
+    eobt,
+  };
 }

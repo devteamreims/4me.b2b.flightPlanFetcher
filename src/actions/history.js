@@ -46,15 +46,39 @@ import {
 } from '../selectors/history';
 
 import {
-  requestProfile
+  requestProfile,
+  ifplIdToKeys
 } from '../lib/b2b';
+
+import {
+  ADD_FLIGHT_PLAN
+} from './flight-plans';
 
 // Force fetch flight from B2B
 export function fetchProfile(ifplId, forceRefresh = false) {
   return (dispatch, getState) => {
     const prefetchedKeys = getKeysFromIfplId(ifplId)(getState());
+
+    // Here we rely on local history, this makes our API stateful
+    // Let's query B2B for details about this IFPLId
+
     if(_.isEmpty(prefetchedKeys)) {
-      return Promise.reject(`Flight with ifplId ${ifplId} is unknown !`);
+      return ifplIdToKeys(ifplId)
+        .then((keys) => {
+
+          const flight = {
+            ifplId,
+            fetched: Date.now(),
+            ...keys,
+          };
+
+          dispatch({
+            type: ADD_FLIGHT_PLAN,
+            ...flight,
+          });
+
+          return dispatch(fetchProfile(ifplId, forceRefresh));
+        });
     }
 
     debug(`Fetching ifplId : ${ifplId}`);
@@ -114,5 +138,6 @@ function parseProfile(flight) {
 
   return _(profile)
     .filter(nonVectorPoint)
-    .map(parsePoint);
+    .map(parsePoint)
+    .value();
 }

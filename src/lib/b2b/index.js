@@ -18,12 +18,14 @@ import {
 
 import {
   queryFlightPlans,
-  retrieveFlight
+  retrieveFlight,
+  flightKeysFromIfplId
 } from './query-builder';
 
 import {
   parseFlightPlanListReply,
-  parseFlightRetrievalReply
+  parseFlightRetrievalReply,
+  flightPlanToKeys
 } from './response-parser';
 
 
@@ -45,7 +47,7 @@ const extractData = (data) => {
 
 let pfxContent;
 
-const nmUrl = 'https://www.nm.eurocontrol.int:16443/B2B_PREOPS/gateway/spec/19.0.0';
+const nmUrl = 'https://www.nm.eurocontrol.int:16443/B2B_OPS/gateway/spec/19.0.0';
 
 function myRequest() {
 
@@ -78,6 +80,34 @@ export function requestByCallsign(callsign, options = {}) {
     .then(toJS)
     .then(extractData)
     .then(parseFlightPlanListReply);
+}
+
+export function requestByIfplId(ifplId, options = {}) {
+  const body = flightKeysFromIfplId(ifplId, options);
+
+  debug('requestByIfplId');
+  debug(body);
+
+  return myRequest()
+    .post({body})
+    .then(toJS)
+    .then(extractData);
+}
+
+export function ifplIdToKeys(ifplId, options = {}) {
+  return requestByIfplId(ifplId)
+    .then((data) => {
+      const flightPlan = _.get(data, 'flight:FlightRetrievalReply.data.flightPlan');
+      if(!flightPlan) {
+        return Promise.reject('Unknown flight');
+      }
+
+      const ret = flightPlanToKeys(flightPlan);
+      if(_.isEmpty(ret)) {
+        return Promise.reject('Unknown flight');
+      }
+      return ret;
+    })
 }
 
 export function requestProfile(callsign, dep, dest, eobt, options = {}) {

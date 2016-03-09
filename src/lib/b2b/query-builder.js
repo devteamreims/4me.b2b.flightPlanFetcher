@@ -33,8 +33,34 @@ export function queryFlightPlans(callsign, options = {}) {
   `);
 }
 
+export function flightKeysFromIfplId(ifplId, options = {}) {
+  if(!ifplId) {
+    throw new Error('ifplId cannot be undefined !');
+  }
+
+  const sendTime = moment.utc().format(b2bTimeFormatWithSeconds);
+
+  const query = (`
+    <sendTime>${sendTime}</sendTime>
+    <dataset>
+      <type>OPERATIONAL</type>
+    </dataset>
+    <includeProposalFlights>false</includeProposalFlights>
+    <flightId>
+      <id>${ifplId}</id>
+    </flightId>
+    <requestedFlightDatasets>flightPlan</requestedFlightDatasets>
+  `);
+
+  return soapEnvelope(`
+    <flight:FlightRetrievalRequest>
+      ${query}
+    </flight:FlightRetrievalRequest>
+  `);
+}
+
 export function retrieveFlight(callsign, dep, dest, eobt, options = {}) {
-  
+
   const sendTime = moment.utc().format(b2bTimeFormatWithSeconds);
   const formattedEobt = moment.utc(eobt).format(b2bTimeFormat);
 /*
