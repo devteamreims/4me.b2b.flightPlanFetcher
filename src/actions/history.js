@@ -42,7 +42,8 @@ import {
 } from '../selectors/flight-plans';
 
 import {
-  getFromIfplId
+  getFromIfplId,
+  getHistory,
 } from '../selectors/history';
 
 import {
@@ -53,6 +54,10 @@ import {
 import {
   ADD_FLIGHT_PLAN
 } from './flight-plans';
+
+import {
+  getSocket
+} from '../socket';
 
 // Force fetch flight from B2B
 export function fetchProfile(ifplId, forceRefresh = false) {
@@ -77,6 +82,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
             ...flight,
           });
 
+          // Redispatch with local cache
           return dispatch(fetchProfile(ifplId, forceRefresh));
         });
     }
@@ -93,6 +99,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
 
     const fromHistory = getFromIfplId(ifplId)(getState());
 
+    // We have data in cache, return this
     if(!forceRefresh && !_.isEmpty(fromHistory)) {
       debug(`fetchProfile ${ifplId} : returning data from local cache`);
       return Promise.resolve(fromHistory);
@@ -123,6 +130,11 @@ export function fetchProfile(ifplId, forceRefresh = false) {
       })
       .then(formattedProfile => {
         dispatch(addToHistory(formattedProfile));
+        const socket = getSocket();
+        if(socket && socket.emit) {
+          debug('Emitting history update to sockets');
+          socket.emit('update_history', getHistory(getState()));
+        }
         return formattedProfile;
       });
   };
