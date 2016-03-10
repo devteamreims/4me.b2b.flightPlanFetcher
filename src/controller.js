@@ -10,6 +10,10 @@ import {
   parsePoint
 } from './lib/b2b/response-parser';
 
+import {
+  getHistory
+} from './selectors/history';
+
 import d from 'debug';
 const debug = d('4me.controller');
 
@@ -48,6 +52,11 @@ export function getSearchProfilesRoute(store) {
 
 export function getHistoryRoute(store) {
   return (req, res, next) => {
-    res.send({history: 'BLABLA'});
+    const history = getHistory(store.getState());
+
+    res.send(_.take(
+      history,
+      req.query.limit || history.length
+    ));
   }
 }
