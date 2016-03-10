@@ -23,13 +23,14 @@ const defaultState = [];
 */
 
 export default function historyReducer(state = defaultState, action) {
+  const maxHistoryLen = parseInt(process.env.HISTORY_MAX_SIZE) || 30;
   switch(action.type) {
     case ADD_FLIGHT_TO_HISTORY:
       const ifplId = action.ifplId;
-      return [
+      return _.take([
         actionToHistoryObject(action),
         ..._.reject(state, h => h.ifplId === ifplId)
-      ];
+      ], maxHistoryLen);
     case REMOVE_FLIGHT_FROM_HISTORY:
       return [
         ..._.reject(state, h => h.ifplId === action.ifplId)
