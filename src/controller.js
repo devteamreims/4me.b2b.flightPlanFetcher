@@ -66,9 +66,15 @@ import {
   requestByTrafficVolume
 } from './lib/b2b';
 
+import {
+  getFromString,
+} from './selectors/autocomplete-cache';
+
 export function getAutocomplete(store) {
   return (req, res, next) => {
-    requestByTrafficVolume()
-      .then(resp => res.send(resp));
+    const { search } = req.query;
+    const getResults = getFromString(search);
+
+    res.send(getResults(store.getState()));
   };
 }

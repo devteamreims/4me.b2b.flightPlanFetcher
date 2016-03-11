@@ -8,13 +8,21 @@ import d from 'debug';
 const debug = d('4me.redux');
 
 import {initializeSocket} from './actions/socket';
+
+import {
+  refreshAutocomplete,
+} from './actions/autocomplete-cache';
+
+
+const AUTOCOMPLETE_REFRESH_INTERVAL = 1000*60*5; //  5 minutes
+
 import reducers from './reducers';
 
 import {getSocket} from './socket';
 
 export default function makeStore(socketIo) {
   debug('Creating store');
-  
+
   const logger = createLogger({
     logger: {
       log: d('4me.redux.logger'),
@@ -23,9 +31,16 @@ export default function makeStore(socketIo) {
   });
 
   const store = createStore(reducers, applyMiddleware(thunk, deepFreeze, logger));
-  
+
   // Initialize socketIo
   store.dispatch(initializeSocket(socketIo));
+
+  const refreshCache = () => store.dispatch(refreshAutocomplete('LFERMS'));
+
+  setInterval(refreshCache, AUTOCOMPLETE_REFRESH_INTERVAL);
+
+  // For some reason, calling refreshCache synchronously fails, something to do with dotenv
+  setTimeout(refreshCache, 200);
 
   return store;
 }

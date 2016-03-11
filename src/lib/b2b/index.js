@@ -26,7 +26,8 @@ import {
 import {
   parseFlightPlanListReply,
   parseFlightRetrievalReply,
-  flightPlanToKeys
+  flightPlanToKeys,
+  normalizeFlightPlan,
 } from './response-parser';
 
 
@@ -122,7 +123,8 @@ export function requestByTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
     .then(d => _.get(d, 'flight:FlightListByTrafficVolumeReply', {}))
     .then(d => _.get(d, 'data.flights', []))
     .then(d => _.map(d, f => _.get(f, 'flight', {})))
-    .then(d => _.map(d, f => _.get(f, 'flightId', {})));
+    .then(d => _.map(d, f => _.get(f, 'flightId', {})))
+    .then(d => _.map(d, normalizeFlightPlan));
 }
 
 export function requestProfile(callsign, dep, dest, eobt, options = {}) {
