@@ -1,8 +1,48 @@
 import moment from 'moment';
+import _ from 'lodash';
+
 const b2bTimeFormat = 'YYYY-MM-DD HH:mm';
 const b2bTimeFormatWithSeconds = b2bTimeFormat + ':ss';
 
+const b2bFormatDuration = (str) => _.padStart(_.take(`${str}`, 4).join(''), 4, '0');
 
+
+export function queryInTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
+
+  const sendTime = moment.utc().format(b2bTimeFormatWithSeconds);
+
+  const wef = moment.utc().subtract(2, 'minutes').format(b2bTimeFormat);
+  const unt = moment.utc().add(3, 'minutes').format(b2bTimeFormat);
+
+  const duration = b2bFormatDuration(_.get(options, 'duration', 11));
+  const step = b2bFormatDuration(_.get(options, 'step', 1));
+
+  const query = (`
+     <sendTime>${sendTime}</sendTime>
+     <dataset>
+        <type>OPERATIONAL</type>
+     </dataset>
+     <includeProposalFlights>false</includeProposalFlights>
+     <trafficType>LOAD</trafficType>
+     <trafficWindow>
+        <wef>${wef}</wef>
+        <unt>${unt}</unt>
+     </trafficWindow>
+     <countsInterval>
+        <duration>${duration}</duration>
+        <step>${step}</step>
+     </countsInterval>
+     <!--Optional:-->
+     <calculationType>OCCUPANCY</calculationType>
+     <trafficVolume>LFERMS</trafficVolume>
+  `);
+
+  return soapEnvelope(`
+    <flight:FlightListByTrafficVolumeRequest>
+      ${query}
+    </flight:FlightListByTrafficVolumeRequest>
+  `);
+}
 
 export function queryFlightPlans(callsign, options = {}) {
   if(callsign === undefined) {

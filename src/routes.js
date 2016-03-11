@@ -3,7 +3,8 @@ import express from 'express';
 import {
   getHistoryRoute,
   getSearchFlightsRoute,
-  getSearchProfilesRoute
+  getSearchProfilesRoute,
+  getAutocomplete,
 } from './controller';
 
 const routes = function(store) {
@@ -16,6 +17,8 @@ const routes = function(store) {
   router.get('/searchProfiles', getSearchProfilesRoute(store));
 
   router.get('/getState', getStateController(store));
+
+  router.get('/autocomplete', getAutocomplete(store));
 
   return router;
 };

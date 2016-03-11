@@ -18,6 +18,7 @@ import {
 
 import {
   queryFlightPlans,
+  queryInTrafficVolume,
   retrieveFlight,
   flightKeysFromIfplId
 } from './query-builder';
@@ -108,6 +109,20 @@ export function ifplIdToKeys(ifplId, options = {}) {
       }
       return ret;
     })
+}
+
+export function requestByTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
+
+  const body = queryInTrafficVolume(trafficVolume, options);
+
+  return myRequest()
+    .post({body})
+    .then(toJS)
+    .then(extractData)
+    .then(d => _.get(d, 'flight:FlightListByTrafficVolumeReply', {}))
+    .then(d => _.get(d, 'data.flights', []))
+    .then(d => _.map(d, f => _.get(f, 'flight', {})))
+    .then(d => _.map(d, f => _.get(f, 'flightId', {})));
 }
 
 export function requestProfile(callsign, dep, dest, eobt, options = {}) {

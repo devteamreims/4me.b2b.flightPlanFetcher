@@ -60,3 +60,15 @@ export function getHistoryRoute(store) {
     ));
   }
 }
+
+
+import {
+  requestByTrafficVolume
+} from './lib/b2b';
+
+export function getAutocomplete(store) {
+  return (req, res, next) => {
+    requestByTrafficVolume()
+      .then(resp => res.send(resp));
+  };
+}
