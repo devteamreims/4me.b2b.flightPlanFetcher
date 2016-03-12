@@ -82,7 +82,7 @@ export function normalizeFlightPlan(flightPlan) {
 }
 
 export function flightPlanToKeys(flightPlan) {
-  debug(flightPlan);
+  //debug(flightPlan);
   const departure = _.get(flightPlan, 'aerodromeOfDeparture.icaoId');
   const destination = _.get(flightPlan, 'aerodromesOfDestination.aerodromeOfDestination.icaoId');
   const callsign = _.get(flightPlan, 'aircraftId.aircraftId');
