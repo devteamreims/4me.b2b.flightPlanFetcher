@@ -64,9 +64,6 @@ export function fetchProfile(ifplId, forceRefresh = false) {
   return (dispatch, getState) => {
     const prefetchedKeys = getKeysFromIfplId(ifplId)(getState());
 
-    // Here we rely on local history, this makes our API stateful
-    // Let's query B2B for details about this IFPLId
-
     if(_.isEmpty(prefetchedKeys)) {
       return ifplIdToKeys(ifplId)
         .then((keys) => {
@@ -113,7 +110,15 @@ export function fetchProfile(ifplId, forceRefresh = false) {
         }
 
         const flight = _.get(resp, 'body.flight');
-        const delay = parseInt(_.get(flight, 'delay', 0)) || 0;
+
+        // Delay : 0109 => 1 hour, 60 minutes;
+        const formatDelay = (str) => {
+          const hours = parseInt(str.substr(0, 2)) || 0;
+          const minutes = (parseInt(str.substr(2)) || 0) + hours * 60;
+          return minutes;
+        };
+
+        const delay = formatDelay(_.get(flight, 'delay', 0));
 
         const pointProfile = parseProfile(flight);
 
