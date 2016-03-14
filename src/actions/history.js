@@ -113,6 +113,9 @@ export function fetchProfile(ifplId, forceRefresh = false) {
 
         // Delay : 0109 => 1 hour, 60 minutes;
         const formatDelay = (str) => {
+          if(!str) {
+            return 0;
+          }
           const hours = parseInt(str.substr(0, 2)) || 0;
           const minutes = (parseInt(str.substr(2)) || 0) + hours * 60;
           return minutes;
