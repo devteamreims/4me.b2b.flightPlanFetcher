@@ -21,13 +21,16 @@ export default function reducer(state = defaultState, action) {
     case SOCKET_CLIENT_CONNECTED:
       return Object.assign({}, state, {
         clients: [
-          action.clientId,
+          {
+            id: action.clientId,
+            ip: action.ipAddress,
+          },
           ...state.clients
         ]
       });
     case SOCKET_CLIENT_DISCONNECTED:
       return Object.assign({}, state, {
-        clients: _.without(state.clients, action.clientId)
+        clients: _.reject(state.clients, c => c.id === action.clientId)
       });
   }
   return state;

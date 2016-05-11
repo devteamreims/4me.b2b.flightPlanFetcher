@@ -18,7 +18,10 @@ export function setupSocketIo(dispatch, socketIo) {
 
   socketIo.on('connect', function(socket) {
     debug('client connected');
-    dispatch(clientConnected(socket.id));
+
+    const ipAddress = socket.request.connection.remoteAddress;
+
+    dispatch(clientConnected(socket.id, ipAddress));
     attachHandlerToSocket(dispatch, socket);
   });
 

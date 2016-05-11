@@ -25,16 +25,17 @@ function socketInitialized() {
   }
 }
 
-export function clientConnected(clientId) {
+export function clientConnected(clientId, ipAddress) {
   return {
     type: SOCKET_CLIENT_CONNECTED,
-    clientId: clientId
+    clientId,
+    ipAddress,
   };
 }
 
 export function clientDisconnected(clientId) {
   return {
     type: SOCKET_CLIENT_DISCONNECTED,
-    clientId: clientId
+    clientId,
   };
 }
