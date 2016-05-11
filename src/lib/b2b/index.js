@@ -49,12 +49,17 @@ const extractData = (data) => {
 
 let pfxContent;
 
-const nmUrl = 'https://www.nm.eurocontrol.int:16443/B2B_OPS/gateway/spec/19.0.0';
 
 function myRequest() {
 
   if(pfxContent === undefined) {
     pfxContent = fs.readFileSync(process.env.B2B_CERT);
+  }
+
+  const nmUrl = process.env.B2B_URL;
+
+  if(!nmUrl) {
+    throw new Error('Please define a B2B_URL env variable');
   }
 
   const requestOptions = {
