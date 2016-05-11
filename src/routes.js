@@ -5,7 +5,8 @@ import {
   getSearchFlightsRoute,
   getSearchProfilesRoute,
   getAutocomplete,
-} from './controller';
+  getStatus,
+} from './controllers';
 
 const routes = function(store) {
 
@@ -19,6 +20,8 @@ const routes = function(store) {
   router.get('/getState', getStateController(store));
 
   router.get('/autocomplete', getAutocomplete(store));
+
+  router.get('/status', getStatus(store));
 
   return router;
 };

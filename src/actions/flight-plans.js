@@ -1,5 +1,6 @@
 export const ADD_FLIGHT_PLAN = 'ADD_FLIGHT_PLAN';
 export const REMOVE_FLIGHT_PLAN = 'REMOVE_FLIGHT_PLAN';
+export const ERROR = 'flightPlans/ERROR';
 
 import {
   requestByCallsign
@@ -60,6 +61,12 @@ export function fetchFlight(callsign) {
             return f;
           })
           .value();
+      })
+      .catch(err => {
+        debug(err);
+        const { message = 'Unknown error' } = err;
+        dispatch(errorAction(message));
+        return Promise.reject(message);
       });
 
     // Filter lastValidFlightPlanIds
@@ -68,5 +75,12 @@ export function fetchFlight(callsign) {
 
     // Return thenable promise
 
+  };
+}
+
+function errorAction(error) {
+  return {
+    type: ERROR,
+    error,
   };
 }

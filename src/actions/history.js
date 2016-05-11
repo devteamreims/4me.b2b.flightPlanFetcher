@@ -4,6 +4,7 @@ const debug = d('4me.history.actions');
 
 export const ADD_FLIGHT_TO_HISTORY = 'ADD_FLIGHT_TO_HISTORY';
 export const REMOVE_FLIGHT_FROM_HISTORY = 'REMOVE_FLIGHT_FROM_HISTORY';
+export const ERROR = 'history/ERROR';
 
 export function addToHistory(flight) {
   const {
@@ -52,7 +53,7 @@ import {
 } from '../lib/b2b';
 
 import {
-  ADD_FLIGHT_PLAN
+  fetchFlight,
 } from './flight-plans';
 
 import {
@@ -64,24 +65,18 @@ export function fetchProfile(ifplId, forceRefresh = false) {
   return (dispatch, getState) => {
     const prefetchedKeys = getKeysFromIfplId(ifplId)(getState());
 
+    // Here we handle the case of a flight which is not in history
     if(_.isEmpty(prefetchedKeys)) {
       return ifplIdToKeys(ifplId)
         .then((keys) => {
 
-          const flight = {
-            ifplId,
-            fetched: Date.now(),
-            ...keys,
-          };
-
-          dispatch({
-            type: ADD_FLIGHT_PLAN,
-            ...flight,
-          });
-
+          const { callsign } = keys;
           // Redispatch with local cache
-          return dispatch(fetchProfile(ifplId, forceRefresh));
-        });
+          return dispatch(fetchFlight(callsign))
+            .then(() => {
+              return dispatch(fetchProfile(ifplId, forceRefresh))
+            });
+        })
     }
 
     debug(`Fetching ifplId : ${ifplId}`);
@@ -144,7 +139,19 @@ export function fetchProfile(ifplId, forceRefresh = false) {
           socket.emit('update_history', getHistory(getState()));
         }
         return formattedProfile;
+      })
+      .catch(err => {
+        const { message = 'Unknown error' } = err;
+        dispatch(errorAction(message));
+        return Promise.reject(message);
       });
+  };
+}
+
+function errorAction(error) {
+  return {
+    type: ERROR,
+    error,
   };
 }
 

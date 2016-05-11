@@ -1,5 +1,9 @@
+import d from 'debug';
+const debug = d('4me.actions.autocompleteCache');
+import _ from 'lodash';
 
-export const SET = 'autocompleteCache/SET';
+export const COMPLETE = 'autocompleteCache/COMPLETE';
+export const ERROR = 'autocompleteCache/ERROR';
 
 import {
   requestByTrafficVolume,
@@ -8,13 +12,25 @@ import {
 export function refreshAutocomplete(trafficVolume = 'LFERMS', options = {}) {
   return (dispatch, getState) => {
     return requestByTrafficVolume(trafficVolume, options)
-      .then(flights => dispatch(setAction(flights)));
+      .then(flights => dispatch(completeAction(flights)))
+      .catch(err => {
+        debug(err);
+        const { message = 'Unknown error' } = err;
+        dispatch(errorAction(message));
+      });
   };
 }
 
-function setAction(flights = []) {
+function completeAction(flights = []) {
   return {
-    type: SET,
+    type: COMPLETE,
     flights,
+  };
+}
+
+function errorAction(error) {
+  return {
+    type: ERROR,
+    error,
   };
 }

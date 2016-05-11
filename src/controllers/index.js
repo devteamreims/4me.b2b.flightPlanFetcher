@@ -1,18 +1,18 @@
 import {
   fetchFlight
-} from './actions/flight-plans';
+} from '../actions/flight-plans';
 
 import {
   fetchProfile
-} from './actions/history';
+} from '../actions/history';
 
 import {
   parsePoint
-} from './lib/b2b/response-parser';
+} from '../lib/b2b/response-parser';
 
 import {
   getHistory
-} from './selectors/history';
+} from '../selectors/history';
 
 import d from 'debug';
 const debug = d('4me.controller');
@@ -64,11 +64,11 @@ export function getHistoryRoute(store) {
 
 import {
   requestByTrafficVolume
-} from './lib/b2b';
+} from '../lib/b2b';
 
 import {
   getFromString,
-} from './selectors/autocomplete-cache';
+} from '../selectors/autocomplete-cache';
 
 export function getAutocomplete(store) {
   return (req, res, next) => {
@@ -78,3 +78,6 @@ export function getAutocomplete(store) {
     res.send(getResults(store.getState()));
   };
 }
+
+
+export {getStatus} from './status';
