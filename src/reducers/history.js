@@ -17,6 +17,7 @@ const defaultState = [];
     destination: 'SBGL',
     eobt: Date.utc(),
     fetched: Date.now(),
+    aircraftType: 'A319',
     pointProfile: []
     delay: 23
   }
@@ -41,13 +42,14 @@ export default function historyReducer(state = defaultState, action) {
 }
 
 function actionToHistoryObject(action) {
-  return _.pick(action, [
+  return _.pick(action.payload, [
     'ifplId',
     'callsign',
     'departure',
     'destination',
     'eobt',
     'fetched',
+    'aircraftType',
     'pointProfile',
     'delay'
   ]);

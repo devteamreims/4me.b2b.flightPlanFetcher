@@ -150,6 +150,7 @@ export function retrieveFlight(callsign, dep, dest, eobt, options = {}) {
     <requestedFlightFields>ftfmPointProfile</requestedFlightFields>
     <requestedFlightFields>rtfmPointProfile</requestedFlightFields>
     <requestedFlightFields>delay</requestedFlightFields>
+    <requestedFlightFields>aircraftType</requestedFlightFields>
   `);
 
   return soapEnvelope(`

@@ -7,27 +7,9 @@ export const REMOVE_FLIGHT_FROM_HISTORY = 'REMOVE_FLIGHT_FROM_HISTORY';
 export const ERROR = 'history/ERROR';
 
 export function addToHistory(flight) {
-  const {
-    callsign,
-    ifplId,
-    departure,
-    destination,
-    eobt,
-    fetched,
-    pointProfile,
-    delay
-  } = flight;
-
   return {
     type: ADD_FLIGHT_TO_HISTORY,
-    callsign,
-    ifplId,
-    departure,
-    destination,
-    eobt,
-    fetched,
-    pointProfile,
-    delay
+    payload: flight,
   };
 }
 
@@ -87,6 +69,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
       departure,
       destination,
       eobt,
+      aircraftType,
     } = prefetchedKeys;
 
     const fromHistory = getFromIfplId(ifplId)(getState());
@@ -117,6 +100,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
         };
 
         const delay = formatDelay(_.get(flight, 'delay', 0));
+        const aircraftType = _.get(flight, 'aircraftType', 'ZZZZ');
 
         const pointProfile = parseProfile(flight);
 
@@ -127,6 +111,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
           destination,
           eobt,
           delay,
+          aircraftType,
           fetched: Date.now(),
           pointProfile,
         };
