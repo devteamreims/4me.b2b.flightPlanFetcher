@@ -2,6 +2,10 @@ import _ from 'lodash';
 import d from 'debug';
 const debug = d('4me.history.actions');
 
+import {
+  opsLog,
+} from '../logger';
+
 export const ADD_FLIGHT_TO_HISTORY = 'ADD_FLIGHT_TO_HISTORY';
 export const REMOVE_FLIGHT_FROM_HISTORY = 'REMOVE_FLIGHT_FROM_HISTORY';
 export const ERROR = 'history/ERROR';
@@ -77,6 +81,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
     // We have data in cache, return this
     if(!forceRefresh && !_.isEmpty(fromHistory)) {
       debug(`fetchProfile ${ifplId} : returning data from local cache`);
+      opsLog({ifplId, result: fromHistory, forceRefresh}, {fetchProfile: true});
       return Promise.resolve(fromHistory);
     }
 
@@ -118,6 +123,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
       })
       .then(formattedProfile => {
         dispatch(addToHistory(formattedProfile));
+        opsLog({ifplId, result: formattedProfile, forceRefresh}, {fetchProfile: true});
         const socket = getSocket();
         if(socket && socket.emit) {
           debug('Emitting history update to sockets');

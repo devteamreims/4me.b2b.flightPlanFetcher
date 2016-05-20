@@ -6,6 +6,10 @@ import {
   requestByCallsign
 } from '../lib/b2b';
 
+import {
+  opsLog,
+} from '../logger';
+
 import _ from 'lodash';
 
 import moment from 'moment';
@@ -61,6 +65,10 @@ export function fetchFlight(callsign) {
             return f;
           })
           .value();
+      })
+      .then(processed => {
+        opsLog({callsign, reponse: processed}, {requestByCallsign: true});
+        return processed;
       })
       .catch(err => {
         debug(err);

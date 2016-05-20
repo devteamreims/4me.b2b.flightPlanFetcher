@@ -9,6 +9,10 @@ import {
   requestByTrafficVolume,
 } from '../lib/b2b';
 
+import {
+  opsLog,
+} from '../logger';
+
 export function refreshAutocomplete(trafficVolume = 'LFERMS', options = {}) {
   return (dispatch, getState) => {
     return requestByTrafficVolume(trafficVolume, options)
@@ -22,6 +26,9 @@ export function refreshAutocomplete(trafficVolume = 'LFERMS', options = {}) {
 }
 
 function completeAction(flights = []) {
+
+  opsLog({flights}, {autocompleteRefresh: true});
+
   return {
     type: COMPLETE,
     flights,
