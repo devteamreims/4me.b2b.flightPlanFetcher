@@ -11,8 +11,8 @@ export function queryInTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
 
   const sendTime = moment.utc().format(b2bTimeFormatWithSeconds);
 
-  const wef = moment.utc().subtract(2, 'minutes').format(b2bTimeFormat);
-  const unt = moment.utc().add(3, 'minutes').format(b2bTimeFormat);
+  const wef = moment.utc().subtract(10, 'minutes').format(b2bTimeFormat);
+  const unt = moment.utc().add(20, 'minutes').format(b2bTimeFormat);
 
   const duration = b2bFormatDuration(_.get(options, 'duration', 11));
   const step = b2bFormatDuration(_.get(options, 'step', 1));
