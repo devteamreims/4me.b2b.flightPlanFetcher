@@ -66,8 +66,8 @@ export function parseFlightRetrievalReply(input) {
 export function normalizeFlightPlan(flightPlan) {
   const ifplId = _.get(flightPlan, 'id');
   const callsign = _.get(flightPlan, 'keys.aircraftId');
-  const departure = _.get(flightPlan, 'keys.aerodromeOfDeparture');
-  const destination = _.get(flightPlan, 'keys.aerodromeOfDestination');
+  const departure = _.get(flightPlan, 'keys.aerodromeOfDeparture', 'ZZZZ');
+  const destination = _.get(flightPlan, 'keys.aerodromeOfDestination', 'ZZZZ');
   const eobt = _.get(flightPlan, 'keys.estimatedOffBlockTime');
 
   const flight = {
@@ -83,8 +83,8 @@ export function normalizeFlightPlan(flightPlan) {
 
 export function flightPlanToKeys(flightPlan) {
   //debug(flightPlan);
-  const departure = _.get(flightPlan, 'aerodromeOfDeparture.icaoId');
-  const destination = _.get(flightPlan, 'aerodromesOfDestination.aerodromeOfDestination.icaoId');
+  const departure = _.get(flightPlan, 'aerodromeOfDeparture.icaoId', 'ZZZZ');
+  const destination = _.get(flightPlan, 'aerodromesOfDestination.aerodromeOfDestination.icaoId', 'ZZZZ');
   const callsign = _.get(flightPlan, 'aircraftId.aircraftId');
   const eobt = _.get(flightPlan, 'estimatedOffBlockTime');
 

@@ -42,8 +42,8 @@ export function fetchFlight(callsign) {
 
             const ifplId = _.get(fp, 'id');
             const callsign = _.get(fp, 'keys.aircraftId');
-            const departure = _.get(fp, 'keys.aerodromeOfDeparture');
-            const destination = _.get(fp, 'keys.aerodromeOfDestination');
+            const departure = _.get(fp, 'keys.aerodromeOfDeparture', 'ZZZZ');
+            const destination = _.get(fp, 'keys.aerodromeOfDestination', 'ZZZZ');
             const eobt = _.get(fp, 'keys.estimatedOffBlockTime');
             const fetched = moment.utc().format();
 
