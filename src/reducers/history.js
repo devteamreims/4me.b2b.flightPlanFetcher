@@ -50,7 +50,6 @@ function actionToHistoryObject(action) {
     'eobt',
     'fetched',
     'aircraftType',
-    'pointProfile',
-    'delay'
+    'delay',
   ]);
 }
