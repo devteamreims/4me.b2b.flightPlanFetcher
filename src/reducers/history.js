@@ -1,5 +1,8 @@
 import _ from 'lodash';
 
+import d from 'debug';
+const debug = d('4me.history.reducer');
+
 
 import {
   ADD_FLIGHT_TO_HISTORY,
@@ -27,14 +30,13 @@ export default function historyReducer(state = defaultState, action) {
   const maxHistoryLen = parseInt(process.env.HISTORY_MAX_SIZE) || 30;
   switch(action.type) {
     case ADD_FLIGHT_TO_HISTORY:
-      const ifplId = action.ifplId;
       return _.take([
         actionToHistoryObject(action),
-        ..._.reject(state, h => h.ifplId === ifplId)
+        ..._.reject(state, h => h.ifplId === _.get(action, 'payload.ifplId'))
       ], maxHistoryLen);
     case REMOVE_FLIGHT_FROM_HISTORY:
       return [
-        ..._.reject(state, h => h.ifplId === action.ifplId)
+        ..._.reject(state, h => h.ifplId === _.get(action, 'payload.ifplId'))
       ];
   }
 
