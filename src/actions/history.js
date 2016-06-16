@@ -112,6 +112,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
         const aircraftType = _.get(flight, 'aircraftType', 'ZZZZ');
 
         const pointProfile = parseProfile(flight);
+        const airspaceProfile = _.get(flight, 'rtfmAirspaceProfile') || _.get(flight, 'ftfmAirspaceProfile');
 
         return {
           callsign,
@@ -123,6 +124,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
           aircraftType,
           fetched: Date.now(),
           pointProfile,
+          airspaceProfile,
         };
       })
       .then(formattedProfile => {
@@ -157,6 +159,9 @@ import {
 
 function parseProfile(flight) {
   const profile = _.get(flight, 'rtfmPointProfile') || _.get(flight, 'ftfmPointProfile');
+  const airspaceProfile = _.get(flight, 'rtfmAirspaceProfile') || _.get(flight, 'ftfmAirspaceProfile');
+
+  debug(airspaceProfile);
 
   return _(profile)
     .filter(nonVectorPoint)

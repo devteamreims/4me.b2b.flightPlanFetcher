@@ -149,6 +149,8 @@ export function retrieveFlight(callsign, dep, dest, eobt, options = {}) {
     <requestedFlightDatasets>flight</requestedFlightDatasets>
     <requestedFlightFields>ftfmPointProfile</requestedFlightFields>
     <requestedFlightFields>rtfmPointProfile</requestedFlightFields>
+    <requestedFlightFields>ftfmAirspaceProfile</requestedFlightFields>
+    <requestedFlightFields>rtfmAirspaceProfile</requestedFlightFields>
     <requestedFlightFields>delay</requestedFlightFields>
     <requestedFlightFields>aircraftType</requestedFlightFields>
   `);
