@@ -59,7 +59,11 @@ export function fetchProfile(ifplId, forceRefresh = false) {
           const { callsign } = keys;
           // Redispatch with local cache
           return dispatch(fetchFlight(callsign))
-            .then(() => {
+            .then((res) => {
+              // No keys found, break out
+              if(_.isEmpty(res)) {
+                return Promise.reject('Unknown flight');
+              }
               return dispatch(fetchProfile(ifplId, forceRefresh))
             });
         })
