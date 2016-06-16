@@ -2,6 +2,8 @@ import _ from 'lodash';
 import d from 'debug';
 const debug = d('4me.history.actions');
 
+import moment from 'moment';
+
 import {
   opsLog,
 } from '../logger';
@@ -112,7 +114,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
         const aircraftType = _.get(flight, 'aircraftType', 'ZZZZ');
 
         const pointProfile = parseProfile(flight);
-        const airspaceProfile = _.get(flight, 'rtfmAirspaceProfile') || _.get(flight, 'ftfmAirspaceProfile');
+        const airspaceProfile = parseAirspaceProfile(flight);
 
         return {
           callsign,
@@ -157,14 +159,71 @@ import {
   nonVectorPoint
 } from '../lib/b2b/response-parser';
 
+
+const findAirspace = (processedAirspaceProfile, pointProfileItem) => {
+  return _.find(
+    processedAirspaceProfile,
+    airspaceProfileItem => (
+      airspaceProfileItem.enter !== null
+      && airspaceProfileItem.exit !== null
+      && moment.utc(_.get(pointProfileItem, 'timeOver'))
+        .isBetween(
+          moment.utc(airspaceProfileItem.enter),
+          moment.utc(airspaceProfileItem.exit),
+          'second',
+          '[)'
+        )
+    )
+  ) || {};
+};
+
+
+
+const mergeAirspaces = processedAirspaceProfile => pointProfileItem => {
+  const airspace = _.pick(
+    findAirspace(processedAirspaceProfile, pointProfileItem),
+    ['name', 'center']
+  );
+
+  return {
+    airspace,
+    ...pointProfileItem,
+  };
+}
+
 function parseProfile(flight) {
   const profile = _.get(flight, 'rtfmPointProfile') || _.get(flight, 'ftfmPointProfile');
-  const airspaceProfile = _.get(flight, 'rtfmAirspaceProfile') || _.get(flight, 'ftfmAirspaceProfile');
-
-  debug(airspaceProfile);
+  const airspaceProfile = parseAirspaceProfile(flight);
 
   return _(profile)
     .filter(nonVectorPoint)
     .map(parsePoint)
+    .map(mergeAirspaces(airspaceProfile))
+    .value();
+}
+
+
+const byAirspaceType = (type) => (airspaceProfileItem) => _.get(airspaceProfileItem, 'airspaceType') === type;
+
+const parseAirspaceProfileItem = (airspaceProfileItem) => {
+  const get = (path, defaultValue) => _.get(airspaceProfileItem, path, defaultValue);
+
+  const name = get('airspaceId', 'XXXX');
+  const center = name.substr(0, 4);
+
+  return {
+    name,
+    center,
+    enter: moment.utc(get('firstEntryTime')) || null,
+    exit: moment.utc(get('lastExitTime')) || null,
+  };
+};
+
+function parseAirspaceProfile(flight) {
+  const profile = _.get(flight, 'rtfmAirspaceProfile') || _.get(flight, 'ftfmAirspaceProfile');
+
+  return _(profile)
+    .filter(byAirspaceType('AUA'))
+    .map(parseAirspaceProfileItem)
     .value();
 }

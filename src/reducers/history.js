@@ -21,7 +21,8 @@ const defaultState = [];
     eobt: Date.utc(),
     fetched: Date.now(),
     aircraftType: 'A319',
-    pointProfile: []
+    pointProfile: [],
+    airspaceProfile: [],
     delay: 23
   }
 */
@@ -53,6 +54,7 @@ function actionToHistoryObject(action) {
     'fetched',
     'aircraftType',
     'pointProfile',
+    'airspaceProfile',
     'delay'
   ]);
 }
