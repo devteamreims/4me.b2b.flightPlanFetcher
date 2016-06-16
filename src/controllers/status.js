@@ -24,6 +24,7 @@ export function getStatus(store) {
       autocompleteStatus,
       flightRequestStatus,
       flightPlanRequestStatus,
+      version: process.env.npm_package_version,
       raw,
     });
   };
