@@ -7,6 +7,7 @@ export const ERROR = 'autocompleteCache/ERROR';
 
 import {
   requestByTrafficVolume,
+  requestByAirspace,
 } from '../lib/b2b';
 
 import {
@@ -15,7 +16,7 @@ import {
 
 export function refreshAutocomplete(trafficVolume = 'LFERMS', options = {}) {
   return (dispatch, getState) => {
-    return requestByTrafficVolume(trafficVolume, options)
+    return requestByAirspace('LFEERMS', options)
       .then(flights => dispatch(completeAction(flights)))
       .catch(err => {
         debug(err);

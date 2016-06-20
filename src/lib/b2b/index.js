@@ -19,6 +19,7 @@ import {
 import {
   queryFlightPlans,
   queryInTrafficVolume,
+  queryInAirspace,
   retrieveFlight,
   flightKeysFromIfplId
 } from './query-builder';
@@ -126,6 +127,20 @@ export function requestByTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
     .then(toJS)
     .then(extractData)
     .then(d => _.get(d, 'flight:FlightListByTrafficVolumeReply', {}))
+    .then(d => _.get(d, 'data.flights', []))
+    .then(d => _.map(d, f => _.get(f, 'flight', {})))
+    .then(d => _.map(d, f => _.get(f, 'flightId', {})))
+    .then(d => _.map(d, normalizeFlightPlan));
+}
+
+export function requestByAirspace(airspace = 'LFEERMS', options = {}) {
+  const body = queryInAirspace(airspace, options);
+
+  return myRequest()
+    .post({body})
+    .then(toJS)
+    .then(extractData)
+    .then(d => _.get(d, 'flight:FlightListByAirspaceReply', {}))
     .then(d => _.get(d, 'data.flights', []))
     .then(d => _.map(d, f => _.get(f, 'flight', {})))
     .then(d => _.map(d, f => _.get(f, 'flightId', {})))
