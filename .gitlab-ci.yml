@@ -1,0 +1,12 @@
+image: node
+
+cache:
+  paths:
+  - node_modules/
+
+before_script:
+  - npm install --silent
+
+check_deps:
+  script:
+    - npm run check-deps --silent
