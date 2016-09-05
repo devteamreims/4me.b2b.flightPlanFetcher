@@ -4,6 +4,7 @@
   "description": "4ME NM B2B Flight plan fetcher",
   "main": "index.js",
   "scripts": {
+    "preversion": "git add Changelog.md",
     "babel-node": "babel-node server.js",
     "start": "nodemon --exec npm run babel-node",
     "dev": "DEBUG=4me.*,-4me.redux.logger npm run start",
