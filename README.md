@@ -2,7 +2,7 @@
 
 Simple nodejs proxy to fetch flight plans from NM B2B platform.
 
-[![Dependencies](https://david-dm.org/devteamreims/4me.b2b.flightPlanFetcher.svg)](https://david-dm.org/devteamreims/4me.b2b.flightPlanFetcher)
+[![build status](https://gitlab.com/devteamreims/4me.b2b.flightPlanFetcher/badges/master/build.svg)](https://gitlab.com/devteamreims/4me.b2b.flightPlanFetcher/commits/master)
 
 
 ## REST API
