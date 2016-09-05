@@ -1,3 +1,7 @@
+# v0.1.6
+  * Add npm-check script and integrates with gitlab-ci [#115](devteamreims/4ME#115)/[#45](devteamreims/4ME#45)
+  * More straightforward release process involving `npm version`
+
 # Version 0.1.5
   * Add Changelog
   * Add version in /status [#91](https://github.com/devteamreims/4ME/issues/91)
