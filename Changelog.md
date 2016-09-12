@@ -1,3 +1,7 @@
+# Master
+  * Use jest for testing
+  * Plug in gitlab build pipeline
+
 # v0.1.6
   * Add npm-check script and integrates with gitlab-ci [#115](devteamreims/4ME#115)/[#45](devteamreims/4ME#45)
   * More straightforward release process involving `npm version`

@@ -1,19 +1,49 @@
-image: node
+image: node:6
 
 cache:
+  untracked: true
+  key: "$CI_BUILD_REF_NAME"
   paths:
-  - node_modules/
-
-before_script:
-  - npm install --silent
+    - node_modules/
 
 stages:
   - build
   - test
+  - deploy
 
 check_deps:
   stage: build
   script:
+    - npm install --silent
     - npm run check-deps --silent
   allow_failure: true
 
+jest:
+  stage: test
+  script:
+    - npm install --silent
+    - npm test -- --coverage
+
+build_release_image:
+  stage: deploy
+  image: docker:git
+  services:
+    - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_TAG .
+    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
+  only:
+    - tags
+
+build_image:
+  stage: deploy
+  image: docker:git
+  services:
+    - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME .
+    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
+  only:
+    - master

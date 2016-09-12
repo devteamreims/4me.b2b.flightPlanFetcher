@@ -7,18 +7,18 @@
     "preversion": "git add Changelog.md",
     "babel-node": "babel-node server.js",
     "start": "nodemon --exec npm run babel-node",
+    "test": "jest",
     "dev": "DEBUG=4me.*,-4me.redux.logger npm run start",
-    "test": "NODE_ENV=test mocha --compilers js:babel-register --recursive",
     "check-deps": "npm-check --production"
   },
   "author": "Benjamin Beret <benjamin.beret@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "babel": "^6.3.26",
     "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-preset-es2015": "^6.14.0",
-    "babel-preset-es2015-node5": "^1.2.0",
+    "babel-preset-es2015-node6": "^0.3.0",
     "body-parser": "^1.15.2",
     "bunyan": "^1.8.1",
     "cors": "^2.8.0",
@@ -39,13 +39,18 @@
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
-    "chai-as-promised": "^5.2.0",
-    "chai-things": "^0.2.0",
-    "mocha": "^2.3.4",
-    "proxyquire": "^1.7.3",
-    "sinon": "^1.17.2",
-    "sinon-as-promised": "^4.0.0",
-    "sinon-chai": "^2.8.0"
+    "babel-jest": "^15.0.0",
+    "babel-polyfill": "^6.13.0",
+    "jest": "^15.1.1",
+    "mock-socket.io": "^1.1.0",
+    "nock": "^8.0.0",
+    "supertest": "^2.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/"
+    ]
   }
 }
