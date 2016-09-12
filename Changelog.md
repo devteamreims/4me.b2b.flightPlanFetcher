@@ -1,4 +1,4 @@
-# Master
+# v0.1.7
   * Use jest for testing
   * Plug in gitlab build pipeline
 
