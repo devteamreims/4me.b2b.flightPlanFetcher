@@ -1,12 +1,11 @@
+import {} from 'dotenv/config';
 import app from './index';
 import http from 'http';
 import d from 'debug';
 
-import dotenv from 'dotenv';
+
 
 // Import stuff from .env
-dotenv.config();
-
 let debug = d('4me.index');
 
 /**
