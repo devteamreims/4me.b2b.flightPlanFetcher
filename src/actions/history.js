@@ -159,22 +159,39 @@ import {
   nonVectorPoint
 } from '../lib/b2b/response-parser';
 
+import fp from 'lodash/fp';
 
-const findAirspace = (processedAirspaceProfile, pointProfileItem) => {
-  return _.find(
-    processedAirspaceProfile,
-    airspaceProfileItem => (
-      airspaceProfileItem.enter !== null
-      && airspaceProfileItem.exit !== null
-      && moment.utc(_.get(pointProfileItem, 'timeOver'))
-        .isBetween(
-          moment.utc(airspaceProfileItem.enter),
-          moment.utc(airspaceProfileItem.exit),
-          'second',
-          '[)'
-        )
+export const findAirspace = (processedAirspaceProfile, pointProfileItem) => {
+
+  // Sometimes, airspaces will cover each others
+  // We must first find possible airspace candidates (meaning our point timestamp is included into enter/exit airspace boundaries)
+
+  const candidates = fp.filter(airspaceProfileItem => (
+    airspaceProfileItem.enter !== null
+    && airspaceProfileItem.exit !== null
+    && moment.utc(_.get(pointProfileItem, 'timeOver'))
+      .isBetween(
+        moment.utc(airspaceProfileItem.enter),
+        moment.utc(airspaceProfileItem.exit),
+        'second',
+        '[)'
+      )
     )
-  ) || {};
+  )(processedAirspaceProfile);
+
+  // Here we calculate a distance to airspaceProfile enter/exit boundaries
+  const distanceToBoundaries = pointProfileItem => airspaceProfileItem => {
+    const distanceToEnter = moment.utc(pointProfileItem.timeOver) - moment.utc(airspaceProfileItem.enter);
+    const distanceToExit = moment.utc(airspaceProfileItem.exit) - moment.utc(pointProfileItem.timeOver);
+    return distanceToExit + distanceToEnter;
+  };
+
+  // Sort candidates by distance, return closest match
+  return fp.pipe(
+    fp.sortBy(distanceToBoundaries(pointProfileItem)),
+    fp.first
+  )(candidates) || {};
+
 };
 
 

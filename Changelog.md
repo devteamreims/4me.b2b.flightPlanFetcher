@@ -1,3 +1,7 @@
+# Master
+  * Specification tests
+  * Better airspace extrapolation [#122](devteamreims/4ME#122)
+
 # v0.1.7
   * Use jest for testing
   * Plug in gitlab build pipeline
