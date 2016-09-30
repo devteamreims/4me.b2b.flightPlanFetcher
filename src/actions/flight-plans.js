@@ -74,7 +74,7 @@ export function fetchFlight(callsign) {
         debug(err);
         const { message = 'Unknown error' } = err;
         dispatch(errorAction(message));
-        return Promise.reject(message);
+        return Promise.reject(err);
       });
 
     // Filter lastValidFlightPlanIds

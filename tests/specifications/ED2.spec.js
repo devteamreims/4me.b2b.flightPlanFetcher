@@ -15,8 +15,8 @@ test('have a maximum allowed size for server response', () => {
   return requestByCallsign('AFR1234')
     .then(() => expect(true).toBe(false))
     .catch(err => {
+      expect(b2bRemote.isDone()).toBe(true);
       delete process.env.B2B_MAX_REQUEST_SIZE;
-      nock.cleanAll();
       expect(err.message).toMatch(/MAX_REQUEST_SIZE/);
     });
 });
@@ -36,9 +36,10 @@ test('reject large downloads even if content-length header does not match', () =
   return requestByCallsign('AFR1234')
     .then(() => expect(true).toBe(false))
     .catch(err => {
+      expect(b2bRemote.isDone()).toBe(true);
       delete process.env.B2B_MAX_REQUEST_SIZE;
-      nock.cleanAll();
       expect(err.message).toMatch(/MAX_REQUEST_SIZE/);
     });
 
 });
+

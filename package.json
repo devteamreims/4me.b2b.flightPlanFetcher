@@ -44,6 +44,7 @@
     "jest": "^15.1.1",
     "mock-socket.io": "^1.1.0",
     "nock": "^8.0.0",
+    "node-uuid": "^1.4.7",
     "supertest": "^2.0.0"
   },
   "jest": {

@@ -51,7 +51,7 @@ const extractData = (data) => {
 let pfxContent;
 
 
-function myRequest() {
+function getRequestOptions() {
 
   if(process.env.NODE_ENV !== 'test' && pfxContent === undefined) {
     pfxContent = fs.readFileSync(process.env.B2B_CERT);
@@ -81,14 +81,14 @@ function myRequest() {
     delete requestOptions.agentOptions;
   }
 
-  return rp.defaults(requestOptions);
+  return requestOptions;
 }
 
 function postToB2B(data) {
   const MAX_REQUEST_SIZE = parseInt(process.env.B2B_MAX_REQUEST_SIZE) || 1024*1024*2; // 2MB
 
   return new Promise((resolve, reject) => {
-    const r = myRequest().post(data);
+    const r = rp.defaults(getRequestOptions()).post(data);
 
     let dataLen = 0;
 
