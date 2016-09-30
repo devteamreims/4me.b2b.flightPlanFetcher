@@ -28,7 +28,7 @@ export function refreshAutocomplete(trafficVolume = 'LFERMS', options = {}) {
 
 function completeAction(flights = []) {
 
-  opsLog({flights}, {autocompleteRefresh: true});
+  opsLog({flights, autocompleteRefresh: true}, "autocompleteRefresh");
 
   return {
     type: COMPLETE,

@@ -67,14 +67,14 @@ export function fetchFlight(callsign) {
           .value();
       })
       .then(processed => {
-        opsLog({callsign, reponse: processed}, {requestByCallsign: true});
+        opsLog({callsign, reponse: processed, requestByCallsign: true}, 'requestByCallsign');
         return processed;
       })
       .catch(err => {
         debug(err);
         const { message = 'Unknown error' } = err;
         dispatch(errorAction(message));
-        return Promise.reject(message);
+        return Promise.reject(err);
       });
 
     // Filter lastValidFlightPlanIds

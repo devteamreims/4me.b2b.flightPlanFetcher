@@ -39,8 +39,7 @@ export default function makeStore(socketIo) {
 
   setInterval(refreshCache, AUTOCOMPLETE_REFRESH_INTERVAL);
 
-  // For some reason, calling refreshCache synchronously fails, something to do with dotenv
-  setTimeout(refreshCache, 200);
+  refreshCache();
 
   return store;
 }
