@@ -87,7 +87,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
     // We have data in cache, return this
     if(!forceRefresh && !_.isEmpty(fromHistory)) {
       debug(`fetchProfile ${ifplId} : returning data from local cache`);
-      opsLog({ifplId, result: fromHistory, forceRefresh}, {fetchProfile: true});
+      opsLog({ifplId, result: fromHistory, forceRefresh, fetchProfile: true}, "fetchProfile");
       return Promise.resolve(fromHistory);
     }
 
@@ -131,7 +131,7 @@ export function fetchProfile(ifplId, forceRefresh = false) {
       })
       .then(formattedProfile => {
         dispatch(addToHistory(formattedProfile));
-        opsLog({ifplId, result: formattedProfile, forceRefresh}, {fetchProfile: true});
+        opsLog({ifplId, result: formattedProfile, forceRefresh, fetchProfile: true}, "fetchProfile");
         const socket = getSocket();
         if(socket && socket.emit) {
           debug('Emitting history update to sockets');
