@@ -161,7 +161,7 @@ import {
 
 import fp from 'lodash/fp';
 
-const findAirspace = (processedAirspaceProfile, pointProfileItem) => {
+export const findAirspace = (processedAirspaceProfile, pointProfileItem) => {
 
   // Sometimes, airspaces will cover each others
   // We must first find possible airspace candidates (meaning our point timestamp is included into enter/exit airspace boundaries)
