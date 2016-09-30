@@ -35,6 +35,7 @@ test('E4.2.3 : must raise error to clients in case of a b2b request error', () =
 
   return Promise.resolve()
     .then(checkReply)
-    .then(checkStatus);
+    .then(checkStatus)
+    .then(() => jest.resetModules());
 });
 

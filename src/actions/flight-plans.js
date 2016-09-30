@@ -67,7 +67,7 @@ export function fetchFlight(callsign) {
           .value();
       })
       .then(processed => {
-        opsLog({callsign, reponse: processed}, {requestByCallsign: true});
+        opsLog({callsign, reponse: processed, requestByCallsign: true}, 'requestByCallsign');
         return processed;
       })
       .catch(err => {
