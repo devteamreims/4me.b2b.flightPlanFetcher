@@ -35,7 +35,7 @@ import {
 function toJS(input) {
   const callback = (resolve, reject) => (err, stdout, stderr) => {
     if(err) {
-      return reject(err);
+      return reject(new Error('Unable to parse invalid data'));
     }
     return resolve(stdout);
   };
@@ -53,7 +53,7 @@ let pfxContent;
 
 function myRequest() {
 
-  if(pfxContent === undefined) {
+  if(process.env.NODE_ENV !== 'test' && pfxContent === undefined) {
     pfxContent = fs.readFileSync(process.env.B2B_CERT);
   }
 
@@ -66,15 +66,55 @@ function myRequest() {
   const requestOptions = {
     uri: nmUrl,
     agentOptions: {
-        pfx: pfxContent,
-        passphrase: process.env.B2B_KEY
+      pfx: pfxContent,
+      passphrase: process.env.B2B_KEY,
+
     },
     headers: {
-        'Content-Type': 'text/xml'
+      'Content-Type': 'text/xml'
     },
+    timeout: parseInt(process.env.B2B_MAX_REQUEST_TIME, 10) || 30*1000, // 30 seconds timeout
   };
 
+  // In test env, do not use certificate to sign requests
+  if(process.env.NODE_ENV === 'test') {
+    delete requestOptions.agentOptions;
+  }
+
   return rp.defaults(requestOptions);
+}
+
+function postToB2B(data) {
+  const MAX_REQUEST_SIZE = parseInt(process.env.B2B_MAX_REQUEST_SIZE) || 1024*1024*2; // 2MB
+
+  return new Promise((resolve, reject) => {
+    const r = myRequest().post(data);
+
+    let dataLen = 0;
+
+    r.on('data', data => {
+      dataLen += _.size(data);
+
+      if(dataLen > MAX_REQUEST_SIZE) {
+        debug(`Aborting request due to B2B_MAX_REQUEST_SIZE : ${MAX_REQUEST_SIZE}`);
+        reject(new Error('Response exceeds B2B_MAX_REQUEST_SIZE'));
+        r.abort();
+      }
+    });
+
+
+    r.on('response', res => {
+      const headerSize = _.get(res, 'headers.content-length', 0);
+
+      if(headerSize > MAX_REQUEST_SIZE) {
+        debug(`Aborting request due to B2B_MAX_REQUEST_SIZE : ${MAX_REQUEST_SIZE}`);
+        reject(new Error('Response exceeds B2B_MAX_REQUEST_SIZE'));
+        r.abort();
+      }
+    });
+
+    r.then(resolve, reject);
+  });
 }
 
 
@@ -83,8 +123,7 @@ export function requestByCallsign(callsign, options = {}) {
   debug('requestByCallsign');
   debug(body);
 
-  return myRequest()
-    .post({body})
+  return postToB2B({body})
     .then(toJS)
     .then(extractData)
     .then(parseFlightPlanListReply);
@@ -96,8 +135,7 @@ export function requestByIfplId(ifplId, options = {}) {
   debug('requestByIfplId');
   debug(body);
 
-  return myRequest()
-    .post({body})
+  return postToB2B({body})
     .then(toJS)
     .then(extractData);
 }
@@ -122,8 +160,7 @@ export function requestByTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
 
   const body = queryInTrafficVolume(trafficVolume, options);
 
-  return myRequest()
-    .post({body})
+  return postToB2B({body})
     .then(toJS)
     .then(extractData)
     .then(d => _.get(d, 'flight:FlightListByTrafficVolumeReply', {}))
@@ -136,8 +173,7 @@ export function requestByTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
 export function requestByAirspace(airspace = 'LFEERMS', options = {}) {
   const body = queryInAirspace(airspace, options);
 
-  return myRequest()
-    .post({body})
+  return postToB2B({body})
     .then(toJS)
     .then(extractData)
     .then(d => _.get(d, 'flight:FlightListByAirspaceReply', {}))
@@ -155,8 +191,7 @@ export function requestProfile(callsign, dep, dest, eobt, options = {}) {
 
   const body = retrieveFlight(callsign, dep, dest, eobt);
 
-  return myRequest()
-    .post({body})
+  return postToB2B({body})
     .then(toJS)
     .then(extractData)
     .then(parseFlightRetrievalReply);

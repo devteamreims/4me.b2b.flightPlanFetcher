@@ -1,5 +1,5 @@
-xdescribe('E4.2.2 : must not crash when receiving a malformed B2B response', () => {
-  test('', () => {
-    expect(true).toBe(true);
-  });
+test('be resilient', () => {
+  // See files ED1.spec.js, ED2.spec.js and ED3.spec.js
+  expect(true).toBe(true);
 });
+
