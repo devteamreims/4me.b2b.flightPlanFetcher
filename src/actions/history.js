@@ -240,7 +240,7 @@ function parseAirspaceProfile(flight) {
   const profile = _.get(flight, 'rtfmAirspaceProfile') || _.get(flight, 'ftfmAirspaceProfile');
 
   return _(profile)
-    .filter(byAirspaceType('AUA'))
+    .filter(byAirspaceType('ES'))
     .map(parseAirspaceProfileItem)
     .value();
 }
