@@ -3,8 +3,6 @@ import nock from 'nock';
 import _ from 'lodash';
 import fp from 'lodash/fp';
 
-import Promise from 'bluebird';
-
 describe('E3.5.1 : must produce logs for incoming requests', () => {
   const mockRequestByCallsign = () => Promise.resolve({
     body: {
@@ -41,7 +39,7 @@ describe('E3.5.1 : must produce logs for incoming requests', () => {
 
     return Promise.resolve()
       .then(performQuery)
-      .finally(() => {
+      .then(() => {
         const logRecord = fp.pipe(
           fp.get('LOG_STREAM.records'),
           fp.last
@@ -49,6 +47,9 @@ describe('E3.5.1 : must produce logs for incoming requests', () => {
 
         expect(logRecord.payload.requestByCallsign).toBe(true);
         expect(logRecord.payload.callsign).toBe(callsign);
+      })
+      .catch(() => {
+        expect(true).toBe(false);
       });
   });
 });
