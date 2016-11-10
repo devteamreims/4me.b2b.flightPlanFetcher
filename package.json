@@ -7,7 +7,6 @@
     "preversion": "git add Changelog.md",
     "babel-node": "babel-node server.js",
     "start": "nodemon --exec npm run babel-node",
-    "prepare-whitelist": "babel-node scripts/refreshWhitelist.js",
     "test": "jest",
     "dev": "DEBUG=4me.*,-4me.redux.logger npm run start",
     "check-deps": "npm-check --production"
