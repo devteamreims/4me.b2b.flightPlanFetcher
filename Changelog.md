@@ -1,4 +1,6 @@
 # Master
+  * Inject airspaces based on a whitelist (devteamreims/4ME#66)
+  * Add a `npm run prepare-whitelist` to pull current ES whitelist from B2B (devteamreims/4ME#66)
   * Specification tests
   * Better airspace extrapolation [#122](devteamreims/4ME#122)
 

@@ -11,4 +11,4 @@ COPY . /usr/src/app/
 ENV PORT 3102
 EXPOSE ${PORT}
 
-CMD ["npm", "start"]
+CMD npm run prepare-whitelist && npm start

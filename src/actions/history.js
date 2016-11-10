@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import R from 'ramda';
 import d from 'debug';
 const debug = d('4me.history.actions');
 
@@ -174,7 +175,7 @@ export const findAirspace = (processedAirspaceProfile, pointProfileItem) => {
         moment.utc(airspaceProfileItem.enter),
         moment.utc(airspaceProfileItem.exit),
         'second',
-        '[)'
+        '[]'
       )
     )
   )(processedAirspaceProfile);
@@ -199,7 +200,7 @@ export const findAirspace = (processedAirspaceProfile, pointProfileItem) => {
 const mergeAirspaces = processedAirspaceProfile => pointProfileItem => {
   const airspace = _.pick(
     findAirspace(processedAirspaceProfile, pointProfileItem),
-    ['name', 'center']
+    ['name', 'center', 'fullname']
   );
 
   return {
@@ -220,16 +221,25 @@ function parseProfile(flight) {
 }
 
 
-const byAirspaceType = (type) => (airspaceProfileItem) => _.get(airspaceProfileItem, 'airspaceType') === type;
+import { readFileSync } from 'fs';
+
+import { isWhitelisted } from '../lib/b2b/whitelist';
+
+const byAirspaceType = (type) => (airspaceProfileItem) =>
+  _.get(airspaceProfileItem, 'airspaceType') === type &&
+  isWhitelisted(_.get(airspaceProfileItem, 'airspaceId'));
+
+const byWhitelist = airspaceProfileItem => isWhitelisted(R.prop('airspaceId', airspaceProfileItem));
 
 const parseAirspaceProfileItem = (airspaceProfileItem) => {
   const get = (path, defaultValue) => _.get(airspaceProfileItem, path, defaultValue);
 
-  const name = get('airspaceId', 'XXXX');
-  const center = name.substr(0, 4);
+  const fullname = get('airspaceId', 'XXXX');
+  const [center, name] = R.splitAt(4, fullname);
 
   return {
     name,
+    fullname,
     center,
     enter: moment.utc(get('firstEntryTime')) || null,
     exit: moment.utc(get('lastExitTime')) || null,
@@ -240,7 +250,7 @@ function parseAirspaceProfile(flight) {
   const profile = _.get(flight, 'rtfmAirspaceProfile') || _.get(flight, 'ftfmAirspaceProfile');
 
   return _(profile)
-    .filter(byAirspaceType('ES'))
+    .filter(byWhitelist)
     .map(parseAirspaceProfileItem)
     .value();
 }

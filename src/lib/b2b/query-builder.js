@@ -2,10 +2,31 @@ import moment from 'moment';
 import _ from 'lodash';
 
 const b2bTimeFormat = 'YYYY-MM-DD HH:mm';
+const b2bDateFormat = 'YYYY-MM-DD';
 const b2bTimeFormatWithSeconds = b2bTimeFormat + ':ss';
 
 const b2bFormatDuration = (str) => _.padStart(_.take(`${str}`, 4).join(''), 4, '0');
 
+
+export function queryCompleteAIXMDataset() {
+  const sendTime = moment.utc().format(b2bTimeFormatWithSeconds);
+  const wef = moment.utc().subtract(28, 'days').format(b2bDateFormat);
+  const unt = moment.utc(sendTime).format(b2bDateFormat);
+
+  const query = `
+    <air:CompleteAIXMDatasetRequest>
+      <sendTime>${sendTime}</sendTime>
+      <queryCriteria>
+        <publicationPeriod>
+          <wef>${wef}</wef>
+          <unt>${unt}</unt>
+        </publicationPeriod>
+      </queryCriteria>
+    </air:CompleteAIXMDatasetRequest>
+  `;
+
+  return airspaceServiceSoapEnvelope(query);
+}
 
 export function queryInTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
 
@@ -202,6 +223,17 @@ export function retrieveFlight(callsign, dep, dest, eobt, options = {}) {
 function soapEnvelope(content) {
   return `
     <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flight="eurocontrol/cfmu/b2b/FlightServices">
+      <soap:Header></soap:Header>
+      <soap:Body>
+        ${content}
+      </soap:Body>
+    </soap:Envelope>
+  `;
+}
+
+function airspaceServiceSoapEnvelope(content) {
+  return `
+    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:air="eurocontrol/cfmu/b2b/AirspaceServices">
       <soap:Header></soap:Header>
       <soap:Body>
         ${content}

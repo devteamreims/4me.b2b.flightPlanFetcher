@@ -7,6 +7,7 @@
     "preversion": "git add Changelog.md",
     "babel-node": "babel-node server.js",
     "start": "nodemon --exec npm run babel-node",
+    "prepare-whitelist": "babel-node scripts/refreshWhitelist.js",
     "test": "jest",
     "dev": "DEBUG=4me.*,-4me.redux.logger npm run start",
     "check-deps": "npm-check --production"
@@ -30,12 +31,16 @@
     "morgan": "^1.6.1",
     "nodemon": "^1.10.2",
     "npm-check": "^5.2.3",
+    "ramda": "^0.22.1",
     "redux": "^3.5.2",
     "redux-freeze": "^0.1.4",
     "redux-logger": "^2.5.2",
     "redux-thunk": "^2.1.0",
+    "request": "^2.78.0",
     "request-promise": "^4.1.1",
     "socket.io": "^1.4.8",
+    "unzip": "^0.1.11",
+    "xml-stream": "^0.4.5",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {

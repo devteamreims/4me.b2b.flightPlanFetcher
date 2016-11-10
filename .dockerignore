@@ -4,3 +4,4 @@ certs/*
 .env
 node_modules
 npm-debug.log
+whitelist.json

@@ -21,7 +21,8 @@ import {
   queryInTrafficVolume,
   queryInAirspace,
   retrieveFlight,
-  flightKeysFromIfplId
+  flightKeysFromIfplId,
+  queryCompleteAIXMDataset,
 } from './query-builder';
 
 import {
@@ -51,7 +52,7 @@ const extractData = (data) => {
 let pfxContent;
 
 
-function getRequestOptions() {
+export function getRequestOptions() {
 
   if(process.env.NODE_ENV !== 'test' && pfxContent === undefined) {
     pfxContent = fs.readFileSync(process.env.B2B_CERT);
@@ -195,4 +196,14 @@ export function requestProfile(callsign, dep, dest, eobt, options = {}) {
     .then(toJS)
     .then(extractData)
     .then(parseFlightRetrievalReply);
+}
+
+export function requestLatestAixmAirspace() {
+  const sendTime = moment.utc().format(timeFormatWithSeconds);
+
+  const body = queryCompleteAIXMDataset();
+
+  return postToB2B({body})
+    .then(toJS)
+    .then(extractData);
 }
