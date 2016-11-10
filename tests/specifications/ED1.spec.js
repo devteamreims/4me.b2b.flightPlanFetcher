@@ -14,9 +14,8 @@ test('have a request timeout', () => {
     .then(() => expect(true).toBe(false))
     .catch(err => {
       expect(b2bRemote.isDone()).toBe(true);
+      expect(err.message).toMatch(/E(SOCKET)?TIMEDOUT/);
+
       delete process.env.B2B_MAX_REQUEST_TIME;
-      expect(err.message).toMatch(/ETIMEDOUT/);
     });
 });
-
-
