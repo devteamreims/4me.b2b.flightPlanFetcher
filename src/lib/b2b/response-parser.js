@@ -16,6 +16,8 @@ export function parseFlightPlanListReply(input) {
 
   const body = _.get(reply, 'data');
 
+  debug(body);
+
   return {
     status,
     body

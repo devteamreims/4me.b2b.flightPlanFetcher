@@ -106,13 +106,14 @@ export function fetchProfile(ifplId, forceRefresh = false) {
           if(!str) {
             return 0;
           }
-          const hours = parseInt(str.substr(0, 2)) || 0;
-          const minutes = (parseInt(str.substr(2)) || 0) + hours * 60;
+          const hours = parseInt(str.substr(0, 2), 10) || 0;
+          const minutes = (parseInt(str.substr(2), 10) || 0) + hours * 60;
           return minutes;
         };
 
         const delay = formatDelay(_.get(flight, 'delay', 0));
         const aircraftType = _.get(flight, 'aircraftType', 'ZZZZ');
+
 
         const pointProfile = parseProfile(flight);
         const airspaceProfile = parseAirspaceProfile(flight);

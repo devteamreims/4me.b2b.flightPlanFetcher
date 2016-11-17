@@ -1,4 +1,5 @@
 # Master
+  * Use B2B V20.0.0
   * Make the whitelist pull more resilient
   * Introduce `MOCK_WHITELIST` env variable as a way to prevent whitelist pull from the B2B
 
