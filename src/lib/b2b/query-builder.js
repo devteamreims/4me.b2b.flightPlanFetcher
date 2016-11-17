@@ -58,10 +58,10 @@ export function queryInTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
      <trafficVolume>${trafficVolume}</trafficVolume>
   `);
 
-  return soapEnvelope(`
-    <flight:FlightListByTrafficVolumeRequest>
+  return flightSoapEnvelope(`
+    <flig:FlightListByTrafficVolumeRequest>
       ${query}
-    </flight:FlightListByTrafficVolumeRequest>
+    </flig:FlightListByTrafficVolumeRequest>
   `);
 }
 
@@ -95,10 +95,10 @@ export function queryInAirspace(airspace = 'LFEERMS', options = {}) {
      <airspace>${airspace}</airspace>
   `);
 
-  return soapEnvelope(`
-    <flight:FlightListByAirspaceRequest>
+  return flightSoapEnvelope(`
+    <flig:FlightListByAirspaceRequest>
       ${query}
-    </flight:FlightListByAirspaceRequest>
+    </flig:FlightListByAirspaceRequest>
   `);
 }
 
@@ -124,10 +124,10 @@ export function queryFlightPlans(callsign, options = {}) {
     </estimatedOffBlockTime>
   `);
 
-  return soapEnvelope(`
-    <flight:FlightPlanListRequest xmlns:flight="eurocontrol/cfmu/b2b/FlightServices" xmlns:common="eurocontrol/cfmu/b2b/CommonServices" xmlns:airspace="eurocontrol/cfmu/b2b/AirspaceServices" xmlns:flow="eurocontrol/cfmu/b2b/FlowServices">
+  return flightSoapEnvelope(`
+    <flig:FlightPlanListRequest>
       ${query}
-    </flight:FlightPlanListRequest>
+    </flig:FlightPlanListRequest>
   `);
 }
 
@@ -150,10 +150,10 @@ export function flightKeysFromIfplId(ifplId, options = {}) {
     <requestedFlightDatasets>flightPlan</requestedFlightDatasets>
   `);
 
-  return soapEnvelope(`
-    <flight:FlightRetrievalRequest>
+  return flightSoapEnvelope(`
+    <flig:FlightRetrievalRequest>
       ${query}
-    </flight:FlightRetrievalRequest>
+    </flig:FlightRetrievalRequest>
   `);
 }
 
@@ -213,31 +213,31 @@ export function retrieveFlight(callsign, dep, dest, eobt, options = {}) {
     <requestedFlightFields>aircraftType</requestedFlightFields>
   `);
 
-  return soapEnvelope(`
-    <flight:FlightRetrievalRequest>
+  return flightSoapEnvelope(`
+    <flig:FlightRetrievalRequest>
       ${query}
-    </flight:FlightRetrievalRequest>
+    </flig:FlightRetrievalRequest>
   `);
 }
 
-function soapEnvelope(content) {
+function flightSoapEnvelope(content) {
   return `
-    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flight="eurocontrol/cfmu/b2b/FlightServices">
-      <soap:Header></soap:Header>
-      <soap:Body>
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:flig="eurocontrol/cfmu/b2b/FlightServices">
+      <soapenv:Header/>
+      <soapenv:Body>
         ${content}
-      </soap:Body>
-    </soap:Envelope>
+      </soapenv:Body>
+    </soapenv:Envelope>
   `;
 }
 
 function airspaceServiceSoapEnvelope(content) {
   return `
-    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:air="eurocontrol/cfmu/b2b/AirspaceServices">
-      <soap:Header></soap:Header>
-      <soap:Body>
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:air="eurocontrol/cfmu/b2b/AirspaceServices">
+      <soapenv:Header/>
+      <soapenv:Body>
         ${content}
-      </soap:Body>
-    </soap:Envelope>
+      </soapenv:Body>
+    </soapenv:Envelope>
   `;
 }

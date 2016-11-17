@@ -11,6 +11,7 @@ import {
 } from '../logger';
 
 import _ from 'lodash';
+import R from 'ramda';
 
 import moment from 'moment';
 
@@ -26,45 +27,53 @@ export function fetchFlight(callsign) {
     // Fetch from B2B
     return requestByCallsign(callsign)
       .then(resp => {
-        let flightPlans = _.get(resp, 'body.summaries');
-        if(!_.isArray(flightPlans)) {
+        let flightPlans = R.pathOr([], ['body', 'summaries'], resp);
+        if(!R.isArrayLike(flightPlans)) {
           flightPlans = [flightPlans];
         }
 
-        return _(flightPlans)
-          .map(flightPlan => {
-            debug(flightPlan);
-            const fp = _.get(flightPlan, 'lastValidFlightPlanId');
+        const withStatus = status => R.propEq('status', status);
 
-            if(!fp) {
-              return;
+        return R.pipe(
+          R.map(R.propOr({}, 'lastValidFlightPlan')),
+          R.reject(withStatus('BACKUP')),
+          R.map(flightPlan => {
+            const status = R.propOr('UNKNOWN', 'status', flightPlan);
+
+            const ifplId = R.path(['id', 'id'], flightPlan);
+            if(!ifplId) {
+              return null;
             }
 
-            const ifplId = _.get(fp, 'id');
-            const callsign = _.get(fp, 'keys.aircraftId');
-            const departure = _.get(fp, 'keys.aerodromeOfDeparture', 'ZZZZ');
-            const destination = _.get(fp, 'keys.aerodromeOfDestination', 'ZZZZ');
-            const eobt = _.get(fp, 'keys.estimatedOffBlockTime');
+            const cs = R.pathOr(callsign, ['id', 'keys', 'aircraftId'], flightPlan);
+            const departure = R.pathOr('ZZZZ', ['id', 'keys', 'aerodromeOfDeparture'], flightPlan);
+            const destination = R.pathOr('ZZZZ', ['id', 'keys', 'aerodromeOfDestination'], flightPlan);
+
+            const eobt = R.path(['id', 'keys', 'estimatedOffBlockTime'], flightPlan);
             const fetched = moment.utc().format();
 
             const flight = {
               ifplId,
-              callsign,
+              status,
+              callsign: cs,
               departure,
               destination,
               eobt,
-              fetched
+              fetched,
             };
 
             return flight;
-          })
-          .compact()
-          .uniqBy(f => f.ifplId)
-          .map(f => {
-            dispatch({type: ADD_FLIGHT_PLAN, ...f});
+          }),
+          R.reject(R.isNil),
+          R.uniqBy(R.prop('ifplId')),
+          R.map(f => {
+            dispatch({
+              type: ADD_FLIGHT_PLAN,
+              ...f
+            });
             return f;
-          })
-          .value();
+          }),
+        )(flightPlans);
       })
       .then(processed => {
         opsLog({callsign, reponse: processed, requestByCallsign: true}, 'requestByCallsign');
@@ -76,13 +85,6 @@ export function fetchFlight(callsign) {
         dispatch(errorAction(message));
         return Promise.reject(err);
       });
-
-    // Filter lastValidFlightPlanIds
-
-    // Dispatch ADD_FLIGHT_PLAN with proper keys
-
-    // Return thenable promise
-
   };
 }
 
