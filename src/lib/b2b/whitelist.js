@@ -24,7 +24,7 @@ export function isWhitelisted(sector) {
 /**
  * Utility functions
  */
-const extractDatasets = R.path([
+const extractDatasets = R.pathOr([], [
   'airspace:CompleteAIXMDatasetReply',
   'data',
   'datasetSummaries',
@@ -41,11 +41,17 @@ const matchAirspace = R.pipe(
   R.test(/Airspace/),
 );
 
-const getFilepath = R.pipe(
-  R.prop('files'),
-  R.find(matchAirspace),
-  R.pick(['id', 'releaseTime']),
-);
+const getFilepath = data => {
+  if(!data || R.isEmpty(data)) {
+    throw new Error('No whitelist data found');
+  }
+
+  return R.pipe(
+    R.prop('files'),
+    R.find(matchAirspace),
+    R.pick(['id', 'releaseTime']),
+  )(data);
+};
 
 // On startup, fetch whitelist
 getWhitelist()
@@ -61,7 +67,11 @@ const prepareDatasetUrl = filePath => `https://www.b2b.nm.eurocontrol.int/FILE_O
  */
 function getWhitelist() {
 
-  if(process.env.NODE_ENV === 'test') {
+  if(
+    process.env.NODE_ENV === 'test' ||
+    process.env.MOCK_WHITELIST
+  ) {
+    debug('Using fake whitelist');
     return Promise.resolve(['LFEEKD', 'LFEEUR', 'LFEEKR']);
   }
 
@@ -110,5 +120,10 @@ function getWhitelist() {
       debug(`Pulled ${res.length} sectors in ${duration.seconds()} seconds`);
 
       return res;
+    })
+    .catch(err => {
+      // We have some error, log it and return an empty whitelist
+      debug(err);
+      return [];
     });
 }

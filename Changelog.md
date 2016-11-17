@@ -1,3 +1,7 @@
+# Master
+  * Make the whitelist pull more resilient
+  * Introduce `MOCK_WHITELIST` env variable as a way to prevent whitelist pull from the B2B
+
 # v0.2.0-0
   * Inject airspaces based on a whitelist (devteamreims/4ME#66)
   * Add a `npm run prepare-whitelist` to pull current ES whitelist from B2B (devteamreims/4ME#66)
