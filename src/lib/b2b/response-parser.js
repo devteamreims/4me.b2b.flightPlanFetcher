@@ -30,7 +30,9 @@ export function parsePoint(point) {
 
   const flightLevel = _.get(point, 'flightLevel.level', 0);
 
-  const name = _.get(point, 'point.pointId', '');
+  const name = _.get(point, 'point.pointId') ||
+    _.get(point, 'point.nonPublishedPoint-DBEPoint.dbePointId') ||
+    '';
 
   const trend = _.get(point, 'exitTrend', 'CRUISE');
 
