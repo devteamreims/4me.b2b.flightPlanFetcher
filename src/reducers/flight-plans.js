@@ -28,5 +28,6 @@ export function actionToObject(action) {
     'destination',
     'eobt',
     'fetched',
+    'status',
   ]);
 }

@@ -38,13 +38,12 @@ export function fetchFlight(callsign) {
           R.map(R.propOr({}, 'lastValidFlightPlan')),
           R.reject(withStatus('BACKUP')),
           R.map(flightPlan => {
-            const status = R.propOr('UNKNOWN', 'status', flightPlan);
-
             const ifplId = R.path(['id', 'id'], flightPlan);
             if(!ifplId) {
               return null;
             }
 
+            const status = R.propOr('UNKNOWN', 'status', flightPlan);
             const cs = R.pathOr(callsign, ['id', 'keys', 'aircraftId'], flightPlan);
             const departure = R.pathOr('ZZZZ', ['id', 'keys', 'aerodromeOfDeparture'], flightPlan);
             const destination = R.pathOr('ZZZZ', ['id', 'keys', 'aerodromeOfDestination'], flightPlan);
