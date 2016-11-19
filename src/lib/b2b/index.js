@@ -191,6 +191,7 @@ export function requestProfile(callsign, dep, dest, eobt, options = {}) {
   const formattedEobt = moment(new Date(eobt)).format(timeFormat);
 
   const body = retrieveFlight(callsign, dep, dest, eobt);
+  debug(body);
 
   return postToB2B({body})
     .then(toJS)
