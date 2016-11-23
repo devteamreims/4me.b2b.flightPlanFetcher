@@ -1,6 +1,6 @@
 import nock from 'nock';
 
-import { requestByCallsign } from '../../src/lib/b2b';
+import { postToB2B } from '../../src/lib/b2b';
 
 test('have a request timeout', () => {
   const b2bRemote = nock(process.env.B2B_URL)
@@ -10,7 +10,7 @@ test('have a request timeout', () => {
 
   process.env.B2B_MAX_REQUEST_TIME = 300;
 
-  return requestByCallsign('AFR1234')
+  return postToB2B({body: ''})
     .then(() => expect(true).toBe(false))
     .catch(err => {
       expect(b2bRemote.isDone()).toBe(true);
