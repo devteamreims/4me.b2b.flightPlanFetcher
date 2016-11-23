@@ -63,8 +63,6 @@ export function refreshAutocomplete(airspace = 'LFEERMS', options = {}) {
 }
 
 function completeAction(flights = []) {
-
-  console.log('CACA');
   opsLog({flights, autocompleteRefresh: true}, "autocompleteRefresh");
 
   return {
