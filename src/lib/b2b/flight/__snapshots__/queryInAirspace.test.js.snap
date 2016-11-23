@@ -31,6 +31,39 @@ exports[`queryInAirspace query builder should have proper defaults 1`] = `
   "
 `;
 
+exports[`queryInAirspace query builder should match snapshot 1`] = `
+"
+    <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:flig=\"eurocontrol/cfmu/b2b/FlightServices\">
+      <soapenv:Header/>
+      <soapenv:Body>
+        
+    <flig:FlightListByAirspaceRequest>
+      
+     <sendTime>2016-11-23 10:52:35</sendTime>
+     <dataset>
+        <type>OPERATIONAL</type>
+     </dataset>
+     <includeProposalFlights>false</includeProposalFlights>
+     <trafficType>LOAD</trafficType>
+     <trafficWindow>
+        <wef>2016-11-23 10:42</wef>
+        <unt>2016-11-23 11:12</unt>
+     </trafficWindow>
+     <countsInterval>
+        <duration>0011</duration>
+        <step>0001</step>
+     </countsInterval>
+     <!--Optional:-->
+     <calculationType>OCCUPANCY</calculationType>
+     <airspace>MOCKAIRSPACE</airspace>
+  
+    </flig:FlightListByAirspaceRequest>
+  
+      </soapenv:Body>
+    </soapenv:Envelope>
+  "
+`;
+
 exports[`queryInAirspace query builder should reject invalid arguments 1`] = `"Argument error: airspace should be a string"`;
 
 exports[`queryInAirspace query builder should reject invalid arguments 2`] = `"Argument error: airspace should be a string"`;

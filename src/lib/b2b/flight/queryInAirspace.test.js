@@ -31,6 +31,10 @@ describe('queryInAirspace', () => {
     test('should accept an airspace as argument', () => {
       expect(query('MOCKAIRSPACE')).toMatch(/MOCKAIRSPACE/);
     });
+
+    test('should match snapshot', () => {
+      expect(query('MOCKAIRSPACE')).toMatchSnapshot();
+    });
   });
 
   describe('response parser', () => {
