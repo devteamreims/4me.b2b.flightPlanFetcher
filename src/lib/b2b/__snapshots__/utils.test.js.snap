@@ -1,0 +1,29 @@
+exports[`b2b envelopes airspaceService should check arguments 1`] = `"Invalid argument : please provide a String"`;
+
+exports[`b2b envelopes airspaceService should check arguments 2`] = `"Invalid argument : please provide a String"`;
+
+exports[`b2b envelopes airspaceService should match snapshot 1`] = `
+"
+    <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:air=\"eurocontrol/cfmu/b2b/AirspaceServices\">
+      <soapenv:Header/>
+      <soapenv:Body>
+        payload
+      </soapenv:Body>
+    </soapenv:Envelope>
+  "
+`;
+
+exports[`b2b envelopes flightService should check arguments 1`] = `"Invalid argument : please provide a String"`;
+
+exports[`b2b envelopes flightService should check arguments 2`] = `"Invalid argument : please provide a String"`;
+
+exports[`b2b envelopes flightService should match snapshot 1`] = `
+"
+    <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:flig=\"eurocontrol/cfmu/b2b/FlightServices\">
+      <soapenv:Header/>
+      <soapenv:Body>
+        payload
+      </soapenv:Body>
+    </soapenv:Envelope>
+  "
+`;

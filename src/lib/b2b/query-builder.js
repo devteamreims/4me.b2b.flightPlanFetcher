@@ -1,12 +1,14 @@
 import moment from 'moment';
 import _ from 'lodash';
 
-const b2bTimeFormat = 'YYYY-MM-DD HH:mm';
-const b2bDateFormat = 'YYYY-MM-DD';
-const b2bTimeFormatWithSeconds = b2bTimeFormat + ':ss';
-
-const b2bFormatDuration = (str) => _.padStart(_.take(`${str}`, 4).join(''), 4, '0');
-
+import {
+  flightSoapEnvelope,
+  airspaceServiceSoapEnvelope,
+  b2bTimeFormat,
+  b2bDateFormat,
+  b2bTimeFormatWithSeconds,
+  b2bFormatDuration,
+} from './utils';
 
 export function queryCompleteAIXMDataset() {
   const sendTime = moment.utc().format(b2bTimeFormatWithSeconds);
@@ -218,26 +220,4 @@ export function retrieveFlight(callsign, dep, dest, eobt, options = {}) {
       ${query}
     </flig:FlightRetrievalRequest>
   `);
-}
-
-function flightSoapEnvelope(content) {
-  return `
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:flig="eurocontrol/cfmu/b2b/FlightServices">
-      <soapenv:Header/>
-      <soapenv:Body>
-        ${content}
-      </soapenv:Body>
-    </soapenv:Envelope>
-  `;
-}
-
-function airspaceServiceSoapEnvelope(content) {
-  return `
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:air="eurocontrol/cfmu/b2b/AirspaceServices">
-      <soapenv:Header/>
-      <soapenv:Body>
-        ${content}
-      </soapenv:Body>
-    </soapenv:Envelope>
-  `;
 }
