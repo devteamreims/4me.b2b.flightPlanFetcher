@@ -17,13 +17,20 @@ describe('E3.5.1 : must produce logs for incoming requests', () => {
         refreshAutocomplete: () => ({type: 'MOCK_ACTION'}),
       };
     });
-    // Mock requestByCallsign
+    // Mock lib b2b
+    jest.mock('../../src/lib/b2b/flight/queryFlightPlans', () => {
+      return {
+        parseResponse: mockRequestByCallsign,
+        queryByCallsign: () => '',
+      };
+    });
 
     jest.mock('../../src/lib/b2b/index', () => {
       return {
-        requestByCallsign: mockRequestByCallsign,
+        postToB2B: () => Promise.resolve({}),
       };
     });
+
   });
 
   afterEach(() => {

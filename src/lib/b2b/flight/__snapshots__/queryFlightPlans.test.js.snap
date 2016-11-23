@@ -1,0 +1,184 @@
+exports[`queryFlightPlans byCallsign builder should match snapshot 1`] = `
+"
+    <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:flig=\"eurocontrol/cfmu/b2b/FlightServices\">
+      <soapenv:Header/>
+      <soapenv:Body>
+        
+    <flig:FlightPlanListRequest>
+      
+    <sendTime>2016-11-23 10:52:35</sendTime>
+    <aircraftId>AFR1234</aircraftId>
+    <nonICAOAerodromeOfDeparture>false</nonICAOAerodromeOfDeparture>
+    <airFiled>false</airFiled>
+    <nonICAOAerodromeOfDestination>false</nonICAOAerodromeOfDestination>
+    <estimatedOffBlockTime>
+      <wef>2016-11-22 22:52</wef>
+      <unt>2016-11-23 22:52</unt>
+    </estimatedOffBlockTime>
+  
+    </flig:FlightPlanListRequest>
+  
+      </soapenv:Body>
+    </soapenv:Envelope>
+  "
+`;
+
+exports[`queryFlightPlans byCallsign builder should reject invalid arguments 1`] = `"Argument error: callsign should be a string"`;
+
+exports[`queryFlightPlans byCallsign builder should reject invalid arguments 2`] = `"Argument error: callsign should be a string"`;
+
+exports[`queryFlightPlans byCallsign builder should reject invalid arguments 3`] = `"Argument error: options should be an object"`;
+
+exports[`queryFlightPlans response parser should handle multiple response 1`] = `
+Object {
+  "$": Object {
+    "xmlns:airspace": "eurocontrol/cfmu/b2b/AirspaceServices",
+    "xmlns:common": "eurocontrol/cfmu/b2b/CommonServices",
+    "xmlns:flight": "eurocontrol/cfmu/b2b/FlightServices",
+    "xmlns:flow": "eurocontrol/cfmu/b2b/FlowServices",
+  },
+  "data": Object {
+    "summaries": Array [
+      Object {
+        "lastValidFlightPlan": Object {
+          "id": Object {
+            "id": "AA58780893",
+            "keys": Object {
+              "aerodromeOfDeparture": "DAUA",
+              "aerodromeOfDestination": "LEMD",
+              "airFiled": "false",
+              "aircraftId": "OEGMI",
+              "estimatedOffBlockTime": "2016-11-23 09:00",
+              "nonICAOAerodromeOfDeparture": "false",
+              "nonICAOAerodromeOfDestination": "false",
+            },
+          },
+          "status": "CLOSED",
+        },
+      },
+      Object {
+        "lastValidFlightPlan": Object {
+          "id": Object {
+            "id": "AA58783135",
+            "keys": Object {
+              "aerodromeOfDeparture": "LEMD",
+              "aerodromeOfDestination": "LFSB",
+              "airFiled": "false",
+              "aircraftId": "OEGMI",
+              "estimatedOffBlockTime": "2016-11-23 11:55",
+              "nonICAOAerodromeOfDeparture": "false",
+              "nonICAOAerodromeOfDestination": "false",
+            },
+          },
+          "status": "CLOSED",
+        },
+      },
+      Object {
+        "lastValidFlightPlan": Object {
+          "id": Object {
+            "id": "AA58797228",
+            "keys": Object {
+              "aerodromeOfDeparture": "LEMD",
+              "aerodromeOfDestination": "LFSB",
+              "airFiled": "false",
+              "aircraftId": "OEGMI",
+              "estimatedOffBlockTime": "2016-11-23 13:04",
+              "nonICAOAerodromeOfDeparture": "false",
+              "nonICAOAerodromeOfDestination": "false",
+            },
+          },
+          "status": "AIRBORNE",
+        },
+      },
+      Object {
+        "lastValidFlightPlan": Object {
+          "id": Object {
+            "id": "AA58780893",
+            "keys": Object {
+              "aerodromeOfDeparture": "DAUA",
+              "aerodromeOfDestination": "LEMD",
+              "airFiled": "false",
+              "aircraftId": "OEGMI",
+              "estimatedOffBlockTime": "2016-11-23 09:00",
+              "nonICAOAerodromeOfDeparture": "false",
+              "nonICAOAerodromeOfDestination": "false",
+            },
+          },
+          "status": "BACKUP",
+        },
+      },
+      Object {
+        "lastValidFlightPlan": Object {
+          "id": Object {
+            "id": "AA58783135",
+            "keys": Object {
+              "aerodromeOfDeparture": "LEMD",
+              "aerodromeOfDestination": "LFSB",
+              "airFiled": "false",
+              "aircraftId": "OEGMI",
+              "estimatedOffBlockTime": "2016-11-23 11:55",
+              "nonICAOAerodromeOfDeparture": "false",
+              "nonICAOAerodromeOfDestination": "false",
+            },
+          },
+          "status": "BACKUP",
+        },
+      },
+    ],
+  },
+  "requestId": "B2B_CUR:2191979",
+  "requestReceptionTime": "2016-11-23 15:12:48",
+  "sendTime": "2016-11-23 15:13:01",
+  "status": "OK",
+}
+`;
+
+exports[`queryFlightPlans response parser should parse correct response 1`] = `
+Object {
+  "$": Object {
+    "xmlns:airspace": "eurocontrol/cfmu/b2b/AirspaceServices",
+    "xmlns:common": "eurocontrol/cfmu/b2b/CommonServices",
+    "xmlns:flight": "eurocontrol/cfmu/b2b/FlightServices",
+    "xmlns:flow": "eurocontrol/cfmu/b2b/FlowServices",
+  },
+  "data": Object {
+    "summaries": Object {
+      "lastValidFlightPlan": Object {
+        "id": Object {
+          "id": "AA58790671",
+          "keys": Object {
+            "aerodromeOfDeparture": "LIRF",
+            "aerodromeOfDestination": "EGLL",
+            "airFiled": "false",
+            "aircraftId": "AZA97U",
+            "estimatedOffBlockTime": "2016-11-23 13:10",
+            "nonICAOAerodromeOfDeparture": "false",
+            "nonICAOAerodromeOfDestination": "false",
+          },
+        },
+        "status": "AIRBORNE",
+      },
+    },
+  },
+  "requestId": "B2B_CUR:2182940",
+  "requestReceptionTime": "2016-11-23 15:05:27",
+  "sendTime": "2016-11-23 15:05:27",
+  "status": "OK",
+}
+`;
+
+exports[`queryFlightPlans response parser should parse empty response 1`] = `
+Object {
+  "$": Object {
+    "xmlns:airspace": "eurocontrol/cfmu/b2b/AirspaceServices",
+    "xmlns:common": "eurocontrol/cfmu/b2b/CommonServices",
+    "xmlns:flight": "eurocontrol/cfmu/b2b/FlightServices",
+    "xmlns:flow": "eurocontrol/cfmu/b2b/FlowServices",
+  },
+  "data": "",
+  "requestId": "B2B_CUR:2189520",
+  "requestReceptionTime": "2016-11-23 15:10:57",
+  "sendTime": "2016-11-23 15:10:57",
+  "status": "OK",
+}
+`;

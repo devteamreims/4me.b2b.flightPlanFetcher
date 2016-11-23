@@ -21,7 +21,7 @@ test('E4.2.3 : must raise error to clients in case of a b2b request error', () =
   const checkReply = () => r.get('/searchFlights?callsign=AFR12345')
     .expect(500)
     .expect(res => {
-      expect(res.body.message).toMatch(/invalid data/i);
+      expect(res.body.message).toMatch(/parse XML data/i);
     });
 
   const checkStatus = () => r.get('/status')
@@ -30,7 +30,7 @@ test('E4.2.3 : must raise error to clients in case of a b2b request error', () =
       const flightRequest = _.get(res, 'body.flightRequestStatus');
 
       expect(flightRequest.error).toBeTruthy();
-      expect(flightRequest.error).toMatch(/invalid data/i);
+      expect(flightRequest.error).toMatch(/parse XML data/i);
     });
 
   return Promise.resolve()
@@ -38,4 +38,3 @@ test('E4.2.3 : must raise error to clients in case of a b2b request error', () =
     .then(checkStatus)
     .then(() => jest.resetModules());
 });
-

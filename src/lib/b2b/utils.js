@@ -65,10 +65,7 @@ import {
 export function parseXML(input) {
   const callback = (resolve, reject) => (err, stdout, stderr) => {
     if(err) {
-      return reject({
-        error: err,
-        stderr,
-      });
+      return reject(new Error('Unable to parse XML data'));
     }
     return resolve(stdout);
   };

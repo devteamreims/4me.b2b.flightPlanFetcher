@@ -3,8 +3,13 @@ export const REMOVE_FLIGHT_PLAN = 'REMOVE_FLIGHT_PLAN';
 export const ERROR = 'flightPlans/ERROR';
 
 import {
-  requestByCallsign
+  postToB2B,
 } from '../lib/b2b';
+
+import {
+  queryByCallsign,
+  parseResponse as parseFlightPlanResponse,
+} from '../lib/b2b/flight/queryFlightPlans';
 
 import {
   opsLog,
@@ -20,23 +25,25 @@ const debug = d('4me.flight-plans.actions');
 
 export function fetchFlight(callsign) {
   return (dispatch, getState) => {
-
-    if(!callsign) {
-      return Promise.reject('fetchFlight: Please select a callsign');
-    }
+    const body = queryByCallsign(callsign);
     // Fetch from B2B
-    return requestByCallsign(callsign)
+    return postToB2B({body})
+      .then(parseFlightPlanResponse)
       .then(resp => {
-        let flightPlans = R.pathOr([], ['body', 'summaries'], resp);
+        let flightPlans = R.pathOr([], ['data', 'summaries'], resp);
         if(!R.isArrayLike(flightPlans)) {
           flightPlans = [flightPlans];
         }
 
         const withStatus = status => R.propEq('status', status);
 
+        // This pipe here extracts raw b2b data and converts it to a more suitable format
         return R.pipe(
+          // First get lastValidFlightPlan items
           R.map(R.propOr({}, 'lastValidFlightPlan')),
+          // Reject those with `BACKUP` status
           R.reject(withStatus('BACKUP')),
+          // Now, transform each flight plan
           R.map(flightPlan => {
             const ifplId = R.path(['id', 'id'], flightPlan);
             if(!ifplId) {
@@ -61,19 +68,29 @@ export function fetchFlight(callsign) {
               fetched,
             };
 
-            return flight;
-          }),
-          R.reject(R.isNil),
-          R.uniqBy(R.prop('ifplId')),
-          R.map(f => {
-            dispatch({
-              type: ADD_FLIGHT_PLAN,
-              ...f
+            const getPropsFromFlightPlan = R.applySpec({
+              callsign: R.pathOr(callsign, ['id', 'keys', 'aircraftId']),
+              departure: R.pathOr('ZZZZ', ['id', 'keys', 'aerodromeOfDeparture']),
+              destination: R.pathOr('ZZZZ', ['id', 'keys', 'aerodromeOfDestination']),
+              eobt: R.pathOr('', ['id', 'keys', 'estimatedOffBlockTime']),
+              status: R.propOr('UNKNOWN', 'status'),
             });
-            return f;
+
+            return {
+              ifplId,
+              fetched,
+              ...getPropsFromFlightPlan(flightPlan)
+            };
           }),
+          // Reject anomalies
+          R.reject(R.isNil),
+          // Reject duplicates
+          R.uniqBy(R.prop('ifplId')),
+          // Dispatch redux actions to populate our local cache
+          R.forEach(f => dispatch(addFlightToCache(f)))
         )(flightPlans);
       })
+      // If all went well, produce ops log for this request
       .then(processed => {
         opsLog({callsign, reponse: processed, requestByCallsign: true}, 'requestByCallsign');
         return processed;
@@ -84,6 +101,13 @@ export function fetchFlight(callsign) {
         dispatch(errorAction(message));
         return Promise.reject(err);
       });
+  };
+}
+
+function addFlightToCache(flight) {
+  return {
+    type: ADD_FLIGHT_PLAN,
+    ...flight,
   };
 }
 
