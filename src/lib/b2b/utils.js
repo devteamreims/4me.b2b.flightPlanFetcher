@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import R from 'ramda';
 
 /**
  * Wraps the query in a proper SOAP:Envelope
@@ -50,3 +51,45 @@ export const b2bTimeFormatWithSeconds = b2bTimeFormat + ':ss';
  * @return {String}
  */
 export const b2bFormatDuration = (str) => _.padStart(_.take(`${str}`, 4).join(''), 4, '0');
+
+
+import {
+  parseString as parseXMLStringWithCallback
+} from 'xml2js';
+
+/**
+ * Transform raw XML data in JS objects
+ * @param  {string} input Raw XML data
+ * @return {Promise<object>}
+ */
+export function parseXML(input) {
+  const callback = (resolve, reject) => (err, stdout, stderr) => {
+    if(err) {
+      return reject({
+        error: err,
+        stderr,
+      });
+    }
+    return resolve(stdout);
+  };
+
+  return new Promise((resolve, reject) => parseXMLStringWithCallback(input, {explicitArray: false}, callback(resolve, reject)));
+}
+
+/**
+ * Remove soap envelope from a parsed XML Object
+ * @param {object} Parsed XML object
+ * @return {object}
+ */
+export const unfoldSoapEnvelope = R.pathOr({}, ['S:Envelope', 'S:Body']);
+
+/**
+ * B2BError which extends Error and add a `b2bResponse` field
+ */
+export class B2BError extends Error {
+  constructor(message, options = {}) {
+    super(message);
+    this.name = 'B2BError';
+    this.b2bResponse = R.propOr(null, 'b2bResponse', options);
+  }
+}

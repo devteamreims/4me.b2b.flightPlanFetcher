@@ -35,7 +35,7 @@ export default function makeStore(socketIo) {
   // Initialize socketIo
   store.dispatch(initializeSocket(socketIo));
 
-  const refreshCache = () => store.dispatch(refreshAutocomplete('LFERMS'));
+  const refreshCache = () => store.dispatch(refreshAutocomplete('LFEERMS'));
 
   setInterval(refreshCache, AUTOCOMPLETE_REFRESH_INTERVAL);
 

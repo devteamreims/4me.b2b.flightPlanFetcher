@@ -11,6 +11,7 @@ const timeFormatWithSeconds = timeFormat + ':ss';
 import fs from 'fs';
 
 import _ from 'lodash';
+import R from 'ramda';
 
 import {
   parseString as parseStringCb
@@ -19,11 +20,15 @@ import {
 import {
   queryFlightPlans,
   queryInTrafficVolume,
-  queryInAirspace,
   retrieveFlight,
   flightKeysFromIfplId,
   queryCompleteAIXMDataset,
 } from './query-builder';
+
+import {
+  query as queryInAirspace,
+  parseResponse as parseQueryInAirspace,
+} from './flight/queryInAirspace';
 
 import {
   parseFlightPlanListReply,
@@ -85,7 +90,7 @@ export function getRequestOptions() {
   return requestOptions;
 }
 
-function postToB2B(data) {
+export function postToB2B(data) {
   const MAX_REQUEST_SIZE = parseInt(process.env.B2B_MAX_REQUEST_SIZE) || 1024*1024*2; // 2MB
 
   return new Promise((resolve, reject) => {
@@ -155,33 +160,6 @@ export function ifplIdToKeys(ifplId, options = {}) {
       }
       return ret;
     })
-}
-
-export function requestByTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
-
-  const body = queryInTrafficVolume(trafficVolume, options);
-
-  return postToB2B({body})
-    .then(toJS)
-    .then(extractData)
-    .then(d => _.get(d, 'flight:FlightListByTrafficVolumeReply', {}))
-    .then(d => _.get(d, 'data.flights', []))
-    .then(d => _.map(d, f => _.get(f, 'flight', {})))
-    .then(d => _.map(d, f => _.get(f, 'flightId', {})))
-    .then(d => _.map(d, normalizeFlightPlan));
-}
-
-export function requestByAirspace(airspace = 'LFEERMS', options = {}) {
-  const body = queryInAirspace(airspace, options);
-
-  return postToB2B({body})
-    .then(toJS)
-    .then(extractData)
-    .then(d => _.get(d, 'flight:FlightListByAirspaceReply', {}))
-    .then(d => _.get(d, 'data.flights', []))
-    .then(d => _.map(d, f => _.get(f, 'flight', {})))
-    .then(d => _.map(d, f => _.get(f, 'flightId', {})))
-    .then(d => _.map(d, normalizeFlightPlan));
 }
 
 export function requestProfile(callsign, dep, dest, eobt, options = {}) {

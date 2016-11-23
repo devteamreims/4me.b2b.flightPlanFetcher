@@ -1,6 +1,7 @@
 import {
   flightSoapEnvelope,
   airspaceServiceSoapEnvelope,
+  B2BError,
 } from './utils';
 
 describe('b2b envelopes', () => {
@@ -24,5 +25,18 @@ describe('b2b envelopes', () => {
     test('should match snapshot', () => {
       expect(airspaceServiceSoapEnvelope('payload')).toMatchSnapshot();
     });
+  });
+});
+
+describe('B2B Error', () => {
+  test('should extend native Error', () => {
+    const err = new B2BError('Test error !');
+    expect(() => { throw err; }).toThrow();
+    expect(err.message).toBe('Test error !');
+  });
+
+  test('should accept a b2bResponse metadata', () => {
+    const err = new B2BError('Test error !', {b2bResponse: 'test'});
+    expect(err.b2bResponse).toBe('test');
   });
 });
