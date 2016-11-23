@@ -123,18 +123,6 @@ export function postToB2B(data) {
   });
 }
 
-
-export function requestByCallsign(callsign, options = {}) {
-  const body = queryFlightPlans(callsign);
-  debug('requestByCallsign');
-  debug(body);
-
-  return postToB2B({body})
-    .then(toJS)
-    .then(extractData)
-    .then(parseFlightPlanListReply);
-}
-
 export function requestByIfplId(ifplId, options = {}) {
   const body = flightKeysFromIfplId(ifplId, options);
 
