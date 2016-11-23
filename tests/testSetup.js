@@ -34,3 +34,5 @@ afterEach(() => {
   delete process.env.B2B_URL;
   delete process.env.HISTORY_HARD_LIMIT;
 });
+
+test(() => {});
