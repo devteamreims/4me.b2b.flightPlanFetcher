@@ -123,17 +123,6 @@ export function postToB2B(data) {
   });
 }
 
-export function requestByIfplId(ifplId, options = {}) {
-  const body = flightKeysFromIfplId(ifplId, options);
-
-  debug('requestByIfplId');
-  debug(body);
-
-  return postToB2B({body})
-    .then(toJS)
-    .then(extractData);
-}
-
 export function ifplIdToKeys(ifplId, options = {}) {
   return requestByIfplId(ifplId)
     .then((data) => {
@@ -147,7 +136,7 @@ export function ifplIdToKeys(ifplId, options = {}) {
         return Promise.reject('Unknown flight');
       }
       return ret;
-    })
+    });
 }
 
 export function requestProfile(callsign, dep, dest, eobt, options = {}) {

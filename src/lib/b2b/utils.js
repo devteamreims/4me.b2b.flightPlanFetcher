@@ -90,3 +90,15 @@ export class B2BError extends Error {
     this.b2bResponse = R.propOr(null, 'b2bResponse', options);
   }
 }
+
+/**
+ * B2BError which extends Error and add a `b2bResponse` field
+ */
+export class B2BErrorNotFound extends Error {
+  constructor(options = {}) {
+    const message = 'Object not found';
+    super(message);
+    this.name = 'B2BErrorNotFound';
+    this.b2bResponse = R.propOr(null, 'b2bResponse', options);
+  }
+}

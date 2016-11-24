@@ -37,8 +37,13 @@ import {
 } from '../selectors/history';
 
 import {
-  requestProfile,
-  ifplIdToKeys
+  retrieveByIfplId,
+  retrieveByKeys,
+  parseResponse,
+} from '../lib/b2b/flight/retrieveFlight';
+
+import {
+  postToB2B,
 } from '../lib/b2b';
 
 import {
@@ -56,10 +61,13 @@ export function fetchProfile(ifplId, forceRefresh = false) {
 
     // Here we handle the case of a flight which is not in history
     if(_.isEmpty(prefetchedKeys)) {
-      return ifplIdToKeys(ifplId)
-        .then((keys) => {
+      const body = retrieveByIfplId(ifplId);
 
-          const { callsign } = keys;
+      return postToB2B({body})
+        .then(parseResponse)
+        .then((resp) => {
+          const callsign = R.path(['data', 'flightPlan', 'aircraftId', 'aircraftId'], resp);
+
           // Redispatch with local cache
           return dispatch(fetchFlight(callsign))
             .then((res) => {
@@ -92,14 +100,13 @@ export function fetchProfile(ifplId, forceRefresh = false) {
       return Promise.resolve(fromHistory);
     }
 
-    return requestProfile(callsign, departure, destination, eobt)
-      .then(resp => {
-        const status = _.get(resp, 'status');
-        if(status !== 'OK') {
-          return Promise.reject(resp);
-        }
+    const body = retrieveByKeys(callsign, departure, destination, eobt);
 
-        const flight = _.get(resp, 'body.flight');
+    return postToB2B({body})
+      .then(parseResponse)
+      .then(resp => {
+        console.log(resp);
+        const flight = R.path(['data', 'flight'], resp);
 
         // Delay : 0109 => 1 hour, 60 minutes;
         const formatDelay = (str) => {

@@ -2,6 +2,7 @@ import {
   flightSoapEnvelope,
   airspaceServiceSoapEnvelope,
   B2BError,
+  B2BErrorNotFound,
 } from './utils';
 
 describe('b2b envelopes', () => {
@@ -28,7 +29,7 @@ describe('b2b envelopes', () => {
   });
 });
 
-describe('B2B Error', () => {
+describe('B2BError', () => {
   test('should extend native Error', () => {
     const err = new B2BError('Test error !');
     expect(() => { throw err; }).toThrow();
@@ -37,6 +38,19 @@ describe('B2B Error', () => {
 
   test('should accept a b2bResponse metadata', () => {
     const err = new B2BError('Test error !', {b2bResponse: 'test'});
+    expect(err.b2bResponse).toBe('test');
+  });
+});
+
+describe('B2BErrorNotFound', () => {
+  test('should extend native Error', () => {
+    const err = new B2BErrorNotFound();
+    expect(() => { throw err; }).toThrow();
+    expect(err.message).toMatch(/not found/i);
+  });
+
+  test('should accept a b2bResponse metadata', () => {
+    const err = new B2BErrorNotFound({b2bResponse: 'test'});
     expect(err.b2bResponse).toBe('test');
   });
 });
