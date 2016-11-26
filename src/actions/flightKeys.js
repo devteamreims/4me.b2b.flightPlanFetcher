@@ -26,28 +26,18 @@ import {
 
 /**
  * Redux-thunk action creator
- * Will search for keys in the local store or send a b2b request
+ * Fetches keys from B2B and populate local store
  * @param  {string} callsign Callsign to look for
  * @param  {Object} Options Options for the request
  * @return {Promise<keys>}   A Promise of resulting keys, formated according to the redux store
  */
 export function fetchKeysForCallsign(callsign, options = {}) {
   return (dispatch, getState) => {
-    // Handle options
-    const {
-      forceRefresh = false,
-    } = options;
-
     invariant(
       callsign && typeof callsign === 'string',
       'Argument error: a callsign must be provided',
     );
 
-    // Look for stuff in local store first
-    const keysFromCache = getKeysFromCallsign(callsign)(getState());
-    if(!forceRefresh && keysFromCache) {
-      return Promise.resolve(keysFromCache);
-    }
 
     // Hit B2B here
     const body = queryByCallsign(callsign);

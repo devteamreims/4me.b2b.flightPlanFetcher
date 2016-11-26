@@ -14,6 +14,11 @@ import {
   fetchProfileFromIfplId,
 } from '../actions/profiles';
 
+
+import {
+  getKeysFromCallsign,
+} from '../selectors/flightKeys';
+
 import {
   getProfilesInHistory,
 } from '../selectors/history';
@@ -38,7 +43,8 @@ export function getSearchFlightsRoute(store) {
       throw new Error('Callsign parameter must exist');
     }
 
-    store.dispatch(fetchKeysForCallsign(callsign))
+    store.dispatch(fetchKeysForCallsign(R.toUpper(callsign)))
+      .then(() => getKeysFromCallsign(R.toUpper(callsign))(store.getState()))
       .then(resp => res.send(resp))
       .catch(err => next(err));
   }

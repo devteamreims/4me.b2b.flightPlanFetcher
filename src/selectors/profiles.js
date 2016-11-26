@@ -26,8 +26,10 @@ export const getFromIfplId = ifplId => state => {
     return null;
   }
 
+
   return {
     ...keys,
-    ...profile,
+    fetched: profile.when,
+    ...R.dissoc('when', profile),
   };
 };

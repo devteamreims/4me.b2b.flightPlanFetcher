@@ -1,14 +1,5 @@
-import _ from 'lodash';
 import R from 'ramda';
-import d from 'debug';
-const debug = d('4me.history.actions');
 import invariant from 'invariant';
-
-import moment from 'moment';
-
-import {
-  opsLog,
-} from '../logger';
 
 // opsLog({ifplId, result: fromHistory, forceRefresh, fetchProfile: true}, "fetchProfile");
 

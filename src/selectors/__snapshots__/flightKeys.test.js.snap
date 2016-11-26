@@ -1,6 +1,8 @@
 exports[`flightKeys selectors getByCallsign should return the keys for an existing callsign 1`] = `
-Object {
-  "callsign": "AFR1234",
-  "ifplId": "AA123",
-}
+Array [
+  Object {
+    "callsign": "AFR1234",
+    "ifplId": "AA123",
+  },
+]
 `;

@@ -13,6 +13,8 @@ import {
   refreshAutocomplete,
 } from './actions/autocomplete';
 
+import { installSubscriptions } from './subscriptions';
+
 
 const AUTOCOMPLETE_REFRESH_INTERVAL = 1000*60*5; //  5 minutes
 
@@ -40,6 +42,8 @@ export default function makeStore(socketIo) {
   setInterval(refreshCache, AUTOCOMPLETE_REFRESH_INTERVAL);
 
   refreshCache();
+
+  installSubscriptions(store);
 
   return store;
 }
