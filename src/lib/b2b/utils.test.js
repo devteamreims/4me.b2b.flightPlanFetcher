@@ -1,6 +1,6 @@
 import {
   flightSoapEnvelope,
-  airspaceServiceSoapEnvelope,
+  airspaceSoapEnvelope,
   B2BError,
   B2BErrorNotFound,
   parseDelay,
@@ -20,12 +20,12 @@ describe('b2b envelopes', () => {
 
   describe('airspaceService', () => {
     test('should check arguments', () => {
-      expect(() => airspaceServiceSoapEnvelope()).toThrowErrorMatchingSnapshot();
-      expect(() => airspaceServiceSoapEnvelope({id: 1})).toThrowErrorMatchingSnapshot();
+      expect(() => airspaceSoapEnvelope()).toThrowErrorMatchingSnapshot();
+      expect(() => airspaceSoapEnvelope({id: 1})).toThrowErrorMatchingSnapshot();
     });
 
     test('should match snapshot', () => {
-      expect(airspaceServiceSoapEnvelope('payload')).toMatchSnapshot();
+      expect(airspaceSoapEnvelope('payload')).toMatchSnapshot();
     });
   });
 });

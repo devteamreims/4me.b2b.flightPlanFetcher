@@ -1,8 +1,4 @@
 import {
-  fetchFlight
-} from '../actions/flight-plans';
-
-import {
   fetchKeysForCallsign,
 } from '../actions/flightKeys';
 

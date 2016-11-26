@@ -26,7 +26,7 @@ export function flightSoapEnvelope(content) {
  * @param  {String} content Query to be wrapped
  * @return {String}         Properly wrapped query (airspaceService)
  */
-export function airspaceServiceSoapEnvelope(content) {
+export function airspaceSoapEnvelope(content) {
   if(!content || typeof content !== 'string') {
     throw new Error('Invalid argument : please provide a String');
   }

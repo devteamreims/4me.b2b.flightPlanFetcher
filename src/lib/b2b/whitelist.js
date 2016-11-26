@@ -11,9 +11,14 @@ import XmlStream from 'xml-stream';
 import moment from 'moment';
 
 import {
-  requestLatestAixmAirspace,
   getRequestOptions,
+  postToB2B,
 } from './index';
+
+import {
+  query as queryCompleteAIXMDataset,
+  parseResponse as parseCompleteAIXMDatasetReply,
+} from './airspace/queryCompleteAIXMDataset';
 
 let whitelist = [];
 
@@ -82,7 +87,9 @@ function pullWhitelist() {
   const startTime = Date.now();
 
   debug('Pulling latest AIXM data from B2B ...');
-  return requestLatestAixmAirspace()
+  const body = queryCompleteAIXMDataset();
+  return postToB2B({body})
+    .then(parseCompleteAIXMDatasetReply)
     .then(extractDatasets)
     .then(extractLatestItem)
     .then(getFilepath)
