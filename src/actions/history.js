@@ -1,10 +1,6 @@
 import R from 'ramda';
 import invariant from 'invariant';
 
-// opsLog({ifplId, result: fromHistory, forceRefresh, fetchProfile: true}, "fetchProfile");
-
-// opsLog({ifplId, result: formattedProfile, forceRefresh, fetchProfile: true}, "fetchProfile");
-
 
 export const MARK_FOR_HISTORY = 'history/MARK_FOR_HISTORY';
 

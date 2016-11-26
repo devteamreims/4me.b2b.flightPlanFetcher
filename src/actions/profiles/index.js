@@ -39,6 +39,10 @@ import {
   markForHistory,
 } from '../history';
 
+import {
+  opsLog,
+} from '../../logger';
+
 
 export function fetchProfileFromIfplId(ifplId) {
   return (dispatch, getState) => {
@@ -107,6 +111,10 @@ export function fetchProfileFromIfplId(ifplId) {
         dispatch(addProfile(ifplId, profile));
         // Then add to history
         dispatch(markForHistory(ifplId));
+        return profile;
+      })
+      .then(profile => {
+        opsLog({ifplId, result: profile, fetchProfile: true}, "fetchProfile");
         return profile;
       })
       .catch(err => {
