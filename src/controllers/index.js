@@ -59,9 +59,10 @@ export function getSearchProfilesRoute(store) {
 
     let promise;
     if(forceRefresh || !cachedProfile) {
-      // Do not care about anything in store
+      // We don't have cached data or we want fresh data, pull from B2B
       promise = store.dispatch(fetchProfileFromIfplId(ifplId));
     } else {
+      // We have cache data, no need to send mutations to the store
       promise = Promise.resolve();
     }
 
