@@ -1,60 +1,31 @@
-import _ from 'lodash';
-
-import d from 'debug';
-const debug = d('4me.history.reducer');
-
+import R from 'ramda';
 
 import {
-  ADD_FLIGHT_TO_HISTORY,
-  REMOVE_FLIGHT_FROM_HISTORY
+  MARK_FOR_HISTORY,
 } from '../actions/history';
 
-const defaultState = [];
+import {
+  INVALID_KEYS,
+} from '../actions/flightKeys';
 
-/**
-  State is an array of objects like this one :
-  {
-    ifplId: 'ATXXXXX',
-    callsign: 'DLH500',
-    departure: 'EDDF',
-    destination: 'SBGL',
-    eobt: Date.utc(),
-    fetched: Date.now(),
-    aircraftType: 'A319',
-    pointProfile: [],
-    airspaceProfile: [],
-    delay: 23
-  }
-*/
+export const maxHistoryLen = 30;
 
-export default function historyReducer(state = defaultState, action) {
-  const maxHistoryLen = parseInt(process.env.HISTORY_MAX_SIZE) || 30;
+export default function historyReducer(state = [], action) {
   switch(action.type) {
-    case ADD_FLIGHT_TO_HISTORY:
-      return _.take([
-        actionToHistoryObject(action),
-        ..._.reject(state, h => h.ifplId === _.get(action, 'payload.ifplId'))
-      ], maxHistoryLen);
-    case REMOVE_FLIGHT_FROM_HISTORY:
-      return [
-        ..._.reject(state, h => h.ifplId === _.get(action, 'payload.ifplId'))
-      ];
+    case MARK_FOR_HISTORY: {
+      const { ifplId } = action;
+
+      return R.pipe(
+        R.without([ifplId]),
+        R.concat([ifplId]),
+        R.take(maxHistoryLen),
+      )(state);
+    }
+    case INVALID_KEYS: {
+      const { ifplId } = action;
+      return R.reject(R.equals(ifplId), state);
+    }
   }
 
   return state;
-}
-
-function actionToHistoryObject(action) {
-  return _.pick(action.payload, [
-    'ifplId',
-    'callsign',
-    'departure',
-    'destination',
-    'eobt',
-    'fetched',
-    'aircraftType',
-    'pointProfile',
-    'airspaceProfile',
-    'delay'
-  ]);
 }

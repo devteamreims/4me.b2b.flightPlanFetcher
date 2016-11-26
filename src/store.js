@@ -11,7 +11,7 @@ import {initializeSocket} from './actions/socket';
 
 import {
   refreshAutocomplete,
-} from './actions/autocomplete-cache';
+} from './actions/autocomplete';
 
 
 const AUTOCOMPLETE_REFRESH_INTERVAL = 1000*60*5; //  5 minutes

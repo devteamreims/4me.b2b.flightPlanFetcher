@@ -3,21 +3,30 @@ import {
 } from '../actions/flight-plans';
 
 import {
+  fetchKeysForCallsign,
+} from '../actions/flightKeys';
+
+import {
   fetchProfile
 } from '../actions/history';
 
 import {
-  parsePoint
-} from '../lib/b2b/response-parser';
+  fetchProfileFromIfplId,
+} from '../actions/profiles';
 
 import {
-  getHistory
+  getProfilesInHistory,
 } from '../selectors/history';
+
+import {
+  getFromIfplId as getProfileFromIfplId,
+} from '../selectors/profiles';
 
 import d from 'debug';
 const debug = d('4me.controller');
 
 import _ from 'lodash';
+import R from 'ramda';
 
 export function getSearchFlightsRoute(store) {
   return (req, res, next) => {
@@ -29,7 +38,7 @@ export function getSearchFlightsRoute(store) {
       throw new Error('Callsign parameter must exist');
     }
 
-    store.dispatch(fetchFlight(callsign))
+    store.dispatch(fetchKeysForCallsign(callsign))
       .then(resp => res.send(resp))
       .catch(err => next(err));
   }
@@ -44,15 +53,28 @@ export function getSearchProfilesRoute(store) {
       throw new Error('ifplId must be set');
     }
 
-    store.dispatch(fetchProfile(ifplId, forceRefresh !== undefined))
-      .then(resp => res.send(Object.assign({}, resp, {ifplId})))
+
+    const cachedProfile = getProfileFromIfplId(ifplId)(store.getState());
+
+    let promise;
+    if(forceRefresh || !cachedProfile) {
+      // Do not care about anything in store
+      promise = store.dispatch(fetchProfileFromIfplId(ifplId));
+    } else {
+      promise = Promise.resolve();
+    }
+
+
+    promise
+      .then(() => getProfileFromIfplId(ifplId)(store.getState()))
+      .then(profile => res.send(profile))
       .catch(err => next(err));
   }
 }
 
 export function getHistoryRoute(store) {
   return (req, res, next) => {
-    const history = getHistory(store.getState());
+    const history = getProfilesInHistory(store.getState());
 
     res.send(_.take(
       history,
@@ -68,7 +90,7 @@ import {
 
 import {
   getFromString,
-} from '../selectors/autocomplete-cache';
+} from '../selectors/autocomplete';
 
 export function getAutocomplete(store) {
   return (req, res, next) => {

@@ -12,7 +12,7 @@ describe('E3.5.1 : must produce logs for incoming requests', () => {
 
   beforeEach(() => {
     // Mock autocomplete
-    jest.mock('../../src/actions/autocomplete-cache', () => {
+    jest.mock('../../src/actions/autocomplete', () => {
       return {
         refreshAutocomplete: () => ({type: 'MOCK_ACTION'}),
       };

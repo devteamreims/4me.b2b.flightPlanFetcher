@@ -41,6 +41,20 @@ export function airspaceServiceSoapEnvelope(content) {
   `;
 }
 
+/**
+ * Transform a B2B delay string into a Number (unit: minutes)
+ * @param  {string} str B2B formatted delay
+ * @return {Number}     Delay in minutes
+ */
+export const parseDelay = str => {
+  if(!str) {
+    return 0;
+  }
+  const hours = parseInt(str.substr(0, 2), 10) || 0;
+  const minutes = (parseInt(str.substr(2), 10) || 0) + hours * 60;
+  return minutes;
+}
+
 
 export const b2bTimeFormat = 'YYYY-MM-DD HH:mm';
 export const b2bDateFormat = 'YYYY-MM-DD';

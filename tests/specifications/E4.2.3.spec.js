@@ -6,7 +6,7 @@ test('E4.2.3 : must raise error to clients in case of a b2b request error', () =
   const app = require('../../index').default;
 
   // Here we mock the refresh autocomplete behaviour
-  jest.mock('../../src/actions/autocomplete-cache', () => {
+  jest.mock('../../src/actions/autocomplete', () => {
     return {
       refreshAutocomplete: () => ({type: 'MOCK_ACTION'}),
     };
@@ -27,7 +27,7 @@ test('E4.2.3 : must raise error to clients in case of a b2b request error', () =
   const checkStatus = () => r.get('/status')
     .expect(200)
     .expect(res => {
-      const flightRequest = _.get(res, 'body.flightRequestStatus');
+      const flightRequest = _.get(res, 'body.flightKeysStatus');
 
       expect(flightRequest.error).toBeTruthy();
       expect(flightRequest.error).toMatch(/parse XML data/i);

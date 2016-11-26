@@ -1,0 +1,14 @@
+exports[`autocomplete reducer should discard old ifplIds marked for autocomplete 1`] = `
+Array [
+  "AA1",
+  "AA3",
+]
+`;
+
+exports[`autocomplete reducer should mark specific keys are part of the autocomplete list 1`] = `
+Array [
+  "AA0",
+  "AA1",
+  "AA2",
+]
+`;

@@ -18,7 +18,7 @@ describe('E4.2.1 : must integrate with 4ME Framework', () => {
         expect(res.body.version).toBe(process.env.npm_package_version);
         expect(res.body.socketClients).toBeDefined();
         expect(res.body.autocompleteStatus).toBeDefined();
-        expect(res.body.flightRequestStatus).toBeDefined();
+        expect(res.body.flightKeysStatus).toBeDefined();
         expect(res.body.flightPlanRequestStatus).toBeDefined();
       });
   });

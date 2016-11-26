@@ -1,5 +1,12 @@
-import _ from 'lodash';
+import R from 'ramda';
 
-export const getHistory = (state) => _.get(state, 'history');
+import { getFromIfplId } from './profiles';
 
-export const getFromIfplId = (ifplId) => (state) => _.find(getHistory(state), h => h.ifplId === ifplId) || {};
+export const getHistory = R.prop('history');
+export const getProfilesInHistory = state => {
+  const ifplIdsInHistory = getHistory(state);
+
+  return R.map(
+    ifplId => getFromIfplId(ifplId)(state)
+  )(ifplIdsInHistory);
+};

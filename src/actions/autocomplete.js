@@ -1,10 +1,12 @@
 import d from 'debug';
 const debug = d('4me.actions.autocompleteCache');
-import _ from 'lodash';
+
 import R from 'ramda';
 
-export const COMPLETE = 'autocompleteCache/COMPLETE';
+import invariant from 'invariant';
+
 export const ERROR = 'autocompleteCache/ERROR';
+export const MARK_FOR_AUTOCOMPLETE = 'autocomplete/MARK_FOR_AUTOCOMPLETE';
 
 import {
   postToB2B,
@@ -19,10 +21,13 @@ import {
   opsLog,
 } from '../logger';
 
+import {
+  addBulkKeys,
+} from './flightKeys';
+
 export function refreshAutocomplete(airspace = 'LFEERMS', options = {}) {
   return (dispatch, getState) => {
     const body = buildQuery(airspace, options);
-
     return postToB2B({body})
       .then(parseResponse)
       .then(b2bResponse => {
@@ -36,6 +41,7 @@ export function refreshAutocomplete(airspace = 'LFEERMS', options = {}) {
            * "departure": "LSGG",
            * "destination": "EGCC",
            * "eobt": "2016-11-23 13:20"
+           * "status": "AIRBORNE"
            * More on applySpec here: http://ramdajs.com/docs/#applySpec
            */
           R.applySpec({
@@ -45,15 +51,21 @@ export function refreshAutocomplete(airspace = 'LFEERMS', options = {}) {
             destination: R.path(['keys', 'aerodromeOfDestination']),
             eobt: R.path(['keys', 'estimatedOffBlockTime']),
           }),
+          R.assoc('status', 'AIRBORNE'),
         );
 
         const flights = R.pipe(
           R.pathOr([], ['data', 'flights']),
           R.map(processSingleFlight),
+          R.tap(flights => dispatch(addBulkKeys(flights))),
         )(b2bResponse);
 
-        dispatch(completeAction(flights));
+        const ifplIds = R.map(R.prop('ifplId'), flights);
+        dispatch(markForAutocomplete(ifplIds));
+
+        return flights;
       })
+      .then(flights => opsLog({flights, autocompleteRefresh: true}, "autocompleteRefresh"))
       .catch(err => {
         debug(err);
         const { message = 'Unknown error' } = err;
@@ -62,13 +74,21 @@ export function refreshAutocomplete(airspace = 'LFEERMS', options = {}) {
   };
 }
 
-function completeAction(flights = []) {
-  opsLog({flights, autocompleteRefresh: true}, "autocompleteRefresh");
+export function markForAutocomplete(ifplIds = []) {
+  const isArrayOfStrings = R.all(R.is(String));
+
+  invariant(
+    ifplIds &&
+    R.isArrayLike(ifplIds) &&
+    !R.isEmpty(ifplIds) &&
+    isArrayOfStrings(ifplIds),
+    'Argument error: ifplIds must be an array of ifplIds',
+  );
 
   return {
-    type: COMPLETE,
-    flights,
-  };
+    type: MARK_FOR_AUTOCOMPLETE,
+    ifplIds,
+  }
 }
 
 function errorAction(error) {

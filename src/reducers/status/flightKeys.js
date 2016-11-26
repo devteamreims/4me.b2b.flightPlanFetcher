@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
 import {
-  ADD_FLIGHT_PLAN,
+  ADD_KEYS,
   ERROR,
-} from '../../actions/flight-plans';
+} from '../../actions/flightKeys';
 
 const defaultState = {
   lastUpdated: Date.now(),
@@ -13,7 +13,7 @@ const defaultState = {
 
 export default function flightRequest(state = defaultState, action) {
   switch(action.type) {
-    case ADD_FLIGHT_PLAN:
+    case ADD_KEYS:
       return Object.assign({}, defaultState, {
         lastUpdated: Date.now(),
       });

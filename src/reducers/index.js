@@ -1,15 +1,18 @@
 import {combineReducers} from 'redux';
 
 import socketReducer from './socket';
-import historyReducer from './history';
-import flightPlansReducer from './flight-plans';
-import autocompleteCacheReducer from './autocomplete-cache';
+import history from './history';
+import autocomplete from './autocomplete';
 import status from './status';
+import flightKeys from './flightKeys';
+import profiles from './profiles';
+
 
 export default combineReducers({
   socket: socketReducer,
-  history: historyReducer,
-  flightPlans: flightPlansReducer,
-  autocompleteCache: autocompleteCacheReducer,
+  history,
+  autocomplete,
+  flightKeys,
+  profiles,
   status,
 });

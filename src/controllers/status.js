@@ -5,7 +5,7 @@ import {
 import {
   getRaw,
   getAutocomplete,
-  getFlightRequest,
+  getFlightKeys,
   getFlightPlanRequest,
 } from '../selectors/status';
 
@@ -14,7 +14,7 @@ export function getStatus(store) {
     const socketClients = getClients(store.getState());
 
     const autocompleteStatus = getAutocomplete(store.getState());
-    const flightRequestStatus = getFlightRequest(store.getState());
+    const flightKeysStatus = getFlightKeys(store.getState());
     const flightPlanRequestStatus = getFlightPlanRequest(store.getState());
 
     const raw = getRaw(store.getState());
@@ -22,7 +22,7 @@ export function getStatus(store) {
     res.send({
       socketClients,
       autocompleteStatus,
-      flightRequestStatus,
+      flightKeysStatus,
       flightPlanRequestStatus,
       version: process.env.npm_package_version,
       raw,

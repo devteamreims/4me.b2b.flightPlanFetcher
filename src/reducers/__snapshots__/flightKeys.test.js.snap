@@ -1,0 +1,95 @@
+exports[`flightKeys addBulkKeys should accept valid keys 1`] = `
+Object {
+  "keys": Array [
+    Object {
+      "callsign": "AFR1234",
+      "departure": "LFPG",
+      "destination": "LIPZ",
+      "eobt": "2016-11-23 21:00",
+      "ifplId": "AA123456789",
+      "status": "AIRBORNE",
+    },
+  ],
+  "type": "flightKeys/ADD_BULK_KEYS",
+}
+`;
+
+exports[`flightKeys addKeys should accept valid keys 1`] = `
+Object {
+  "callsign": "AFR1234",
+  "departure": "LFPG",
+  "destination": "LIPZ",
+  "eobt": "2016-11-23 21:00",
+  "ifplId": "AA123456789",
+  "status": "AIRBORNE",
+  "type": "flightKeys/ADD_KEYS",
+}
+`;
+
+exports[`flightKeys reducer bulk key insertion should handle bulk keys 1`] = `
+Object {
+  "AA123456789": Object {
+    "callsign": "AFR1234",
+    "departure": "LFPG",
+    "destination": "LIPZ",
+    "eobt": "2016-11-23 21:00",
+    "status": "AIRBORNE",
+    "when": 2016-11-23T10:52:35.004Z,
+  },
+  "AA987654321": Object {
+    "callsign": "AFR1234",
+    "departure": "LFPG",
+    "destination": "LIPZ",
+    "eobt": "2016-11-23 21:00",
+    "status": "AIRBORNE",
+    "when": 2016-11-23T10:52:35.004Z,
+  },
+}
+`;
+
+exports[`flightKeys reducer should add keys for multiple ifplIds 1`] = `
+Object {
+  "AA123456789": Object {
+    "callsign": "AFR1234",
+    "departure": "LFPG",
+    "destination": "LIPZ",
+    "eobt": "2016-11-23 21:00",
+    "status": "AIRBORNE",
+    "when": 2016-11-23T10:52:35.004Z,
+  },
+  "AA987654321": Object {
+    "callsign": "AFR1234",
+    "departure": "LFPG",
+    "destination": "LIPZ",
+    "eobt": "2016-11-23 21:00",
+    "status": "AIRBORNE",
+    "when": 2016-11-23T10:52:35.004Z,
+  },
+}
+`;
+
+exports[`flightKeys reducer should add keys to the store 1`] = `
+Object {
+  "AA123456789": Object {
+    "callsign": "AFR1234",
+    "departure": "LFPG",
+    "destination": "LIPZ",
+    "eobt": "2016-11-23 21:00",
+    "status": "AIRBORNE",
+    "when": 2016-11-23T10:52:35.004Z,
+  },
+}
+`;
+
+exports[`flightKeys reducer should replace keys with the same ifplId 1`] = `
+Object {
+  "AA123456789": Object {
+    "callsign": "AFR1234",
+    "departure": "LFPG",
+    "destination": "LIPZ",
+    "eobt": "2016-11-23 21:00",
+    "status": "AIRBORNE",
+    "when": 2016-11-23T10:52:35.004Z,
+  },
+}
+`;

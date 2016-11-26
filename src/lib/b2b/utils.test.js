@@ -3,6 +3,7 @@ import {
   airspaceServiceSoapEnvelope,
   B2BError,
   B2BErrorNotFound,
+  parseDelay,
 } from './utils';
 
 describe('b2b envelopes', () => {
@@ -52,5 +53,13 @@ describe('B2BErrorNotFound', () => {
   test('should accept a b2bResponse metadata', () => {
     const err = new B2BErrorNotFound({b2bResponse: 'test'});
     expect(err.b2bResponse).toBe('test');
+  });
+});
+
+describe('parseDelay', () => {
+  test('should properly parse a normal string', () => {
+    expect(parseDelay('0000')).toBe(0);
+    expect(parseDelay('0001')).toBe(1);
+    expect(parseDelay('0103')).toBe(63);
   });
 });

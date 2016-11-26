@@ -21,6 +21,10 @@ export function isWhitelisted(sector) {
   return R.contains(sector, whitelist);
 }
 
+export function getWhitelist() {
+  return whitelist;
+}
+
 /**
  * Utility functions
  */
@@ -54,7 +58,7 @@ const getFilepath = data => {
 };
 
 // On startup, fetch whitelist
-getWhitelist()
+pullWhitelist()
   .then(res => whitelist = R.clone(res));
 
 
@@ -65,7 +69,7 @@ const prepareDatasetUrl = filePath => `https://www.b2b.nm.eurocontrol.int/FILE_O
  * During tests, do not hit B2B
  * @return [String] Array of strings representing elementary sectors
  */
-function getWhitelist() {
+function pullWhitelist() {
 
   if(
     process.env.NODE_ENV === 'test' ||

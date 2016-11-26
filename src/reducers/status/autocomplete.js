@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
 import {
-  COMPLETE,
+  MARK_FOR_AUTOCOMPLETE,
   ERROR,
-} from '../../actions/autocomplete-cache';
+} from '../../actions/autocomplete';
 
 const defaultState = {
   lastUpdated: Date.now(),
@@ -13,7 +13,7 @@ const defaultState = {
 
 export default function autocomplete(state = defaultState, action) {
   switch(action.type) {
-    case COMPLETE:
+    case MARK_FOR_AUTOCOMPLETE:
       return Object.assign({}, defaultState, {
         lastUpdated: Date.now(),
       });
