@@ -26,7 +26,6 @@ import {
 import d from 'debug';
 const debug = d('4me.controller');
 
-import _ from 'lodash';
 import R from 'ramda';
 
 export function getSearchFlightsRoute(store) {
@@ -78,9 +77,9 @@ export function getHistoryRoute(store) {
   return (req, res, next) => {
     const history = getProfilesInHistory(store.getState());
 
-    res.send(_.take(
+    res.send(R.take(
+      req.query.limit || history.length,
       history,
-      req.query.limit || history.length
     ));
   }
 }
