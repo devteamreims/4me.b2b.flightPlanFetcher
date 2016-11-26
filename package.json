@@ -54,7 +54,7 @@
     "supertest": "^2.0.0"
   },
   "jest": {
-    "testEnvironment": "jsdom",
+    "testEnvironment": "node",
     "setupTestFrameworkScriptFile": "tests/testSetup.js",
     "coveragePathIgnorePatterns": [
       "/node_modules/",
