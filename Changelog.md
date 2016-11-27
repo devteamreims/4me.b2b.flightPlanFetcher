@@ -1,3 +1,6 @@
+# Master
+  * Use 4ME specific base image
+
 # v0.2.0-1
   * Move to yarn as package manager
   * Major refactor : reorganized lib/b2b, reorganized state
