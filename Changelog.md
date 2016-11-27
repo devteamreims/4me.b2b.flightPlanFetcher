@@ -1,8 +1,8 @@
 # Master
-  * Use 4ME specific base image
+  * Use 4ME specific base image (devteamreims/4ME#140)
 
 # v0.2.0-1
-  * Move to yarn as package manager
+  * Move to yarn as package manager (devteamreims/4ME#141)
   * Major refactor : reorganized lib/b2b, reorganized state
   * Use B2B V20.0.0
   * Make the whitelist pull more resilient
