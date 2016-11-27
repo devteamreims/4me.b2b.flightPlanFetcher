@@ -3,7 +3,7 @@ FROM node:7.2.0
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
-COPY yarn.lock package.json /usr/src/app
+COPY yarn.lock package.json /usr/src/app/
 RUN yarn install --production
 
 COPY . /usr/src/app/
