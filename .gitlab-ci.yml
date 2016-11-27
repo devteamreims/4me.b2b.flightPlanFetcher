@@ -1,7 +1,7 @@
 image: node:7.2.0
 
 before_script:
-  - npm install -g yarn
+  - npm install -g yarn --silent
 
 cache:
   untracked: true
@@ -25,7 +25,7 @@ jest:
   stage: test
   script:
     - yarn
-    - npm test -- --coverage
+    - npm test -- --coverage --forceExit
 
 build_release_image:
   stage: deploy
