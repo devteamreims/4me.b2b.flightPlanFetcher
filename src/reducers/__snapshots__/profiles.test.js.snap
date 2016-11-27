@@ -1,0 +1,56 @@
+exports[`profiles addProfile should accept valid ifplId and keys 1`] = `
+Object {
+  "ifplId": "AA123",
+  "profile": Object {
+    "aircraftType": "B772",
+    "airspaceProfile": Array [],
+    "delay": 20,
+    "ifplId": "AA123456789",
+    "pointProfile": Array [],
+  },
+  "type": "profiles/ADD_PROFILE",
+}
+`;
+
+exports[`profiles reducer should add keys for multiple ifplIds 1`] = `
+Object {
+  "AA123456789": Object {
+    "aircraftType": "B772",
+    "airspaceProfile": Array [],
+    "delay": 20,
+    "pointProfile": Array [],
+    "when": 2016-11-23T10:52:35.004Z,
+  },
+  "AA987654321": Object {
+    "aircraftType": "B772",
+    "airspaceProfile": Array [],
+    "delay": 10,
+    "pointProfile": Array [],
+    "when": 2016-11-23T10:52:35.004Z,
+  },
+}
+`;
+
+exports[`profiles reducer should add profiles to the store 1`] = `
+Object {
+  "AA123456789": Object {
+    "aircraftType": "B772",
+    "airspaceProfile": Array [],
+    "delay": 20,
+    "pointProfile": Array [],
+    "when": 2016-11-23T10:52:35.004Z,
+  },
+}
+`;
+
+exports[`profiles reducer should replace keys with the same ifplId 1`] = `
+Object {
+  "AA123456789": Object {
+    "aircraftType": "B772",
+    "airspaceProfile": Array [],
+    "delay": 20,
+    "pointProfile": Array [],
+    "when": 2016-11-23T10:52:35.004Z,
+  },
+}
+`;

@@ -67,43 +67,6 @@ export function queryInTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
   `);
 }
 
-export function queryInAirspace(airspace = 'LFEERMS', options = {}) {
-
-  const sendTime = moment.utc().format(b2bTimeFormatWithSeconds);
-
-  const wef = moment.utc().subtract(10, 'minutes').format(b2bTimeFormat);
-  const unt = moment.utc().add(20, 'minutes').format(b2bTimeFormat);
-
-  const duration = b2bFormatDuration(_.get(options, 'duration', 11));
-  const step = b2bFormatDuration(_.get(options, 'step', 1));
-
-  const query = (`
-     <sendTime>${sendTime}</sendTime>
-     <dataset>
-        <type>OPERATIONAL</type>
-     </dataset>
-     <includeProposalFlights>false</includeProposalFlights>
-     <trafficType>LOAD</trafficType>
-     <trafficWindow>
-        <wef>${wef}</wef>
-        <unt>${unt}</unt>
-     </trafficWindow>
-     <countsInterval>
-        <duration>${duration}</duration>
-        <step>${step}</step>
-     </countsInterval>
-     <!--Optional:-->
-     <calculationType>OCCUPANCY</calculationType>
-     <airspace>${airspace}</airspace>
-  `);
-
-  return flightSoapEnvelope(`
-    <flig:FlightListByAirspaceRequest>
-      ${query}
-    </flig:FlightListByAirspaceRequest>
-  `);
-}
-
 export function queryFlightPlans(callsign, options = {}) {
   if(callsign === undefined) {
     throw new Error('Callsign cannot be undefined !');

@@ -2,11 +2,11 @@ import _ from 'lodash';
 import { combineReducers } from 'redux';
 
 import autocomplete from './autocomplete';
-import flightRequest from './flight-request';
-import flightPlanRequest from './flight-plan-request';
+import flightKeys from './flightKeys';
+import profiles from './profiles';
 
 export default combineReducers({
   autocomplete,
-  flightRequest,
-  flightPlanRequest,
+  flightKeys,
+  profiles,
 });

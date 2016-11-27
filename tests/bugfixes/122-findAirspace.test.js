@@ -1,4 +1,4 @@
-import {findAirspace} from '../../src/actions/history';
+import {findAirspace} from '../../src/actions/profiles/profileParser';
 
 const mockAirspaceProfile = [
   {

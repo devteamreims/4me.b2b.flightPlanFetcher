@@ -11,14 +11,23 @@ import XmlStream from 'xml-stream';
 import moment from 'moment';
 
 import {
-  requestLatestAixmAirspace,
   getRequestOptions,
+  postToB2B,
 } from './index';
+
+import {
+  query as queryCompleteAIXMDataset,
+  parseResponse as parseCompleteAIXMDatasetReply,
+} from './airspace/queryCompleteAIXMDataset';
 
 let whitelist = [];
 
 export function isWhitelisted(sector) {
   return R.contains(sector, whitelist);
+}
+
+export function getWhitelist() {
+  return whitelist;
 }
 
 /**
@@ -54,7 +63,7 @@ const getFilepath = data => {
 };
 
 // On startup, fetch whitelist
-getWhitelist()
+pullWhitelist()
   .then(res => whitelist = R.clone(res));
 
 
@@ -65,7 +74,7 @@ const prepareDatasetUrl = filePath => `https://www.b2b.nm.eurocontrol.int/FILE_O
  * During tests, do not hit B2B
  * @return [String] Array of strings representing elementary sectors
  */
-function getWhitelist() {
+function pullWhitelist() {
 
   if(
     process.env.NODE_ENV === 'test' ||
@@ -78,7 +87,9 @@ function getWhitelist() {
   const startTime = Date.now();
 
   debug('Pulling latest AIXM data from B2B ...');
-  return requestLatestAixmAirspace()
+  const body = queryCompleteAIXMDataset();
+  return postToB2B({body})
+    .then(parseCompleteAIXMDatasetReply)
     .then(extractDatasets)
     .then(extractLatestItem)
     .then(getFilepath)

@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
 import {
-  ADD_FLIGHT_TO_HISTORY,
+  ADD_KEYS,
   ERROR,
-} from '../../actions/history';
+} from '../../actions/flightKeys';
 
 const defaultState = {
   lastUpdated: Date.now(),
@@ -11,9 +11,9 @@ const defaultState = {
   error: null
 };
 
-export default function flightPlanRequest(state = defaultState, action) {
+export default function flightRequest(state = defaultState, action) {
   switch(action.type) {
-    case ADD_FLIGHT_TO_HISTORY:
+    case ADD_KEYS:
       return Object.assign({}, defaultState, {
         lastUpdated: Date.now(),
       });

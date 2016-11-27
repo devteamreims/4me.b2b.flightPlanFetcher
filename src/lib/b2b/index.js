@@ -1,53 +1,12 @@
 import moment from 'moment';
 
 import rp from 'request-promise';
-
+import R from 'ramda';
 import d from 'debug';
 const debug = d('4me.lib.b2b');
 
-const timeFormat = 'YYYY-MM-DD HH:mm';
-const timeFormatWithSeconds = timeFormat + ':ss';
 
 import fs from 'fs';
-
-import _ from 'lodash';
-
-import {
-  parseString as parseStringCb
-} from 'xml2js';
-
-import {
-  queryFlightPlans,
-  queryInTrafficVolume,
-  queryInAirspace,
-  retrieveFlight,
-  flightKeysFromIfplId,
-  queryCompleteAIXMDataset,
-} from './query-builder';
-
-import {
-  parseFlightPlanListReply,
-  parseFlightRetrievalReply,
-  flightPlanToKeys,
-  normalizeFlightPlan,
-} from './response-parser';
-
-
-function toJS(input) {
-  const callback = (resolve, reject) => (err, stdout, stderr) => {
-    if(err) {
-      return reject(new Error('Unable to parse invalid data'));
-    }
-    return resolve(stdout);
-  };
-
-  return new Promise((resolve, reject) => parseStringCb(input, {explicitArray: false}, callback(resolve, reject)));
-}
-
-const extractData = (data) => {
-  debug(_.get(data, 'S:Envelope.S:Body', {}));
-  return _.get(data, 'S:Envelope.S:Body', {});
-};
 
 let pfxContent;
 
@@ -85,7 +44,7 @@ export function getRequestOptions() {
   return requestOptions;
 }
 
-function postToB2B(data) {
+export function postToB2B(data) {
   const MAX_REQUEST_SIZE = parseInt(process.env.B2B_MAX_REQUEST_SIZE) || 1024*1024*2; // 2MB
 
   return new Promise((resolve, reject) => {
@@ -94,7 +53,7 @@ function postToB2B(data) {
     let dataLen = 0;
 
     r.on('data', data => {
-      dataLen += _.size(data);
+      dataLen += R.length(data);
 
       if(dataLen > MAX_REQUEST_SIZE) {
         debug(`Aborting request due to B2B_MAX_REQUEST_SIZE : ${MAX_REQUEST_SIZE}`);
@@ -105,7 +64,7 @@ function postToB2B(data) {
 
 
     r.on('response', res => {
-      const headerSize = _.get(res, 'headers.content-length', 0);
+      const headerSize = R.pathOr(0, ['headers', 'content-length'], res);
 
       if(headerSize > MAX_REQUEST_SIZE) {
         debug(`Aborting request due to B2B_MAX_REQUEST_SIZE : ${MAX_REQUEST_SIZE}`);
@@ -116,95 +75,4 @@ function postToB2B(data) {
 
     r.then(resolve, reject);
   });
-}
-
-
-export function requestByCallsign(callsign, options = {}) {
-  const body = queryFlightPlans(callsign);
-  debug('requestByCallsign');
-  debug(body);
-
-  return postToB2B({body})
-    .then(toJS)
-    .then(extractData)
-    .then(parseFlightPlanListReply);
-}
-
-export function requestByIfplId(ifplId, options = {}) {
-  const body = flightKeysFromIfplId(ifplId, options);
-
-  debug('requestByIfplId');
-  debug(body);
-
-  return postToB2B({body})
-    .then(toJS)
-    .then(extractData);
-}
-
-export function ifplIdToKeys(ifplId, options = {}) {
-  return requestByIfplId(ifplId)
-    .then((data) => {
-      const flightPlan = _.get(data, 'flight:FlightRetrievalReply.data.flightPlan');
-      if(!flightPlan) {
-        return Promise.reject('Unknown flight');
-      }
-
-      const ret = flightPlanToKeys(flightPlan);
-      if(_.isEmpty(ret)) {
-        return Promise.reject('Unknown flight');
-      }
-      return ret;
-    })
-}
-
-export function requestByTrafficVolume(trafficVolume = 'LFERMS', options = {}) {
-
-  const body = queryInTrafficVolume(trafficVolume, options);
-
-  return postToB2B({body})
-    .then(toJS)
-    .then(extractData)
-    .then(d => _.get(d, 'flight:FlightListByTrafficVolumeReply', {}))
-    .then(d => _.get(d, 'data.flights', []))
-    .then(d => _.map(d, f => _.get(f, 'flight', {})))
-    .then(d => _.map(d, f => _.get(f, 'flightId', {})))
-    .then(d => _.map(d, normalizeFlightPlan));
-}
-
-export function requestByAirspace(airspace = 'LFEERMS', options = {}) {
-  const body = queryInAirspace(airspace, options);
-
-  return postToB2B({body})
-    .then(toJS)
-    .then(extractData)
-    .then(d => _.get(d, 'flight:FlightListByAirspaceReply', {}))
-    .then(d => _.get(d, 'data.flights', []))
-    .then(d => _.map(d, f => _.get(f, 'flight', {})))
-    .then(d => _.map(d, f => _.get(f, 'flightId', {})))
-    .then(d => _.map(d, normalizeFlightPlan));
-}
-
-export function requestProfile(callsign, dep, dest, eobt, options = {}) {
-
-  const sendTime = moment.utc().format(timeFormatWithSeconds);
-
-  const formattedEobt = moment(new Date(eobt)).format(timeFormat);
-
-  const body = retrieveFlight(callsign, dep, dest, eobt);
-  debug(body);
-
-  return postToB2B({body})
-    .then(toJS)
-    .then(extractData)
-    .then(parseFlightRetrievalReply);
-}
-
-export function requestLatestAixmAirspace() {
-  const sendTime = moment.utc().format(timeFormatWithSeconds);
-
-  const body = queryCompleteAIXMDataset();
-
-  return postToB2B({body})
-    .then(toJS)
-    .then(extractData);
 }

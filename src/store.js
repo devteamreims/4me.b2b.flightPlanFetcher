@@ -11,7 +11,9 @@ import {initializeSocket} from './actions/socket';
 
 import {
   refreshAutocomplete,
-} from './actions/autocomplete-cache';
+} from './actions/autocomplete';
+
+import { installSubscriptions } from './subscriptions';
 
 
 const AUTOCOMPLETE_REFRESH_INTERVAL = 1000*60*5; //  5 minutes
@@ -35,11 +37,13 @@ export default function makeStore(socketIo) {
   // Initialize socketIo
   store.dispatch(initializeSocket(socketIo));
 
-  const refreshCache = () => store.dispatch(refreshAutocomplete('LFERMS'));
+  const refreshCache = () => store.dispatch(refreshAutocomplete('LFEERMS'));
 
   setInterval(refreshCache, AUTOCOMPLETE_REFRESH_INTERVAL);
 
   refreshCache();
+
+  installSubscriptions(store);
 
   return store;
 }

@@ -1,0 +1,5 @@
+exports[`history reducer should mark specific keys are part of the history list 1`] = `
+Array [
+  "AA0",
+]
+`;

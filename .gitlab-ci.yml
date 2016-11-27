@@ -1,4 +1,7 @@
-image: node:6
+image: node:7.2.0
+
+before_script:
+  - npm install -g yarn --silent
 
 cache:
   untracked: true
@@ -14,15 +17,15 @@ stages:
 check_deps:
   stage: build
   script:
-    - npm install --silent
+    - yarn
     - npm run check-deps --silent
   allow_failure: true
 
 jest:
   stage: test
   script:
-    - npm install --silent
-    - npm test -- --coverage
+    - yarn
+    - npm test -- --coverage --forceExit
 
 build_release_image:
   stage: deploy

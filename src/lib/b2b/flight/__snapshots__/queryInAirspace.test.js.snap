@@ -1,0 +1,142 @@
+exports[`queryInAirspace query builder should have proper defaults 1`] = `
+"
+    <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:flig=\"eurocontrol/cfmu/b2b/FlightServices\">
+      <soapenv:Header/>
+      <soapenv:Body>
+        
+    <flig:FlightListByAirspaceRequest>
+      
+     <sendTime>2016-11-23 10:52:35</sendTime>
+     <dataset>
+        <type>OPERATIONAL</type>
+     </dataset>
+     <includeProposalFlights>false</includeProposalFlights>
+     <trafficType>LOAD</trafficType>
+     <trafficWindow>
+        <wef>2016-11-23 10:42</wef>
+        <unt>2016-11-23 11:12</unt>
+     </trafficWindow>
+     <countsInterval>
+        <duration>0011</duration>
+        <step>0001</step>
+     </countsInterval>
+     <!--Optional:-->
+     <calculationType>OCCUPANCY</calculationType>
+     <airspace>LFEERMS</airspace>
+  
+    </flig:FlightListByAirspaceRequest>
+  
+      </soapenv:Body>
+    </soapenv:Envelope>
+  "
+`;
+
+exports[`queryInAirspace query builder should match snapshot 1`] = `
+"
+    <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:flig=\"eurocontrol/cfmu/b2b/FlightServices\">
+      <soapenv:Header/>
+      <soapenv:Body>
+        
+    <flig:FlightListByAirspaceRequest>
+      
+     <sendTime>2016-11-23 10:52:35</sendTime>
+     <dataset>
+        <type>OPERATIONAL</type>
+     </dataset>
+     <includeProposalFlights>false</includeProposalFlights>
+     <trafficType>LOAD</trafficType>
+     <trafficWindow>
+        <wef>2016-11-23 10:42</wef>
+        <unt>2016-11-23 11:12</unt>
+     </trafficWindow>
+     <countsInterval>
+        <duration>0011</duration>
+        <step>0001</step>
+     </countsInterval>
+     <!--Optional:-->
+     <calculationType>OCCUPANCY</calculationType>
+     <airspace>MOCKAIRSPACE</airspace>
+  
+    </flig:FlightListByAirspaceRequest>
+  
+      </soapenv:Body>
+    </soapenv:Envelope>
+  "
+`;
+
+exports[`queryInAirspace query builder should reject invalid arguments 1`] = `"Argument error: airspace should be a string"`;
+
+exports[`queryInAirspace query builder should reject invalid arguments 2`] = `"Argument error: airspace should be a string"`;
+
+exports[`queryInAirspace query builder should reject invalid arguments 3`] = `"Argument error: options should be an object"`;
+
+exports[`queryInAirspace response parser should parse correct response 1`] = `
+Object {
+  "$": Object {
+    "xmlns:airspace": "eurocontrol/cfmu/b2b/AirspaceServices",
+    "xmlns:common": "eurocontrol/cfmu/b2b/CommonServices",
+    "xmlns:flight": "eurocontrol/cfmu/b2b/FlightServices",
+    "xmlns:flow": "eurocontrol/cfmu/b2b/FlowServices",
+  },
+  "data": Object {
+    "effectiveTrafficWindow": Object {
+      "unt": "2016-11-23 11:22",
+      "wef": "2016-11-23 10:42",
+    },
+    "flights": Array [
+      Object {
+        "flight": Object {
+          "flightId": Object {
+            "id": "AA58786362",
+            "keys": Object {
+              "aerodromeOfDeparture": "LSZH",
+              "aerodromeOfDestination": "EGGW",
+              "airFiled": "false",
+              "aircraftId": "EZY18AG",
+              "estimatedOffBlockTime": "2016-11-23 09:35",
+              "nonICAOAerodromeOfDeparture": "false",
+              "nonICAOAerodromeOfDestination": "false",
+            },
+          },
+        },
+      },
+      Object {
+        "flight": Object {
+          "flightId": Object {
+            "id": "AA58788176",
+            "keys": Object {
+              "aerodromeOfDeparture": "LFSB",
+              "aerodromeOfDestination": "EGLL",
+              "airFiled": "false",
+              "aircraftId": "BAW753",
+              "estimatedOffBlockTime": "2016-11-23 10:10",
+              "nonICAOAerodromeOfDeparture": "false",
+              "nonICAOAerodromeOfDestination": "false",
+            },
+          },
+        },
+      },
+      Object {
+        "flight": Object {
+          "flightId": Object {
+            "id": "AA58793473",
+            "keys": Object {
+              "aerodromeOfDeparture": "LSZH",
+              "aerodromeOfDestination": "KEWR",
+              "airFiled": "false",
+              "aircraftId": "UAL135",
+              "estimatedOffBlockTime": "2016-11-23 09:50",
+              "nonICAOAerodromeOfDeparture": "false",
+              "nonICAOAerodromeOfDestination": "false",
+            },
+          },
+        },
+      },
+    ],
+  },
+  "requestId": "B2B_CUR:1884063",
+  "requestReceptionTime": "2016-11-23 11:11:03",
+  "sendTime": "2016-11-23 11:11:03",
+  "status": "OK",
+}
+`;
