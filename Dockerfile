@@ -1,8 +1,7 @@
-FROM node:7.2.0
+FROM registry.gitlab.com/devteamreims/node-yarn:7.2.0
 
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
-RUN npm install -g yarn --silent
 
 COPY yarn.lock package.json /usr/src/app/
 RUN yarn install --production
