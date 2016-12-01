@@ -1,4 +1,5 @@
 # Master
+  * Implement workaround state inconsistency (devteamreims/4ME#142)
   * Use 4ME specific base image (devteamreims/4ME#140)
 
 # v0.2.0-1
