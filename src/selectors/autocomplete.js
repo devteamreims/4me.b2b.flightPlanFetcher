@@ -17,7 +17,6 @@ export const getFromString = (string) => (state) => {
   }
 
   const regExp = new RegExp(string, 'i');
-  console.log(string);
 
   return R.filter(
     R.propSatisfies(R.test(regExp), 'callsign'),
