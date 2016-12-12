@@ -51,6 +51,8 @@ export function fetchProfileFromIfplId(ifplId) {
 
     // Nothing in our cache for this ifplId, reject
     if(!keys) {
+      // Indicate these keys are invalid
+      dispatch(invalidIfplId(ifplId));
       return Promise.reject(new Error('not found !'));
     }
 
@@ -125,7 +127,7 @@ export function fetchProfileFromIfplId(ifplId) {
 
         dispatch(errorAction(error));
         // Let error bubble up
-        return Promise.reject(error);
+        return Promise.reject(err);
       });
   };
 }

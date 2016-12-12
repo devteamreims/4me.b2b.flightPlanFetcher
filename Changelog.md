@@ -1,3 +1,6 @@
+# Master
+  * Dispatch invalidIfplId from fetchProfileFromIfplId if keys are invalid (devteamreims/4ME#160)
+
 # v0.2.0
   * Implement workaround state inconsistency (devteamreims/4ME#142)
   * Use 4ME specific base image (devteamreims/4ME#140)
