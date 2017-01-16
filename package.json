@@ -6,9 +6,9 @@
   "scripts": {
     "preversion": "git add Changelog.md",
     "babel-node": "babel-node server.js",
-    "start": "nodemon --exec npm run babel-node",
+    "start": "npm run babel-node",
     "test": "jest",
-    "dev": "DEBUG=4me.*,-4me.redux.logger NODE_ENV=development npm run start",
+    "dev": "DEBUG=4me.*,-4me.redux.logger NODE_ENV=development nodemon --exec npm run start",
     "check-deps": "npm-check --production"
   },
   "author": "Benjamin Beret <benjamin.beret@gmail.com>",
@@ -23,7 +23,7 @@
     "bunyan": "^1.8.1",
     "cors": "^2.8.0",
     "debug": "^2.2.0",
-    "dotenv": "^2.0.0",
+    "dotenv": "4.0.0",
     "express": "^4.14.0",
     "invariant": "2.2.2",
     "lodash": "^4.15.0",
