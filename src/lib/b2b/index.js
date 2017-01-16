@@ -14,7 +14,11 @@ let pfxContent;
 export function getRequestOptions() {
 
   if(process.env.NODE_ENV !== 'test' && pfxContent === undefined) {
-    pfxContent = fs.readFileSync(process.env.B2B_CERT);
+    try {
+      pfxContent = fs.readFileSync(process.env.B2B_CERT);
+    } catch(err) {
+      throw new Error('Could not read B2B certificate file !');
+    }
   }
 
   const nmUrl = process.env.B2B_URL;
