@@ -25,6 +25,12 @@ import {getSocket} from './socket';
 export default function makeStore(socketIo) {
   debug('Creating store');
 
+  const autocompleteAirspace = process.env.AUTOCOMPLETE_AIRSPACE;
+
+  if(!autocompleteAirspace) {
+    throw new Error('Please set a AUTOCOMPLETE_AIRSPACE environment variable');
+  }
+
   const logger = createLogger({
     logger: {
       log: d('4me.redux.logger'),
@@ -37,7 +43,7 @@ export default function makeStore(socketIo) {
   // Initialize socketIo
   store.dispatch(initializeSocket(socketIo));
 
-  const refreshCache = () => store.dispatch(refreshAutocomplete('LFEERMS'));
+  const refreshCache = () => store.dispatch(refreshAutocomplete(autocompleteAirspace));
 
   setInterval(refreshCache, AUTOCOMPLETE_REFRESH_INTERVAL);
 
