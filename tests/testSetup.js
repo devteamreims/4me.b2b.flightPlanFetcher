@@ -28,11 +28,13 @@ beforeEach(() => {
   process.env.B2B_URL = global.B2B_URL + '-' + uuid.v4();
 
   process.env.HISTORY_HARD_LIMIT = global.HISTORY_HARD_LIMIT;
+  process.env.AUTOCOMPLETE_AIRSPACE = 'SAMPLE_AIRSPACE';
 });
 
 afterEach(() => {
   delete process.env.B2B_URL;
   delete process.env.HISTORY_HARD_LIMIT;
+  delete process.env.AUTOCOMPLETE_AIRSPACE;
 });
 
 test(() => {});

@@ -1,4 +1,5 @@
 # Master
+  * Accept AUTOCOMPLETE_AIRSPACE environment variable (devteamreims/4ME#182)
   * Dispatch invalidIfplId from fetchProfileFromIfplId if keys are invalid (devteamreims/4ME#160)
 
 # v0.2.0
